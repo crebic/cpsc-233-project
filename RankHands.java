@@ -1,6 +1,8 @@
 
-public class RankHands {
-	
+public class RankHands 
+{
+
+	//Checks to see if there are 5 matching suits, if it does then check for Flush, Straight Flush, or Royal Flush
 	public void checkSuit() 
 	{
 	
