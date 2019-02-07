@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 
-import javax.smartcardio.Card;
-
 public class RankHands {
 	//Players hand and board cards 
 	private ArrayList<Card> allCards = new ArrayList<Card>();
