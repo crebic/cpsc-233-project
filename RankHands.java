@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import javax.smartcardio.Card;
+
 public class RankHands {
 	//Players hand and board cards 
 	private ArrayList<Card> allCards = new ArrayList<Card>();
@@ -17,10 +19,38 @@ public class RankHands {
 		
 	
 	}
-	public void checkSuit() 
+	//Checks for Flush, Straight Flush, and Royal Flush
+	public void checkFlushes() 
 	{
-		
+		int spadeCounter = 0; 
 		for(Card eachCard: board) {
+			if(eachCard.getSuit().equals("spade")) {
+				spadeCounter += 1; 
+			}
+			
+		}
+		
+		int heartCounter = 0; 
+		for(Card eachCard: board) {
+			if(eachCard.getSuit().equals("heart")) {
+				heartCounter += 1; 
+			}
+			
+		}
+		
+		int clubCounter = 0; 
+		for(Card eachCard: board) {
+			if(eachCard.getSuit().equals("club")) {
+				clubCounter += 1; 
+			}
+			
+		}
+		
+		int diamondCounter = 0; 
+		for(Card eachCard: board) {
+			if(eachCard.getSuit().equals("diamond")) {
+				diamondCounter += 1; 
+			}
 			
 		}
 		
