@@ -1,9 +1,9 @@
 class Player{
     private int chips;
     private int seatNumber;
-    private bool isFolded;
+    private boolean isFolded;
     Card[] cardPair = new Card[2];
-    private bool isPlaying = true;
+    private boolean isPlaying = true;
 
     Player(int startingChips, int _seatNumber, Card card1, Card card2)
     {
@@ -28,11 +28,11 @@ class Player{
     {
         return cardPair;
     }
-    public bool getDidFold()
+    public boolean getDidFold()
     {
         return isFolded;
     }
-    public bool getIsPlaying()
+    public boolean getIsPlaying()
     {
         return isPlaying;
     }
