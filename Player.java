@@ -14,6 +14,14 @@ class Player{
         cardPair[1] = card2;
         isFolded = false;
     }
+    Player(Player player)
+    {
+        chips = player.getChips();
+        seatNumber = player.getSeatNumber();
+        isFolded = player.getDidFold();
+        cardPair = player.getPair();
+        isPlaying = player.getIsPlaying();
+    }
 
     //getters
     public int getChips()
