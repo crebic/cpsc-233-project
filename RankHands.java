@@ -158,7 +158,79 @@ public class RankHands {
 
 	
 	public double checkStraightFlush() {
-		
+		int card1Num = playerHandArray.getValue(0);
+		int card2Num = playerHandArray.getValue(1);
+		String card1Suit = playerHandArray.getSuit(0);
+		String card2Suit = playerHandArray.getSuit(1);
+		int sfCounter = 0;
+
+		//index 0 is spades, index 1 is hearts, index 2 is diamonds, index 3 is clubs
+		//the "value" of the cards in the count ArrayList is the number of each suit rather than the value of the card
+		ArrayList<Card> count = new ArrayList<Card>();
+		count.add(Card(0,"spade"));
+		count.add(Card(0,"heart"));
+		count.add(Card(0,"diamond"));
+		count.add(Card(0,"club"));
+
+		//identifies number of each suit
+		for (Card eachCard: allCards){
+		    if (eachCard.getSuit().equals("spade")){
+			Card tempCard = count.get(0);
+			tempCard.value += 1;
+			count.set(0, tempCard);
+		    }
+		    else if (eachCard.getSuit().equals("heart")){
+			Card tempCard = count.get(1);
+			tempCard.value += 1;
+			count.set(1, tempCard);
+		    }
+		    else if (eachCard.getSuit().equals("diamond")){
+			Card tempCard = count.get(2);
+			tempCard.value += 1;
+			count.set(2, tempCard);
+		    }
+		    else{
+			Card tempCard = count.get(3);
+			tempCard.value += 1;
+			count.set(3, tempCard);
+		    }
+		}
+
+		//theSuit is the suit we are using for the straight flush
+		for (int i = 0; i <= 3;i++){
+		    if(count.get(i).value >= 5){
+			String theSuit = count.get(i).value;
+		    }
+		}
+
+		//creates ArrayList of all cards with the same suit
+		//the arraylist will contain the value of each card instead of the card itself
+		ArrayList<Integer> sameSuitCard = new ArrayList<Integer>();
+		for(int i = 0; i <= 6; i++){
+		    if (count.get(i).getSuit().equals(theSuit)){
+			sameSuitCard.add(count.get(i).getValue());
+		    }
+		}
+
+		//sorts arraylist of sameSuitCard from lowerest to highest
+		Collection.sort(sameSuitCard);
+
+		//checks if there is a straight
+		int straightCount = 0;
+		for (int i = 0; i < 5; i++){
+		    if (sameSuitCard.get(i) == sameSuitCard.get(i+1)-1){
+			straightCount += 1;
+		    }
+		    else 
+			break;
+		}
+
+		//returns 9.xx if there is a straight flush and 0.0 if there isn't
+		if (straightCount == 5) {
+		    return 9.0 + allCardNumbers.get(6)/100;
+		}
+		else
+		    return 0.0;
 	}
 	
 	public double checkFourOfAKind() {
@@ -237,7 +309,58 @@ public class RankHands {
 	}
 	
 	public void checkFlush() {
-		
+		int flushCount = 0;
+		String card1 = playerHandArray.getSuit(0);
+		String card2 = playerHandArray.getSuit(1);
+
+		//checks if board has a flush
+		int boardFlushCount = 0;
+		for (int i = 0; i < 5; i++){
+		    if (boardCardArray.get(i).getValue() == boardCardArray.get(i+1).getValue()-1){
+			boardFlushCount += 1;
+		    }
+		}
+
+
+		if (boardFlushCount == 5){
+		    return 6.0 + allCardNumbers.get(6)/100;
+		}
+
+		//checks if cards in hands are the same
+		else if (card2 == card1){
+		    flushCount += 1;
+		    for (Card eachCard: boardCardArray){
+			if (eachCard.getSuit() == card1){
+			    flushCount += 1;
+			}
+		    }
+		    if (flushCount == 5){
+			return 6.0 + allCardNumbers.get(6)/100;
+		    }
+		    else{
+			return 0.0;
+		    }
+		}
+		else{
+		    int flushCount2 = 0;
+		    for (Card eachCard: boardCardArray){
+			if (eachCard.getSuit() == card1){
+			    flushCount += 1;
+			}
+			if (eachCard.getSuit() == card2){
+			    flushCount2 += 0;
+			}
+		    }
+		    if (flushCount == 5){
+			return 6.0 + allCardNumbers.get(6)/100;
+		    }
+		    else if (flushCount2 == 5){
+			return 6.0 + allCardNumbers.get(6)/100;
+		    }
+		    else{
+			return 0.0;
+		    }
+		}
 	}
 	
 	public double checkStraight() {
