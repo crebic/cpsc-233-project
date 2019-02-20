@@ -1,10 +1,24 @@
+
+
 class Player{
     private int chips;
     private int seatNumber;
     private boolean isFolded;
     Card[] cardPair = new Card[2];
     private boolean isPlaying = true;
-
+	
+	//for testing purposes
+	Player(){
+		
+	}
+	Player(int startingChips, int _seatNumber)
+	{
+		chips = startingChips;
+		seatNumber = _seatNumber;
+	}
+	//
+	
+	
     Player(int startingChips, int _seatNumber, Card card1, Card card2)
     {
         //set initial player state
@@ -59,11 +73,11 @@ class Player{
     {
         chips -= chipsDeducted;
     }
-    public void changeFoldedState(bool folded)
+    public void changeFoldedState(boolean folded)
     {
         isFolded = folded;
     }
-    public void changePlayingState(bool playing)
+    public void changePlayingState(boolean playing)
     {
         isPlaying = playing;
     }

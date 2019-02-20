@@ -1,5 +1,4 @@
-import Card;//fix
-
+import java.util.Random;
 import java.util.*;
 
 public class Deck{
@@ -7,6 +6,7 @@ public class Deck{
 	public ArrayList<Card> deck = new ArrayList<>(); //TODO should this be private???
 	
 	public Deck(){
+		
 		//constructor
 		String suit;
 		
@@ -16,27 +16,34 @@ public class Deck{
 				
 				case(0):
 					suit = "spade";
+					break;
 				case(1):
 					suit = "heart";
+					break;
 				case(2):
 					suit = "club";
+					break;
 				case(3):
 					suit = "diamond";
+					break;
+				default:
+					suit = "uiu";
 			}
 			
 			//card with value 14 is the Ace card
 			for (int j = 2; j <= 14; j++){
-				deck.add(new Card(suit, j));
+				deck.add(new Card(j, suit));
 			}
 		}
 	}
 
 	public void deal(Player[] lst, ArrayList<Card> tableCards){
+		Random rand = new Random();
 		for (Player p: lst){
-			p.setPair(deck.remove(random.randRange(0, deck.length - 1)), deck.remove(random.randRange(0, deck.length - 1)));
+			p.setPair(deck.remove(rand.nextInt(deck.size() - 1)), deck.remove(rand.nextInt(deck.size() - 1)));
 		}
 		for (int i = 0; i < 5; i++){
-			tableCards[i] = deck.remove(random.randRange(0, deck.length - 1));
+			tableCards.add(i, deck.remove(rand.nextInt(deck.size() - 1)));
 		}
 	}
 
@@ -60,10 +67,12 @@ public class Deck{
 					suit = "club";
 				case(3):
 					suit = "diamond";
+				default:
+					suit = "";
 			}
 			
 			for (int j = 1; j <= 13; j++){
-				deck.add(new Card(suit, j));
+				deck.add(new Card(j, suit));
 			}
 		}
 	}
