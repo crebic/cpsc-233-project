@@ -55,8 +55,9 @@ public class RankHands {
 		} else {
 			value = checkPair();
 		}
-		value = checkHighCard();
-		return value; 
+		if(value > 0.01) {
+			return value;
+		} else return checkHighCard();
 
 	}
 	
@@ -64,28 +65,25 @@ public class RankHands {
 	
 	
 	//Appends the 2 hand cards and boards card into one list
-	public void createCompareList(ArrayList<Card> boardCardsArray, Card[] playerHandArray) { 
-		
+	public void createCompareList(ArrayList<Card> boardCardArray, Card[] playerCards) { 
+		this.boardCardArray = boardCardArray;
 		for (Card eachCard: boardCardArray) {
 			allCards.add(eachCard); 
 			allCardNumbers.add(eachCard.getValue());
 		}
-		for (Card eachCard: playerHandArray ) {
+		for (Card eachCard: playerCards ) {
 			allCards.add(eachCard); 
 			allCardNumbers.add(eachCard.getValue());
-			this.playerHandArray.add(eachCard);
+			playerHandArray.add(eachCard);
 
 		}
 		Collections.sort(allCardNumbers);		
-
+		
 	}
 		
 	
 	public double checkRoyalFlush() {
-		if(allCardNumbers.get(6) != 14) {
-			return 0;
-		}
-		
+
 		boolean ace = false;
 		boolean ace2 = false;
 		boolean king = false;
@@ -108,7 +106,6 @@ public class RankHands {
 				ace2 = true; 
 			}
 		}
-		
 		for(Card eachCard: allCards) { 
 			if(eachCard.getValue() == 13 && eachCard.getSuit() == suit) {
 				king = true;
@@ -212,12 +209,23 @@ public class RankHands {
 		//checks if there is a straight
 		
 		int straightCount = 0;
-		int currentCard = sameSuitCard.get(0)+1;
+		if(sameSuitCard.size() < 1) { 
+			return 0.0;
+		}
+		int currentCard = sameSuitCard.get(0)-1;
+		double highest = 0;
 		for(int eachCard:sameSuitCard) {
-			if(eachCard == currentCard-1) {
+
+			if(eachCard == currentCard+1) {
 				straightCount += 1;
 				currentCard = eachCard;
-			} else {
+				if(highest < eachCard) {
+					highest = eachCard;
+				}
+			} else if(eachCard == currentCard) {
+				;
+			}
+			else {
 				break;
 			}
 		}
@@ -225,7 +233,7 @@ public class RankHands {
 
 		//returns 9.xx if there is a straight flush and 0.0 if there isn't
 		if (straightCount == 5) {
-		    return 9.0 + allCardNumbers.get(6)/100;
+		    return 9.0 + highest/100.0;
 		}
 		else
 		    return 0.0;
@@ -602,7 +610,36 @@ public class RankHands {
 		}
 		int counter1 = 1;
 		int counter2 = 1; 
+		//Check board for two pair
+		int boardCard1 = boardCardArray.get(0).getValue();
+		int boardCard2 = boardCardArray.get(2).getValue();
+		int boardCard3 = boardCardArray.get(3).getValue();
+		int boardCounter1 = 0;
+		int boardCounter2 = 0;
+		int boardCounter3 = 0;
+		if(boardCard2 == boardCard3) {
+			boardCard2 = 0;
+		}
+		if(boardCard2 == boardCard1) {
+			boardCard2 = 0;
+		}
+		for (Card eachCard: boardCardArray) {
+			if(boardCard1 == eachCard.getValue()) {
+				boardCounter1 += 1;
+			}
+			if(boardCard2 == eachCard.getValue()) {
+				boardCounter2 += 1;
+			}
+			if (boardCard3 == eachCard.getValue()) {
+				boardCounter3 +=1;
+			}
+		}
 		
+		if(boardCounter1 == 2 && boardCounter2==2 || boardCounter1 == 2 && boardCounter3 == 2  || 
+				boardCounter2 == 3 && boardCounter3 == 3) {
+			return 3.0;
+		}
+		//End of board check
 		
 		for (Card eachCard: boardCardArray) {
 			if(eachCard.getValue() == playerCardOne) {
@@ -623,6 +660,51 @@ public class RankHands {
 		if(counter1 == 2 && counter2 == 2) {
 			
 			return 3.0 + (highest/ 100.0); 
+		}
+		else if(counter1 == 2 && boardCounter1 == 2) {
+			if(playerCardOne > boardCard1) {
+				return 3.0 + (playerCardOne / 100.0);
+			} else {
+				return 3.0 + (boardCard1 / 100.0);
+			}
+			
+		} else if(counter1 == 2 && boardCounter2 == 2) {
+			if(playerCardOne > boardCard2) {
+				return 3.0 + (playerCardOne / 100.0);
+			} else {
+				return 3.0 + (boardCard2 / 100.0);
+			}
+			
+		} else if(counter1 == 2 && boardCounter3 == 2) {
+			if(playerCardOne > boardCard3) {
+				return 3.0 + (playerCardOne / 100.0);
+			} else {
+				return 3.0 + (boardCard3 / 100.0);
+			}
+			
+		} else if(counter2 == 2 && boardCounter1 == 2) {
+			if(playerCardTwo > boardCard1) {
+				return 3.0 + (playerCardTwo / 100.0);
+			} else {
+				return 3.0 + (boardCard1 / 100.0);
+			}
+			
+		} else if(counter2 == 2 && boardCounter2 == 2) {
+			if(playerCardTwo > boardCard2) {
+				return 3.0 + (playerCardTwo / 100.0);
+			} else {
+				return 3.0 + (boardCard2 / 100.0);
+			}
+			
+			
+		} else if(counter2 == 2 && boardCounter3 == 2) {
+			if(playerCardTwo > boardCard3) {
+				return 3.0 + (playerCardTwo / 100.0);
+			} else {
+				return 3.0 + (boardCard3 / 100.0);
+			}
+			
+			
 		}
 		else return 0;
 		
@@ -650,10 +732,12 @@ public class RankHands {
 			}
 				
 		}
+		System.out.println(counter2);
 		if(counter1 == 2) {
 			return 2.0 + (playerCardOne/ 100.0); 
 		}
-		else if (counter2 == 2) {
+		else if(counter2 == 2) {
+			System.out.println(counter1);
 			return 2.0 + (playerCardTwo / 100.0);
 		}
 		else return 0;
