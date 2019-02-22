@@ -48,8 +48,13 @@ class Player{
     }
     public Card[] getPair()
     {
-        return cardPair;
+		return cardPair;
+
     }
+	public String getPairAsString()
+	{
+		return (cardPair[0].getValue() + cardPair[0].getSuit().substring(0,1).toUpperCase() + " " + cardPair[1].getValue() + cardPair[1].getSuit().substring(0,1).toUpperCase());
+	}
     public boolean getDidFold()
     {
         return isFolded;
@@ -58,6 +63,7 @@ class Player{
     {
         return isPlaying;
     }
+	
     
     //setters
     public void setPair(Card card1, Card card2)
@@ -81,4 +87,5 @@ class Player{
     {
         isPlaying = playing;
     }
+
 }
