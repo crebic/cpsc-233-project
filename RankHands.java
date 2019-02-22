@@ -401,7 +401,6 @@ public class RankHands {
 			return 0.0;
 		}
 		
-		//If both card 1 and card 2 have triples, choose the greatest one 
 
 		
 	}
