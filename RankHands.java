@@ -341,6 +341,7 @@ public class RankHands {
 		}
 		if(playerCardOne == playerCardTwo) {
 			counter1 += 1;
+			counter2 -=1;
 		}
 				
 		if(counter1 == 3 && counter2 == 3) {
