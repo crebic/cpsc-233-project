@@ -10,9 +10,59 @@ public class RankHands {
 	private ArrayList<Card> boardCardArray = new ArrayList<Card>();
 
 	
+	public String ranking(ArrayList<Card> boardCards, ArrayList<Player> players) {
+		ArrayList<Double> playersValue = new ArrayList<Double>(); 
+		for(Player eachPlayer: players) {
+			playersValue.add(checkAllRanks(boardCards, eachPlayer.getPair())); 
+			System.out.println("hiiii" + allCards.size());
+			System.out.println(allCardNumbers.size());
+			System.out.println(boardCardArray.size());
+			System.out.println(playerHandArray.size());
+			playerHandArray.remove(0);
+			playerHandArray.remove(0);
+
+			allCards.remove(0);
+			allCards.remove(0);
+			allCards.remove(0);
+			allCards.remove(0);
+			allCards.remove(0);
+			allCards.remove(0);
+			allCards.remove(0);
+			System.out.print("saopdkjowfjewoi");
+			boardCardArray.remove(0);
+			boardCardArray.remove(0);
+			boardCardArray.remove(0);
+			boardCardArray.remove(0);
+			boardCardArray.remove(0);
+			allCardNumbers.remove(0);
+			allCardNumbers.remove(0);
+			allCardNumbers.remove(0);
+			allCardNumbers.remove(0);
+			allCardNumbers.remove(0);
+			allCardNumbers.remove(0);
+			allCardNumbers.remove(0);
+
+
+		}
+		double highest = -1; 
+		int bestPlayer = -1;
+		System.out.print("sasdsasds " + playersValue);
+		for(int i = 0; i < playersValue.size(); i++) {
+			if(playersValue.get(i) > highest) {
+				highest = playersValue.get(i);
+				bestPlayer = i;
+				System.out.print("aswjwodewj " + highest);
+			}
+		}
+		
+		return "Player " + (bestPlayer+1) + " wins";
+		
+		
+	}
 	
-	public double checkAllRanks(ArrayList<Card> boardCards, Card[] playerCards) {
-		createCompareList(boardCards, playerCards);
+	public double checkAllRanks(ArrayList<Card> boardCards, Card[] players) {
+		System.out.println("hiiiiiiii");
+		createCompareList(boardCards, players);
 		double value = 0.0;
 		value = checkRoyalFlush();
 		if(value > 0.01) {
@@ -75,6 +125,7 @@ public class RankHands {
 			allCards.add(eachCard); 
 			allCardNumbers.add(eachCard.getValue());
 			playerHandArray.add(eachCard);
+			System.out.println("Player hand array " );
 
 		}
 		Collections.sort(allCardNumbers);		

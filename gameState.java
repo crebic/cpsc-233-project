@@ -105,9 +105,25 @@ public static void main (String[] args){
 			System.out.print(tableCards.get(x).getValue() + tableCards.get(x).getSuit().substring(0,1).toUpperCase() + " ");
 		}
 		betRound();
+		RankHands rank = new RankHands(); 
+		System.out.print("ayo " + getNotFoldedPlayers());
+		String winner = rank.ranking(tableCards, getNotFoldedPlayers());
+		System.out.println(winner);
 		
 	}
 	
+	public ArrayList<Player> getNotFoldedPlayers()
+	{
+		ArrayList<Player> playersNotFolded = new ArrayList<Player>();
+		for(int x = 0; x < 5; x++)
+		{
+			if(!players[x].getDidFold())
+			{
+				playersNotFolded.add(players[x]);
+			}
+		}
+		return playersNotFolded;
+	}
 	
 	public void betRound(){
 		boolean foo = false;
