@@ -157,72 +157,70 @@ public class RankHands {
 
 	
 	public double checkStraightFlush() {
-		int card1Num = playerHandArray.getValue(0);
-		int card2Num = playerHandArray.getValue(1);
-		String card1Suit = playerHandArray.getSuit(0);
-		String card2Suit = playerHandArray.getSuit(1);
-		int sfCounter = 0;
-
 		//index 0 is spades, index 1 is hearts, index 2 is diamonds, index 3 is clubs
 		//the "value" of the cards in the count ArrayList is the number of each suit rather than the value of the card
 		ArrayList<Card> count = new ArrayList<Card>();
-		count.add(Card(0,"spade"));
-		count.add(Card(0,"heart"));
-		count.add(Card(0,"diamond"));
-		count.add(Card(0,"club"));
-
+		count.add(new Card(0,"spade"));
+		count.add(new Card(0,"heart"));
+		count.add(new Card(0,"diamond"));
+		count.add(new Card(0,"club"));
+		int spadeCounter = 0;
+		int heartCounter = 0;
+		int diamondCounter = 0;
+		int clubCounter = 0;
 		//identifies number of each suit
 		for (Card eachCard: allCards){
 		    if (eachCard.getSuit().equals("spade")){
-			Card tempCard = count.get(0);
-			tempCard.value += 1;
-			count.set(0, tempCard);
+			spadeCounter += 1; 
+			count.set(0,new Card(spadeCounter, "spade"));
 		    }
 		    else if (eachCard.getSuit().equals("heart")){
-			Card tempCard = count.get(1);
-			tempCard.value += 1;
-			count.set(1, tempCard);
+		    	heartCounter += 1;
+		    	count.set(1,new Card(heartCounter, "heart"));
 		    }
-		    else if (eachCard.getSuit().equals("diamond")){
-			Card tempCard = count.get(2);
-			tempCard.value += 1;
-			count.set(2, tempCard);
+		    else if (eachCard.getSuit().equals("diamond")) {
+		    	diamondCounter += 1;
+		    	count.set(2,new Card(diamondCounter, "diamond"));
 		    }
 		    else{
-			Card tempCard = count.get(3);
-			tempCard.value += 1;
-			count.set(3, tempCard);
+		    	clubCounter += 1;
+		    	count.set(3,new Card(clubCounter, "club"));
 		    }
 		}
 
+		String theSuit = "";
 		//theSuit is the suit we are using for the straight flush
 		for (int i = 0; i <= 3;i++){
-		    if(count.get(i).value >= 5){
-			String theSuit = count.get(i).value;
+		    if(count.get(i).getValue() >= 5){
+			theSuit = count.get(i).getSuit();
 		    }
 		}
 
 		//creates ArrayList of all cards with the same suit
 		//the arraylist will contain the value of each card instead of the card itself
 		ArrayList<Integer> sameSuitCard = new ArrayList<Integer>();
-		for(int i = 0; i <= 6; i++){
-		    if (count.get(i).getSuit().equals(theSuit)){
-			sameSuitCard.add(count.get(i).getValue());
-		    }
+		for(Card eachCard: allCards) {
+			if(eachCard.getSuit() == theSuit) {
+				sameSuitCard.add(eachCard.getValue());
+			}
 		}
-
+	
 		//sorts arraylist of sameSuitCard from lowerest to highest
-		Collection.sort(sameSuitCard);
+		Collections.sort(sameSuitCard);
 
 		//checks if there is a straight
+		
 		int straightCount = 0;
-		for (int i = 0; i < 5; i++){
-		    if (sameSuitCard.get(i) == sameSuitCard.get(i+1)-1){
-			straightCount += 1;
-		    }
-		    else 
-			break;
+		int currentCard = sameSuitCard.get(0)+1;
+		for(int eachCard:sameSuitCard) {
+			if(eachCard == currentCard-1) {
+				straightCount += 1;
+				currentCard = eachCard;
+			} else {
+				break;
+			}
 		}
+	
 
 		//returns 9.xx if there is a straight flush and 0.0 if there isn't
 		if (straightCount == 5) {
