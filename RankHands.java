@@ -11,7 +11,7 @@ public class RankHands {
 
 	
 	
-	public double checkAllRanks(ArrayList<Card> boardCards, ArrayList<Card> playerCards) {
+	public double checkAllRanks(ArrayList<Card> boardCards, Card[] playerCards) {
 		createCompareList(boardCards, playerCards);
 		double value = 0.0;
 		value = checkRoyalFlush();
@@ -64,7 +64,7 @@ public class RankHands {
 	
 	
 	//Appends the 2 hand cards and boards card into one list
-	public void createCompareList(ArrayList<Card> boardCardsArray, ArrayList<Card> playerHandArray) { 
+	public void createCompareList(ArrayList<Card> boardCardsArray, Card[] playerHandArray) { 
 		
 		for (Card eachCard: boardCardArray) {
 			allCards.add(eachCard); 
@@ -73,6 +73,7 @@ public class RankHands {
 		for (Card eachCard: playerHandArray ) {
 			allCards.add(eachCard); 
 			allCardNumbers.add(eachCard.getValue());
+			this.playerHandArray.add(eachCard);
 
 		}
 		Collections.sort(allCardNumbers);		
