@@ -61,12 +61,16 @@ public class Deck{
 				
 				case(0):
 					suit = "spade";
+					break;
 				case(1):
 					suit = "heart";
+					break;
 				case(2):
 					suit = "club";
+					break;
 				case(3):
 					suit = "diamond";
+					break;
 				default:
 					suit = "";
 			}
