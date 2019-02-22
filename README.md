@@ -1,4 +1,4 @@
-1. The first version of the game is nnder the "master" branch of the repository
+1. The first version of the game is under the "master" branch of the repository
 2. click the green "Clone and download" button at the top right of the coe repository
 3. Download the repository as a ZIP folder
 4. Navigate to the download location of the ZIP folder
