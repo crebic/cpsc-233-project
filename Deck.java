@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Deck{
 
-	public ArrayList<Card> deck = new ArrayList<>(); //TODO should this be private???
+	private ArrayList<Card> deck = new ArrayList<>(); 
 	
 	public Deck(){
 		

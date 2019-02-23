@@ -12,7 +12,7 @@ private int numberOfPlayers = 0;
 public ArrayList<Card> tableCards = new ArrayList<Card>();
 private Player[] players;
 private Player playerWithHighestCallAmount;
-
+private ArrayList<Integer> notWinners = new ArrayList<Integer>();
 
 gameState()
 {
@@ -106,9 +106,9 @@ public static void main (String[] args){
 		}
 		betRound();
 		RankHands rank = new RankHands(); 
-		System.out.print("ayo " + getNotFoldedPlayers());
-		String winner = rank.ranking(tableCards, getNotFoldedPlayers());
-		System.out.println(winner);
+		int winner = rank.ranking(tableCards, getNotFoldedPlayers(), notWinners);
+		System.out.println("The winner is player " +  (winner+1));
+		//Winner is printed as the correct number
 		
 	}
 	
@@ -120,6 +120,9 @@ public static void main (String[] args){
 			if(!players[x].getDidFold())
 			{
 				playersNotFolded.add(players[x]);
+			} else {
+				playersNotFolded.add(players[x]);
+				notWinners.add(x);
 			}
 		}
 		return playersNotFolded;
