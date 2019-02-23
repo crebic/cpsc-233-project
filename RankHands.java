@@ -25,7 +25,6 @@ public class RankHands {
 		}
 		double highest = -1; 
 		int bestPlayer = -1;
-		System.out.print(playersValue);
 		for(int i = 0; i < playersValue.size(); i++) {
 			if(playersValue.get(i) > highest) {
 				highest = playersValue.get(i);
