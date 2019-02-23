@@ -109,8 +109,21 @@ public static void main (String[] args){
 		int winner = rank.ranking(tableCards, getNotFoldedPlayers(), notWinners);
 		System.out.println("The winner is player " +  (winner+1));
 		//Winner is printed as the correct number
+		players[winner].addChips(pot);
+		pot = 0;
 		
 	}
+	
+	
+	public int getPlayersWithChips(){
+		int PlayersStillPlaying = 0;
+		for (int x = 0; x < 5; x++){
+			if (players[x].getChips() > 0)
+				PlayersStillPlaying += 1;
+		}
+		return PlayersStillPlaying;
+	}
+	
 	
 	public ArrayList<Player> getNotFoldedPlayers()
 	{
@@ -166,7 +179,7 @@ public static void main (String[] args){
 				
 				if (callAmount > 0) {
 					System.out.println("$" + callAmount + " to call.");
-					System.out.println("1: Raise 	2: Fold		3: Call");	
+					System.out.println("1: Raise 	2: Fold		3: Call 	5: End Round");	
 				} else System.out.println("1: Raise 	2: Fold		3: Call		4: Check	5: End Round");
 				int choice = scanner.nextInt();
 
@@ -215,23 +228,37 @@ public static void main (String[] args){
 			deck.deal(players, tableCards);
 			
 			//put into flop ?????
-		//while (true){
-			preflop();
-			flop();
 			
+			
+		while (getPlayersWithChips() > 1){
+			
+			
+			preflop();
+			callAmount = 0;
+			flop();
+			callAmount = 0;
 			turn();
+			callAmount = 0;
 			river();
+			callAmount = 0;
+			getPlayersWithChips();
+			
+			
 			
 			//Tester above
-		//}
+		}
 	
 	}
+	
+	// CHANGES : reset call amounts in last while loop lines 236-
+	// getPlayersWithChips method 
+	// reset pot after its won in river method
+	// adding pot to the winning players stack line 112 in river method
 	
 	 
 
 	
 	
 
-
-
 }
+
