@@ -10,7 +10,7 @@ public class RankHands {
 	private ArrayList<Card> boardCardArray = new ArrayList<Card>();
 
 	
-	public String ranking(ArrayList<Card> boardCards, ArrayList<Player> players, int numberOfPlayers) {
+	public int ranking(ArrayList<Card> boardCards, ArrayList<Player> players, ArrayList<Integer> notWinners) {
 		playerHandArray.clear();
 		allCards.clear();
 		allCardNumbers.clear();
@@ -26,13 +26,13 @@ public class RankHands {
 		double highest = -1; 
 		int bestPlayer = -1;
 		for(int i = 0; i < playersValue.size(); i++) {
-			if(playersValue.get(i) > highest) {
+			if((playersValue.get(i) > highest) && !notWinners.contains(i)) {
 				highest = playersValue.get(i);
 				bestPlayer = i;
 			}
 		}
 		
-		return "Player " + (bestPlayer+1) + " wins";
+		return bestPlayer;
 		
 		
 	}
