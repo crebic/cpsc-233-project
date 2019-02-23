@@ -10,9 +10,36 @@ public class RankHands {
 	private ArrayList<Card> boardCardArray = new ArrayList<Card>();
 
 	
+	public String ranking(ArrayList<Card> boardCards, ArrayList<Player> players, int numberOfPlayers) {
+		playerHandArray.clear();
+		allCards.clear();
+		allCardNumbers.clear();
+		ArrayList<Double> playersValue = new ArrayList<Double>(); 
+		for(Player eachPlayer: players) {
+			playersValue.add(checkAllRanks(boardCards, eachPlayer.getPair())); 
+			playerHandArray.clear();
+			allCards.clear();
+			allCardNumbers.clear();
+
+
+		}
+		double highest = -1; 
+		int bestPlayer = -1;
+		System.out.print(playersValue);
+		for(int i = 0; i < playersValue.size(); i++) {
+			if(playersValue.get(i) > highest) {
+				highest = playersValue.get(i);
+				bestPlayer = i;
+			}
+		}
+		
+		return "Player " + (bestPlayer+1) + " wins";
+		
+		
+	}
 	
-	public double checkAllRanks(ArrayList<Card> boardCards, Card[] playerCards) {
-		createCompareList(boardCards, playerCards);
+	public double checkAllRanks(ArrayList<Card> boardCards, Card[] players) {
+		createCompareList(boardCards, players);
 		double value = 0.0;
 		value = checkRoyalFlush();
 		if(value > 0.01) {
@@ -341,6 +368,7 @@ public class RankHands {
 		}
 		if(playerCardOne == playerCardTwo) {
 			counter1 += 1;
+			counter2 -=1;
 		}
 				
 		if(counter1 == 3 && counter2 == 3) {
@@ -732,12 +760,10 @@ public class RankHands {
 			}
 				
 		}
-		System.out.println(counter2);
 		if(counter1 == 2) {
 			return 2.0 + (playerCardOne/ 100.0); 
 		}
 		else if(counter2 == 2) {
-			System.out.println(counter1);
 			return 2.0 + (playerCardTwo / 100.0);
 		}
 		else return 0;
