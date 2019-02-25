@@ -1,4 +1,8 @@
-1. Pick which version from the branches of the repository
+Project Repository Link:
+https://github.com/crebic/private-cpsc-233-project-private1212123-/tree/version-1
+
+
+1.Pick which version from the branches of the repository
 2. Click the green "Clone and download" button at the top right of the coe repository
 3. Download the repository as a ZIP folder
 4. Navigate to the download location of the ZIP folder
