@@ -242,6 +242,8 @@ public static void main (String[] args){
 			river();
 			callAmount = 0;
 			getPlayersWithChips();
+			deck.resetDeck();
+			deck.deal(players, tableCards);
 			
 			
 			
