@@ -232,7 +232,9 @@ public static void main (String[] args){
 			
 		while (getPlayersWithChips() > 1){
 			
-			
+			for (int i=0;i<numberOfPlayers;i++){
+				players[i].changeFoldedState(false);
+			}
 			preflop();
 			callAmount = 0;
 			flop();
