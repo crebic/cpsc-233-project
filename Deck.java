@@ -75,7 +75,7 @@ public class Deck{
 					suit = "";
 			}
 			
-			for (int j = 1; j <= 13; j++){
+			for (int j = 2; j <= 14; j++){
 				deck.add(new Card(j, suit));
 			}
 		}
