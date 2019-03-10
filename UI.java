@@ -1,29 +1,24 @@
 import java.util.ArrayList;
-
+import javax.swing.JOptionPane;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
 import javafx.scene.layout.HBox;
-
 import javafx.scene.layout.StackPane;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
-
 import javafx.scene.layout.GridPane;
-
 import javafx.scene.layout.BorderPane;
-
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.TextArea;
-
 import javafx.scene.layout.VBox;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-
+import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.*;
 import javafx.scene.shape.*;
@@ -39,21 +34,73 @@ public class UI extends Application {
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private Player playerWithHighestCallAmount;
 	private ArrayList<Integer> notWinners = new ArrayList<Integer>();
+	VBox root2 = new VBox();
+	HBox tableCardsBox = new HBox();
+	HBox buttonOptions = new HBox();
+	VBox playerStats = new VBox();
+	HBox playerCardsBox = new HBox();
+	int round = 0;
 
 	public static void main(String[] args) {
+		
 		launch(args);
 	}
 
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws Exception{
 		primaryStage.setTitle("Texas Hold'em");
 
 		// root and scene are for main menu, root2 and scence2 are for the game state
 		Pane root = new Pane();
-		Pane root2 = new Pane();
 		Scene scene = new Scene(root, 800, 600);
 		Scene scene2 = new Scene(root2, 800, 600);
+
+
+		root2.setSpacing(30);
+		root2.setAlignment(Pos.CENTER);
+		tableCardsBox.setAlignment(Pos.CENTER);
+
 		root.setStyle("-fx-background-color: #228B22;");
 		root2.setStyle("-fx-background-color: #228B22;");
+
+		//setting up button options for betting
+		Button raise = new Button();
+		raise.setText("Raise");
+		Button call = new Button();
+		call.setText("Call");
+		Button check = new Button();
+		check.setText("Check");
+		Button fold = new Button();
+		fold.setText("Fold");
+
+		buttonOptions.getChildren().addAll(raise,call,check,fold);
+
+		buttonOptions.setSpacing(20);
+		buttonOptions.setAlignment(Pos.CENTER);
+
+		//raise button just acting as a next round button
+		raise.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				//not doing anything with raise amount as of now
+				String raiseAmount = JOptionPane.showInputDialog("How much would you like to raise?");
+				if(round == 0)
+				{
+					showTableCards(3);
+					round++;
+				}
+				else if(round == 1)
+				{
+					showTableCards(4);
+					round++;
+				}
+				else if(round == 2)
+				{
+					showTableCards(5);
+					round++;
+				}				
+			}
+		});
+		//
 
 		Button btn1 = new Button();
 		btn1.setText("Start");
@@ -79,13 +126,13 @@ public class UI extends Application {
 		gameName.setLayoutX(175);
 		gameName.setLayoutY(100);
 		root.getChildren().add(gameName);
+
 		int amount = 0;
 		Label pot = new Label("Current Pot: " + this.pot);
 		pot.setTextFill(Color.WHITE);
 		pot.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-		pot.setLayoutX(100);
-		pot.setLayoutY(100);
 		root2.getChildren().add(pot);
+
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
@@ -96,22 +143,131 @@ public class UI extends Application {
 			// Method deposits the specified amount when the "Deposit" button is clicked
 			public void handle(ActionEvent event) {
 				// deposit EventHandler
-				primaryStage.setScene(scene2);
-				primaryStage.show();
+
 				int chips = Integer.parseInt(pickStartChipsField.getText());
 				int players = Integer.parseInt(pickPlayerAmount.getText());
-				intialize(chips, players);
+
+				initialize(chips,players);
+				
+				root2.getChildren().add(tableCardsBox);
+				
+				root2.getChildren().add(buttonOptions);
+
+				//setting up player stats
+				Label playerStack = new Label("Your stack: " + chips);
+				playerStack.setTextFill(Color.WHITE);
+				playerStack.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+				playerStats.getChildren().add(playerStack);
+				showPlayerCards();
+				//
+				root2.getChildren().add(playerStats);
+				primaryStage.setScene(scene2);
+				primaryStage.show();
+				root.getChildren().clear();
 
 			}
 		});
 	}
 
-	public void intialize(int startingChips, int numberOfPlayers) {
+	//I know this is basically copy and pasted, sue me im tired
+	void showPlayerCards()
+	{
+		Card[] playerCards = players.get(0).getPair();
+
+		for(int x = 0; x < 2; x++)
+		{
+			//load players card images
+			String card = "";
+			int cardValue = playerCards[x].getValue();
+
+			//replace number with J/Q/K
+			if(cardValue == 11)
+			{
+				card = "J" + playerCards[x].getSuit().substring(0,1).toUpperCase();
+			}
+			else if(cardValue == 12)
+			{
+				card = "Q" + playerCards[x].getSuit().substring(0,1).toUpperCase();
+			}
+			else if(cardValue == 13)
+			{
+				card = "K" + playerCards[x].getSuit().substring(0,1).toUpperCase();
+			}
+			else if(cardValue == 14)
+			{
+				card = "A" + playerCards[x].getSuit().substring(0,1).toUpperCase();
+			}
+			else
+			{
+				card = playerCards[x].getValue() + playerCards[x].getSuit().substring(0,1).toUpperCase();
+			}
+			//add images
+			Image image = new Image(card + ".png");
+			ImageView imgView = new ImageView();
+			imgView.setImage(image);
+	
+			imgView.setPreserveRatio(true);
+			imgView.setFitHeight(150);
+			imgView.setFitWidth(150);
+
+			playerCardsBox.getChildren().add(imgView);
+		}
+		playerStats.getChildren().add(playerCardsBox);
+	}
+
+	void showTableCards(int amountOfCards)
+	{
+		tableCardsBox.getChildren().clear();
+		for(int x = 0; x < amountOfCards; x++)
+		{
+			//load flop images
+			String card = "";
+			int cardValue = tableCards.get(x).getValue();
+
+			//replace number with J/Q/K
+			if(cardValue == 11)
+			{
+				card = "J" + tableCards.get(x).getSuit().substring(0,1).toUpperCase();
+			}
+			else if(cardValue == 12)
+			{
+				card = "Q" + tableCards.get(x).getSuit().substring(0,1).toUpperCase();
+			}
+			else if(cardValue == 13)
+			{
+				card = "K" + tableCards.get(x).getSuit().substring(0,1).toUpperCase();
+			}
+			else if(cardValue == 14)
+			{
+				card = "A" + tableCards.get(x).getSuit().substring(0,1).toUpperCase();
+			}
+			else
+			{
+				card = tableCards.get(x).getValue() + tableCards.get(x).getSuit().substring(0,1).toUpperCase();
+			}
+			//add images
+			Image image = new Image(card + ".png");
+			ImageView imgView = new ImageView();
+			imgView.setImage(image);
+	
+			imgView.setPreserveRatio(true);
+			imgView.setFitHeight(200);
+			imgView.setFitWidth(200);
+
+			tableCardsBox.getChildren().add(imgView);
+		}
+	}
+	public void initialize(int startingChips, int numberOfPlayers) {
 			for(int x = 0; x < numberOfPlayers; x++) {
 				players.add(new Player(startingChips, x+1));
 			}
 			Deck deck = new Deck();
-			deck.deal(players, tableCards);
+			Player[] playersArray = new Player[players.size()];
+			for(int x = 0; x < players.size(); x++)
+			{
+				playersArray[x] = players.get(x);
+			}
+			deck.deal(playersArray, tableCards);
 
 			getNotFoldedPlayers();
 			
