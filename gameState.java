@@ -13,6 +13,10 @@ public ArrayList<Card> tableCards = new ArrayList<Card>();
 private Player[] players;
 private Player playerWithHighestCallAmount;
 private ArrayList<Integer> notWinners = new ArrayList<Integer>();
+	 
+	 //**Comments begining with two stars signify proposed patching in of AI
+	 
+	 //**private AI robot;
 
 gameState()
 {
@@ -75,10 +79,11 @@ public static void main (String[] args){
 	public void populateTable(int startingChips)
 	{
 			//add four bots for now, human player is first seat
-			for(int x = 0; x < 5; x++)
+			for(int x = 0; x < 5; x++)//**this for loop would be changed so x starts at 1
 			{
 				players[x] = new Player(startingChips, x+1);
 			}
+		//** robot = new AI(players[0]);
 	}
 	
 	public void flop(){
@@ -161,12 +166,20 @@ public static void main (String[] args){
 			if(currentPlayer.getDidFold())
 			{
 				playerTurn++;
-				continue;
+				continue;//** not AI related but this continue statement is trippin me out
 			}
 			
 			if(currentPlayer.getDidFold() == false)
 			{
 				int seatNumber = currentPlayer.getSeatNumber();
+				
+				/** if (currentPlayer == robot.player){
+				**	pot += robot.bet(callAmount);
+				**	continue;
+				**}
+				**
+				**
+				**/
 				
 				System.out.println("\nPlayer " + seatNumber + "'s turn.");
 				//at the end of this main method increment player turn number
@@ -213,6 +226,8 @@ public static void main (String[] args){
 	
 	public void preflop()
 	{
+		//**robot.setTableCards(tableCards);
+		//** robot.setStrat();
 		betRound();
 	}
 	public void initialize(){
@@ -225,7 +240,7 @@ public static void main (String[] args){
 			populateTable(startingChips);
 			System.out.println("\nYOU ARE PLAYER 1");
 			Deck deck = new Deck();
-			deck.deal(players, tableCards);
+			deck.deal(players, tableCards);//**need to alter deal method in deck so it deals to robot? (probs not)
 			
 			//put into flop ?????
 			
