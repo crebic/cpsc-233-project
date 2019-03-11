@@ -5,4 +5,4 @@
 5. Right click on the folder and "Extract All" (extract the folder to whatever location of your choosing, usually into the same folder as the ZIP)
 6. Open Command Prompt to and change the directory to the folder you extracted
 7. Compile all the files in the folder
-8. Run the App class
+8. Run the UI class
