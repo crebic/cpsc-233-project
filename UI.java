@@ -24,7 +24,10 @@ import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 import javafx.scene.text.*;
 
+//TODO gamestate methods added, event handlers that tie all buttons to gamestate methods, adapt bet to GUI
+
 public class UI extends Application {
+	private Deck deck = new Deck();//
 	private int pot = 0;
 	private int currentPlayer;
 	private int callAmount;
@@ -85,18 +88,18 @@ public class UI extends Application {
 				String raiseAmount = JOptionPane.showInputDialog("How much would you like to raise?");
 				if(round == 0)
 				{
-					showTableCards(3);
-					round++;
+					//round++;
+					betRound();
 				}
 				else if(round == 1)
 				{
-					showTableCards(4);
-					round++;
+					//round++;
+					betRound();
 				}
 				else if(round == 2)
 				{
-					showTableCards(5);
-					round++;
+					//round++;
+					betRound();
 				}				
 			}
 		});
@@ -167,6 +170,38 @@ public class UI extends Application {
 
 			}
 		});
+		
+		//new shit below
+		while (getPlayersWithChips() > 1){
+			deck.resetDeck();
+			deck.deal();
+			betRound();
+			callAmount = 0;
+			betRound();
+			showTableCards(3);
+
+			callAmount = 0;
+			betRound();
+			showTableCards(4);
+
+			callAmount = 0;
+			//River:
+			betRound();
+			showTableCards(5);
+
+			RankHands rank = new RankHands();
+			notWinners = getNotFoldedPlayers();
+			int winner = rank.ranking(tableCards, getNotFoldedPlayers(), notWinners);
+			players.get(winner).addChips(pot);
+			pot = 0;
+			callAmount = 0;
+			notWinners.clear();
+			//getPlayersWithChips();
+			
+			
+			
+			//Tester above
+		}
 	}
 
 	//I know this is basically copy and pasted, sue me im tired
@@ -261,19 +296,19 @@ public class UI extends Application {
 			for(int x = 0; x < numberOfPlayers; x++) {
 				players.add(new Player(startingChips, x+1));
 			}
-			Deck deck = new Deck();
+			//Deck deck = new Deck();
 			Player[] playersArray = new Player[players.size()];
 			for(int x = 0; x < players.size(); x++)
 			{
 				playersArray[x] = players.get(x);
 			}
-			deck.deal(playersArray, tableCards);
+			//deck.deal(playersArray, tableCards);
 
-			getNotFoldedPlayers();
+			//getNotFoldedPlayers();
 			
-			RankHands rank = new RankHands(); 
-			int winner = rank.ranking(tableCards, getNotFoldedPlayers(), notWinners);
-			System.out.println("The winner is player " +  (winner+1));
+			//RankHands rank = new RankHands(); 
+			//int winner = rank.ranking(tableCards, getNotFoldedPlayers(), notWinners);
+			//System.out.println("The winner is player " +  (winner+1));
 			
 
 	}
@@ -293,4 +328,90 @@ public class UI extends Application {
 		}
 		return playersNotFolded;
 	}
+
+	
+	//start of copied gamestate methods
+	
+	public void river(){
+		betRound();
+		RankHands rank = new RankHands(); 
+		int winner = rank.ranking(tableCards, getNotFoldedPlayers(), notWinners);
+		//System.out.println("The winner is player " +  (winner+1));
+		//Winner is printed as the correct number
+		players.get(winner).addChips(pot);
+		pot = 0;
+		
+	}
+	
+	public void betRound(){
+		boolean foo = false;
+		while(!foo){
+			
+			Scanner scanner = new Scanner(System.in);
+			int currentTurn = playerTurn % numberOfPlayers;
+			Player currentPlayer = players[currentTurn];
+			int playersLeft = 5;
+			
+			for(int x = 0; x < 5; x++)
+			{
+				if(players[x].getDidFold())
+					playersLeft--;
+			}
+			if(playersLeft == 1)
+				foo = true;
+		
+			if(currentPlayer.getDidFold())
+			{
+				playerTurn++;
+				continue;
+			}
+			
+			if(currentPlayer.getDidFold() == false)
+			{
+				int seatNumber = currentPlayer.getSeatNumber();
+				
+				System.out.println("\nPlayer " + seatNumber + "'s turn.");
+				//at the end of this main method increment player turn number
+				
+				System.out.println("Your hand: ");
+				System.out.println(currentPlayer.getPairAsString());
+				
+				System.out.println("What's your next move?");
+				
+				
+				if (callAmount > 0) {
+					System.out.println("$" + callAmount + " to call.");
+					System.out.println("1: Raise 	2: Fold		3: Call 	5: End Round");	
+				} else System.out.println("1: Raise 	2: Fold		3: Call		4: Check	5: End Round");
+				int choice = scanner.nextInt();
+
+				switch(choice){
+				case 1:
+					raise(currentPlayer);
+					break;
+				case 2:
+					fold(currentPlayer);
+					break;
+				case 3:
+					call(currentPlayer);
+					break;
+				case 5:
+					return;
+				
+				}
+				
+				playerTurn++;
+				//Tester below
+				System.out.println(currentPlayer.getDidFold());
+				System.out.println("\nCurrent players chips: " + currentPlayer.getChips());
+				System.out.println("Pot amount: " + pot);
+				System.out.println("Turn/Seat number: " + playerTurn);
+				System.out.println("Call amount: " + callAmount);
+				//Tester above
+			}
+		
+		}
+	}
+	
+	
 }
