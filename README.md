@@ -1,5 +1,5 @@
 Project Repository Link:
-https://github.com/crebic/private-cpsc-233-project-private1212123-/tree/version-1
+https://github.com/crebic/private-cpsc-233-project-private1212123-/tree/version-2
 
 
 1. Pick which version from the branches of the repository
