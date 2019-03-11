@@ -40,6 +40,8 @@ public class UI extends Application {
 	VBox playerStats = new VBox();
 	HBox playerCardsBox = new HBox();
 	int round = 0;
+	int playerChips = 0;
+	Label playerStack = new Label("Your stack: " + playerChips);
 
 	public static void main(String[] args) {
 		
@@ -71,11 +73,16 @@ public class UI extends Application {
 		check.setText("Check");
 		Button fold = new Button();
 		fold.setText("Fold");
+		Button endGame = new Button();
+		endGame.setText("End Game");
 
-		buttonOptions.getChildren().addAll(raise,call,check,fold);
+		buttonOptions.getChildren().addAll(raise,call,check,fold,endGame);
 
 		buttonOptions.setSpacing(20);
 		buttonOptions.setAlignment(Pos.CENTER);
+
+		Label potLabel = new Label("Current Pot: " + pot);
+
 
 		//raise button just acting as a next round button
 		raise.setOnAction(new EventHandler<ActionEvent>() {
@@ -83,6 +90,14 @@ public class UI extends Application {
 			public void handle(ActionEvent event) {
 				//not doing anything with raise amount as of now
 				String raiseAmount = JOptionPane.showInputDialog("How much would you like to raise?");
+				if(playerChips < Integer.parseInt(raiseAmount))
+					return;
+				pot += Integer.parseInt(raiseAmount)*2;
+				potLabel.setText("Current Pot: " + pot);
+
+				//deduct stack
+				playerChips -= Integer.parseInt(raiseAmount);
+				playerStack.setText("Your stack: " + playerChips);
 				if(round == 0)
 				{
 					showTableCards(3);
@@ -100,7 +115,41 @@ public class UI extends Application {
 				}				
 			}
 		});
-		//
+		call.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				//the following lines need to be changed
+				tableCardsBox.getChildren().clear();
+				round = 0;	
+				playerChips += pot;
+				playerStack.setText("Your stack: " + playerChips);
+				pot = 0;
+				potLabel.setText("Current Pot:" + pot);			
+			}
+		});
+
+		fold.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				tableCardsBox.getChildren().clear();
+				round = 0;
+								pot = 0;
+				potLabel.setText("Current Pot:" + pot);		
+			}
+		});
+		check.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				round++;
+				showTableCards(round + 2);		
+		}
+		});
+		endGame.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				System.exit(0);		
+		}
+		});		//
 
 		Button btn1 = new Button();
 		btn1.setText("Start");
@@ -128,10 +177,9 @@ public class UI extends Application {
 		root.getChildren().add(gameName);
 
 		int amount = 0;
-		Label pot = new Label("Current Pot: " + this.pot);
-		pot.setTextFill(Color.WHITE);
-		pot.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-		root2.getChildren().add(pot);
+		potLabel.setTextFill(Color.WHITE);
+		potLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+		root2.getChildren().add(potLabel);
 
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -144,17 +192,19 @@ public class UI extends Application {
 			public void handle(ActionEvent event) {
 				// deposit EventHandler
 
-				int chips = Integer.parseInt(pickStartChipsField.getText());
+				//leave player chips as instance variable for only demo
+				playerChips = Integer.parseInt(pickStartChipsField.getText());
 				int players = Integer.parseInt(pickPlayerAmount.getText());
 
-				initialize(chips,players);
+				playerStack.setText("Your stack: " + playerChips);
+
+				initialize(playerChips,players);
 				
 				root2.getChildren().add(tableCardsBox);
 				
 				root2.getChildren().add(buttonOptions);
 
 				//setting up player stats
-				Label playerStack = new Label("Your stack: " + chips);
 				playerStack.setTextFill(Color.WHITE);
 				playerStack.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 				playerStats.getChildren().add(playerStack);
@@ -268,7 +318,6 @@ public class UI extends Application {
 				playersArray[x] = players.get(x);
 			}
 			deck.deal(playersArray, tableCards);
-
 			getNotFoldedPlayers();
 			
 			RankHands rank = new RankHands(); 
