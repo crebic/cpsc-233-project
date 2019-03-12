@@ -1,4 +1,4 @@
-public class Card implements comparable{
+public class Card implements Comparable{
 
 
 	private int value;
@@ -18,11 +18,11 @@ public class Card implements comparable{
 	}
 	
 	public int compareTo(Object o){
-		if (o instanceOf Card){
+		if (o instanceof Card){
 			Card c = (Card) o;
-		} else return 0;//If given an improper input
-		
-		return value - c.getValue();
+			return value - c.getValue();
+		} 
+		return 0;//If given an improper input
 	}
 
 }
