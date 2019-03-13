@@ -65,6 +65,7 @@ public class UI extends Application {
 		root2.setStyle("-fx-background-color: #228B22;");
 
 		//setting up button options for betting
+		showTableCards(0);
 		Button raise = new Button();
 		raise.setText("Raise");
 		Button call = new Button();
@@ -100,17 +101,17 @@ public class UI extends Application {
 				playerStack.setText("Your stack: " + playerChips);
 				if(round == 0)
 				{
-					showTableCards(3);
+					showTableCards(1);
 					round++;
 				}
 				else if(round == 1)
 				{
-					showTableCards(4);
+					showTableCards(2);
 					round++;
 				}
 				else if(round == 2)
 				{
-					showTableCards(5);
+					showTableCards(3);
 					round++;
 				}				
 			}
@@ -124,7 +125,7 @@ public class UI extends Application {
 				playerChips += pot;
 				playerStack.setText("Your stack: " + playerChips);
 				pot = 0;
-				potLabel.setText("Current Pot:" + pot);			
+				potLabel.setText("Current Pot:" + pot);		
 			}
 		});
 
@@ -141,7 +142,7 @@ public class UI extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				round++;
-				showTableCards(round + 2);		
+				showTableCards(round);		
 		}
 		});
 		endGame.setOnAction(new EventHandler<ActionEvent>() {
@@ -152,20 +153,34 @@ public class UI extends Application {
 		});		//
 
 		Button btn1 = new Button();
+
 		btn1.setText("Start");
 		btn1.setLayoutX(380);
 		btn1.setLayoutY(500);
 		root.getChildren().add(btn1);
 
-		TextField pickStartChipsField = new TextField("Enter Chip Amount");
+		
+		TextField pickStartChipsField = new TextField("");
+		Text chipAmountLabel = new Text("Enter Chip Amount:");
+		chipAmountLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+		chipAmountLabel.setFill(Color.WHITE);
+		chipAmountLabel.setLayoutX(140);
+		chipAmountLabel.setLayoutY(220);
+		root.getChildren().add(chipAmountLabel);
 		pickStartChipsField.setPrefWidth(200);
-		pickStartChipsField.setLayoutX(200);
+		pickStartChipsField.setLayoutX(300);
 		pickStartChipsField.setLayoutY(200);
 		root.getChildren().add(pickStartChipsField);
 
-		TextField pickPlayerAmount = new TextField("Enter Number of Players");
+		TextField pickPlayerAmount = new TextField("");
+		Text playerAmountLabel = new Text("Number of Players:");
+		playerAmountLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+		playerAmountLabel.setFill(Color.WHITE);
+		playerAmountLabel.setLayoutX(140);
+		playerAmountLabel.setLayoutY(265);
+		root.getChildren().add(playerAmountLabel);
 		pickPlayerAmount.setPrefWidth(150);
-		pickPlayerAmount.setLayoutX(200);
+		pickPlayerAmount.setLayoutX(300);
 		pickPlayerAmount.setLayoutY(250);
 		root.getChildren().add(pickPlayerAmount);
 
@@ -195,7 +210,7 @@ public class UI extends Application {
 				//leave player chips as instance variable for only demo
 				playerChips = Integer.parseInt(pickStartChipsField.getText());
 				int players = Integer.parseInt(pickPlayerAmount.getText());
-
+				
 				playerStack.setText("Your stack: " + playerChips);
 
 				initialize(playerChips,players);
@@ -203,6 +218,7 @@ public class UI extends Application {
 				root2.getChildren().add(tableCardsBox);
 				
 				root2.getChildren().add(buttonOptions);
+				showTableCards(0);
 
 				//setting up player stats
 				playerStack.setTextFill(Color.WHITE);
@@ -264,7 +280,74 @@ public class UI extends Application {
 		}
 		playerStats.getChildren().add(playerCardsBox);
 	}
+	
+	void showTableCards(int roundNumber) {
+		tableCardsBox.getChildren().clear();
+		if(roundNumber == 0) {
+			for (int i = 0; i < 5; i++) {
+				Image image2 = new Image("blue_back.png");
+				ImageView imgView2 = new ImageView();
+				imgView2.setImage(image2);
+				imgView2.setPreserveRatio(true);
+				imgView2.setFitHeight(200);
+				imgView2.setFitWidth(200);
+				tableCardsBox.getChildren().add(imgView2);
+					
+				}
+			return;
+		}
+		for(int x = 0; x < roundNumber+2; x++) {
+			String card = "";
+			int cardValue = tableCards.get(x).getValue();
 
+			//replace number with J/Q/K
+			if(cardValue == 11)
+			{
+				card = "J" + tableCards.get(x).getSuit().substring(0,1).toUpperCase();
+			}
+			else if(cardValue == 12)
+			{
+				card = "Q" + tableCards.get(x).getSuit().substring(0,1).toUpperCase();
+			}
+			else if(cardValue == 13)
+			{
+				card = "K" + tableCards.get(x).getSuit().substring(0,1).toUpperCase();
+			}
+			else if(cardValue == 14)
+			{
+				card = "A" + tableCards.get(x).getSuit().substring(0,1).toUpperCase();
+			}
+			else
+			{
+				card = tableCards.get(x).getValue() + tableCards.get(x).getSuit().substring(0,1).toUpperCase();
+			}
+			//add images
+			Image image = new Image(card + ".png");
+			ImageView imgView = new ImageView();
+			imgView.setImage(image);
+	
+			imgView.setPreserveRatio(true);
+			imgView.setFitHeight(200);
+			imgView.setFitWidth(200);
+
+			tableCardsBox.getChildren().add(imgView);
+		}
+		for (int i = 0; i < 5-(roundNumber+2); i++) {
+			Image image2 = new Image("blue_back.png");
+			ImageView imgView2 = new ImageView();
+			imgView2.setImage(image2);
+			imgView2.setPreserveRatio(true);
+			imgView2.setFitHeight(200);
+			imgView2.setFitWidth(200);
+			tableCardsBox.getChildren().add(imgView2);
+				
+			}
+
+	}
+
+	
+
+	/*
 	void showTableCards(int amountOfCards)
 	{
 		tableCardsBox.getChildren().clear();
@@ -306,7 +389,19 @@ public class UI extends Application {
 
 			tableCardsBox.getChildren().add(imgView);
 		}
-	}
+		for (int x = 0; x < 5-amountOfCards; x++) {
+			Image image2 = new Image("blue_back.png");
+			ImageView imgView2 = new ImageView();
+			imgView2.setImage(image2);
+
+			imgView2.setPreserveRatio(true);
+			imgView2.setFitHeight(200);
+			imgView2.setFitWidth(200);
+
+			tableCardsBox.getChildren().add(imgView2);
+		}
+		}
+	*/
 	public void initialize(int startingChips, int numberOfPlayers) {
 			for(int x = 0; x < numberOfPlayers; x++) {
 				players.add(new Player(startingChips, x+1));
@@ -342,4 +437,5 @@ public class UI extends Application {
 		}
 		return playersNotFolded;
 	}
+	
 }
