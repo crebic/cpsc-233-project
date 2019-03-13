@@ -18,10 +18,15 @@ private ArrayList<Integer> notWinners = new ArrayList<Integer>();
 	 
 	 //**private AI robot;
 
+
+//* default constructor
 gameState()
 {
 }
 
+
+//*constructor @param newpot the int containing the value for the pot size
+//* @ param newCurrentPlayer the int value for determining which players turn it is
 
 gameState(int newPot, int newCurrentPlayer){
 	this.pot = newPot;
@@ -29,6 +34,9 @@ gameState(int newPot, int newCurrentPlayer){
 	
 	}
 
+
+//* getter for potsize
+//* @return returns the int value of the pot size
 public int getPot(){
 	return pot;
 	}
@@ -43,6 +51,10 @@ public int getCurrentPlayer(){
 	return new currentPlayer;
 	}
 */
+
+
+//* method for setting raise amount for a specific player "currentPlayer" of type Player, raise is added to call amount for players next in que
+//* @param currentPlayer of type player that holds all the information as an instance of player (eq. chips)
 	
 public void raise(Player currentPlayer){
 	System.out.println("how much would you like to bet?");
@@ -58,10 +70,16 @@ public void raise(Player currentPlayer){
 	}
 }
 
+
+//* method for folding out players
+//*@param BOB of type Player that holds the information of a instance of Player
 public void fold(Player BOB){
 	BOB.changeFoldedState(true);
 }
 
+
+//* method for matching the highest previous raise (calling) 
+//* @param takes in an instance of Player temp named BOB
 public void call(Player BOB){
 	if (callAmount <= BOB.getChips()){
 		BOB.addChips(-callAmount);
@@ -70,12 +88,15 @@ public void call(Player BOB){
 	
 }
 	
-
+//* REMOVE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 /*	
 public static void main (String[] args){
 	gameState gs = new gameState();
 	*/
 	
+	
+//* method that iterates through the number of players and allots each of them the same starting chips 
+//* @param 
 	public void populateTable(int startingChips)
 	{
 			//add four bots for now, human player is first seat

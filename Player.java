@@ -1,6 +1,8 @@
 
 
 class Player{
+	
+	//* instance variables 
     private int chips;
     private int seatNumber;
     private boolean isFolded;
@@ -8,17 +10,25 @@ class Player{
     private boolean isPlaying = true;
 	
 	//for testing purposes
+	//* default constructor 
 	Player(){
 		
 	}
+	
+	//* constructor 
+	//* @param startingChips of type int which is the players starting amount
+	//* @param  _seatNumber of type int that shows where the players turn is in order with respect to the other players
 	Player(int startingChips, int _seatNumber)
 	{
 		chips = startingChips;
 		seatNumber = _seatNumber;
 	}
-	//
 	
 	
+	//* constructor 
+	//* @param startingChips of type int which is the players starting amount
+	//* @param  _seatNumber of type int that shows where the players turn is in order with respect to the other players
+	//* @param  card1 and card2 of type Card, basically deals two cards to a player 
     Player(int startingChips, int _seatNumber, Card card1, Card card2)
     {
         //set initial player state
@@ -28,6 +38,9 @@ class Player{
         cardPair[1] = card2;
         isFolded = false;
     }
+    
+    //* constructor 
+    //* 
     Player(Player player)
     {
         chips = player.getChips();
