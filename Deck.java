@@ -4,7 +4,10 @@ import java.util.*;
 public class Deck{
 
 	private ArrayList<Card> deck = new ArrayList<>(); 
-	
+    
+    /**
+     * Constructor
+     */
 	public Deck(){
 		
 		//constructor
@@ -12,8 +15,7 @@ public class Deck{
 		
 		for (int i = 0; i < 4; i++){
 			
-			switch(i){
-				
+			switch(i){	
 				case(0):
 					suit = "spade";
 					break;
@@ -37,6 +39,10 @@ public class Deck{
 		}
 	}
 
+    /**
+     * @param lst array of players
+     * @param tableCards ArrayList of cards on table
+     */
 	public void deal(Player[] lst, ArrayList<Card> tableCards){
 		Random rand = new Random();
 		for (Player p: lst){
@@ -47,9 +53,10 @@ public class Deck{
 		}
 	}
 
+    /**
+     * resets deck to original form after dealing hands
+     */
 	public void resetDeck(){
-		
-		//resets the deck to it's original form after dealing hands
 		
 		deck.clear();
 		
@@ -58,7 +65,6 @@ public class Deck{
 		for (int i = 0; i < 4; i++){
 			
 			switch(i){
-				
 				case(0):
 					suit = "spade";
 					break;
@@ -79,12 +85,5 @@ public class Deck{
 				deck.add(new Card(j, suit));
 			}
 		}
-	}
-
-
-
-
-
-
-
+    }
 }

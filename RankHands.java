@@ -1,6 +1,5 @@
 import java.util.*;
 
-
 public class RankHands {
 	
 	//Players hand and board cards 
@@ -9,7 +8,12 @@ public class RankHands {
 	private ArrayList<Card> playerHandArray = new ArrayList<Card>();
 	private ArrayList<Card> boardCardArray = new ArrayList<Card>();
 
-	
+    /**
+     * @param boardCards array of cards on board
+     * @param players array of players in game
+     * @param notWinners number of player(s) that can't win (their identification number)
+     * @return number of player with best hand (their identification number)
+     */
 	public int ranking(ArrayList<Card> boardCards, ArrayList<Player> players, ArrayList<Integer> notWinners) {
 		playerHandArray.clear();
 		allCards.clear();
@@ -20,9 +24,8 @@ public class RankHands {
 			playerHandArray.clear();
 			allCards.clear();
 			allCardNumbers.clear();
-
-
-		}
+        }
+        
 		double highest = -1; 
 		int bestPlayer = -1;
 		for(int i = 0; i < playersValue.size(); i++) {
@@ -31,12 +34,16 @@ public class RankHands {
 				bestPlayer = i;
 			}
 		}
-		
-		return bestPlayer;
-		
-		
+		return bestPlayer;	
 	}
-	
+    
+    /**
+     * @param boardCards array of cards on board
+     * @param players array of player's cards
+     * 
+     * cycles through all possible hands
+     * @return value of player's hand
+     */
 	private double checkAllRanks(ArrayList<Card> boardCards, Card[] players) {
 		createCompareList(boardCards, players);
 		double value = 0.0;
@@ -83,14 +90,16 @@ public class RankHands {
 		}
 		if(value > 0.01) {
 			return value;
-		} else return checkHighCard();
-
+        } else 
+            return checkHighCard();
 	}
-	
-	
-	
-	
-	//Appends the 2 hand cards and boards card into one list
+    
+    /**
+     * @param boardCardArray array of cards on the board
+     * @param playerCards array player's cards
+     * 
+     * appends player's cards and cards on board into one list
+     */
 	private void createCompareList(ArrayList<Card> boardCardArray, Card[] playerCards) { 
 		this.boardCardArray = boardCardArray;
 		for (Card eachCard: boardCardArray) {
@@ -101,13 +110,14 @@ public class RankHands {
 			allCards.add(eachCard); 
 			allCardNumbers.add(eachCard.getValue());
 			playerHandArray.add(eachCard);
-
 		}
-		Collections.sort(allCardNumbers);		
-		
+		Collections.sort(allCardNumbers);			
 	}
 		
-	
+	/**
+     * @return value of "royal flush" hand and highest card
+     * @return 0 if hand does not contain "royal flush"
+     */
 	private double checkRoyalFlush() {
 
 		boolean ace = false;
@@ -177,9 +187,10 @@ public class RankHands {
 		}
 	}
 		
-		
-
-	
+	/**
+     * @return value of "straight flush" hand and highest card
+     * @return 0 if hand does not contain "straight flush"
+     */
 	private double checkStraightFlush() {
 		//index 0 is spades, index 1 is hearts, index 2 is diamonds, index 3 is clubs
 		//the "value" of the cards in the count ArrayList is the number of each suit rather than the value of the card
@@ -233,7 +244,6 @@ public class RankHands {
 		Collections.sort(sameSuitCard);
 
 		//checks if there is a straight
-		
 		int straightCount = 0;
 		if(sameSuitCard.size() < 1) { 
 			return 0.0;
@@ -241,7 +251,6 @@ public class RankHands {
 		int currentCard = sameSuitCard.get(0)-1;
 		double highest = 0;
 		for(int eachCard:sameSuitCard) {
-
 			if(eachCard == currentCard+1) {
 				straightCount += 1;
 				currentCard = eachCard;
@@ -255,7 +264,6 @@ public class RankHands {
 				break;
 			}
 		}
-	
 
 		//returns 9.xx if there is a straight flush and 0.0 if there isn't
 		if (straightCount == 5) {
@@ -264,13 +272,15 @@ public class RankHands {
 		else
 		    return 0.0;
 	}
-	
+    
+    /**
+     * @return value of "four of a kind" hand and highest card
+     * @return 0 if hand does not contain "four of a kind"
+     */
 	private double checkFourOfAKind() {
 
 		double playerCardOne = playerHandArray.get(0).getValue();
 		double playerCardTwo = playerHandArray.get(1).getValue();
-		
-
 		
 		//Check if board has four of a kind
 		ArrayList<Integer> testBoard = new ArrayList<Integer>();
@@ -312,7 +322,6 @@ public class RankHands {
 			if(eachCard.getValue() == playerCardTwo) {
 				counter2 += 1;
 			}
-				
 		}
 		if(counter1 == 4) {
 			return 8.0 + (playerCardOne/ 100.0); 
@@ -321,9 +330,12 @@ public class RankHands {
 			return 8.0 + (playerCardTwo / 100.0);
 		}
 		else return 0;
-
 	}
-	
+    
+    /**
+     * @return value of "full house" hand and highest card
+     * @return 0 if hand does not contain "full house"
+     */
 	private double checkFullHouse() {
 		double playerCardOne = playerHandArray.get(0).getValue();
 		double playerCardTwo = playerHandArray.get(1).getValue();
@@ -355,7 +367,6 @@ public class RankHands {
 			return 7.0;
 		} 
 		//End of board test
-		
 		
 		for(Card eachCard: boardCardArray) {
 			if(playerCardOne == eachCard.getValue()) {
@@ -433,12 +444,13 @@ public class RankHands {
 
 		} else {
 			return 0.0;
-		}
-		
-
-		
-	}
-	
+		}	
+    }
+    
+	/**
+     * @return value of "flush" hand and highest card
+     * @return 0 if hand does not contain "flush"
+     */
 	private double checkFlush() {
 		String playerCardSuit1 = playerHandArray.get(0).getSuit();
 		String playerCardSuit2 = playerHandArray.get(1).getSuit();
@@ -451,7 +463,6 @@ public class RankHands {
 				boardFlushCounter += 1;
 			}
 		}
-
 
 		if (boardFlushCounter == 5){
 		    return 6.0 + allCardNumbers.get(6)/100.0;
@@ -473,7 +484,6 @@ public class RankHands {
 				if(playerCardSuit1 == eachCard.getSuit()) {
 					flush.add(eachCard.getValue());
 				}
-				
 			}
 			//Sort by smallest to largest numbers
 			Collections.sort(flush);
@@ -482,9 +492,7 @@ public class RankHands {
 				return 6.0 + (flush.get(flush.size()-1) /100.0);
 			} else {
 				return 0.0;
-			}
-			
-			
+			}	
 		}
 		flush.add(playerHandArray.get(0).getValue());
 		flush2.add(playerHandArray.get(1).getValue());
@@ -495,11 +503,11 @@ public class RankHands {
 			} else if(eachCard.getSuit() == playerCardSuit2) {
 				flush2.add(eachCard.getValue());
 			}
-		}
+        }
+        
 		//Sort flush arrayList by smallest to largest
 		Collections.sort(flush);
 		Collections.sort(flush2);
-
 		
 		//If flush array is at least 5 there is a flush
 		if(flush.size() >=5) {
@@ -509,11 +517,12 @@ public class RankHands {
 		} else {
 			return 0.0;
 		}
-		
-	
-		
 	}
-	
+    
+    /**
+     * @return value of "straight" hand and highest card
+     * @return 0 if hand does not contain "straight"
+     */
 	private double checkStraight() {
 		//Check board for straight
 		ArrayList<Integer> checkBoard = new ArrayList<Integer>();
@@ -572,15 +581,14 @@ public class RankHands {
 				return 5.0 + (cardArray.get(i) / 100.0);
 			}
 			cardArray.set(i, 0);
-
-			
 		}
 		return 0.0;
 	}
 		
-		
-		
-
+	/**
+     * @return value of "three of a kind" hand and highest card
+     * @return 0 if hand does not contain "three of a kind"
+     */
 	private double checkThreeOfAKind() {
 
 		double playerCardOne = playerHandArray.get(0).getValue();
@@ -594,22 +602,18 @@ public class RankHands {
 				if(eachCard.getValue() == playerCardOne) {
 					return 4.0 + (playerCardOne/100.0);
 				}
-			}
-				
+			}	
 		}
 
 		else {
-			
 			for (Card eachCard: boardCardArray) {
 				if(eachCard.getValue() == playerCardOne) {
 					counter1 += 1; 
 				} 
 				if(eachCard.getValue() == playerCardTwo) {
 					counter2 += 1;
-				}
-					
+				}		
 			}
-			
 		}
 
 		if(counter1 == 3 && counter2 == 3) {
@@ -624,10 +628,12 @@ public class RankHands {
 			return 4.0 + (playerCardTwo / 100.0);
 		}
 		else return 0;
-
-		
 	}
-	
+    
+	/**
+     * @return value of "two pairs" hand and highest card
+     * @return 0 if hand does not contain "two pairs"
+     */
 	private double checkTwoPair() {
 		double playerCardOne = playerHandArray.get(0).getValue();
 		double playerCardTwo = playerHandArray.get(1).getValue();
@@ -665,17 +671,16 @@ public class RankHands {
 		if(boardCounter1 == 2 && boardCounter2==2 || boardCounter1 == 2 && boardCounter3 == 2  || 
 				boardCounter2 == 3 && boardCounter3 == 3) {
 			return 3.0;
-		}
+        }
 		//End of board check
-		
-		for (Card eachCard: boardCardArray) {
+        
+        for (Card eachCard: boardCardArray) {
 			if(eachCard.getValue() == playerCardOne) {
 				counter1 += 1; 
 			} 
 			if(eachCard.getValue() == playerCardTwo) {
 				counter2 += 1;
-			}
-				
+			}		
 		}
 		double highest = 0; 
 		if(playerCardOne > playerCardTwo) {
@@ -683,11 +688,13 @@ public class RankHands {
 		}
 		else {
 			highest = playerCardTwo;
-		}
+        }
+        
 		if(counter1 == 2 && counter2 == 2) {
 			
 			return 3.0 + (highest/ 100.0); 
-		}
+        }
+        
 		else if(counter1 == 2 && boardCounter1 == 2) {
 			if(playerCardOne > boardCard1) {
 				return 3.0 + (playerCardOne / 100.0);
@@ -721,23 +728,22 @@ public class RankHands {
 				return 3.0 + (playerCardTwo / 100.0);
 			} else {
 				return 3.0 + (boardCard2 / 100.0);
-			}
-			
-			
+            }
+            
 		} else if(counter2 == 2 && boardCounter3 == 2) {
 			if(playerCardTwo > boardCard3) {
 				return 3.0 + (playerCardTwo / 100.0);
 			} else {
 				return 3.0 + (boardCard3 / 100.0);
 			}
-			
-			
 		}
-		else return 0;
-		
+		else return 0;	
 	}
 
-	
+	/**
+     * @return value of "pair" hand and highest card
+     * @return 0 if hand does not contain "pair"
+     */
 	private double checkPair() {
 		double playerCardOne = playerHandArray.get(0).getValue();
 		double playerCardTwo = playerHandArray.get(1).getValue();
@@ -745,10 +751,9 @@ public class RankHands {
 		if(playerCardOne == playerCardTwo) {
 			return 2.0 + (playerCardOne / 100.0);
 		}
-		
+	
 		int counter1 = 1;
 		int counter2 = 1;
-		
 		
 		for (Card eachCard: boardCardArray) {
 			if(eachCard.getValue() == playerCardOne) {
@@ -757,7 +762,6 @@ public class RankHands {
 			if(eachCard.getValue() == playerCardTwo) {
 				counter2 += 1;
 			}
-				
 		}
 		if(counter1 == 2) {
 			return 2.0 + (playerCardOne/ 100.0); 
@@ -766,19 +770,18 @@ public class RankHands {
 			return 2.0 + (playerCardTwo / 100.0);
 		}
 		else return 0;
-		
 	}
-		
+    
+	/**
+     * @return value of highest card in hand
+     */
 	private double checkHighCard() {
 		double highestValue = 0;
 		for(Card eachCard: playerHandArray) {
 			if(eachCard.getValue() > highestValue) {
 				highestValue = eachCard.getValue();
-			}
-			
+			}		
 		}
 		return 1 + (highestValue/100); 
-	} 
-
-	
+	} 	
 }
