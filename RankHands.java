@@ -13,6 +13,7 @@ public class RankHands {
      * @param players array of players in game
      * @param notWinners number of player(s) that can't win (their identification number)
      * @return number of player with best hand (their identification number)
+     Method is called by the gameState/UI class, and set up the ranking of card hands and returns the winning player
      */
 	public int ranking(ArrayList<Card> boardCards, ArrayList<Player> players, ArrayList<Integer> notWinners) {
 		playerHandArray.clear();
@@ -43,6 +44,8 @@ public class RankHands {
      * 
      * cycles through all possible hands
      * @return value of player's hand
+     Method runs through the hierarchy of hand ranks, going from highest to lowest and returns the value of a hand 
+     a player has 
      */
 	private double checkAllRanks(ArrayList<Card> boardCards, Card[] players) {
 		createCompareList(boardCards, players);
@@ -117,6 +120,7 @@ public class RankHands {
 	/**
      * @return value of "royal flush" hand and highest card
      * @return 0 if hand does not contain "royal flush"
+     * Method checks if a player has a royal flush in their hand (Ten, Jack, Queen, King, Ace and all same suits)
      */
 	private double checkRoyalFlush() {
 
@@ -190,6 +194,7 @@ public class RankHands {
 	/**
      * @return value of "straight flush" hand and highest card
      * @return 0 if hand does not contain "straight flush"
+     * Method checks if player has a straight flush in their hand (5 consecutive card numbers with all same suits)
      */
 	private double checkStraightFlush() {
 		//index 0 is spades, index 1 is hearts, index 2 is diamonds, index 3 is clubs
@@ -276,6 +281,7 @@ public class RankHands {
     /**
      * @return value of "four of a kind" hand and highest card
      * @return 0 if hand does not contain "four of a kind"
+     * Method checks for four of a kinds (all 4 of one card number)
      */
 	private double checkFourOfAKind() {
 
@@ -335,6 +341,7 @@ public class RankHands {
     /**
      * @return value of "full house" hand and highest card
      * @return 0 if hand does not contain "full house"
+     * Method checks for a full house (3 of one card number[a triple] and 2 of one card number[a pair]) 
      */
 	private double checkFullHouse() {
 		double playerCardOne = playerHandArray.get(0).getValue();
@@ -450,6 +457,7 @@ public class RankHands {
 	/**
      * @return value of "flush" hand and highest card
      * @return 0 if hand does not contain "flush"
+     * Method checks for a flush (any 5 card numbers with all the same suits) 
      */
 	private double checkFlush() {
 		String playerCardSuit1 = playerHandArray.get(0).getSuit();
@@ -522,6 +530,7 @@ public class RankHands {
     /**
      * @return value of "straight" hand and highest card
      * @return 0 if hand does not contain "straight"
+     * Method checks for a straight (5 consecutive card numbers that do not all have the same suit)
      */
 	private double checkStraight() {
 		//Check board for straight
@@ -588,6 +597,7 @@ public class RankHands {
 	/**
      * @return value of "three of a kind" hand and highest card
      * @return 0 if hand does not contain "three of a kind"
+     * Method checks for a triple(3 of the same card numbers)
      */
 	private double checkThreeOfAKind() {
 
@@ -633,6 +643,8 @@ public class RankHands {
 	/**
      * @return value of "two pairs" hand and highest card
      * @return 0 if hand does not contain "two pairs"
+     * Method checks for a two pair (2 cards with the same card number and 
+     * a different 2 cards with the same card number)
      */
 	private double checkTwoPair() {
 		double playerCardOne = playerHandArray.get(0).getValue();
@@ -743,6 +755,7 @@ public class RankHands {
 	/**
      * @return value of "pair" hand and highest card
      * @return 0 if hand does not contain "pair"
+     * Method checks for a pair (two cards with the same card number) 
      */
 	private double checkPair() {
 		double playerCardOne = playerHandArray.get(0).getValue();
@@ -774,6 +787,7 @@ public class RankHands {
     
 	/**
      * @return value of highest card in hand
+     * Method checks for the highest single card value 
      */
 	private double checkHighCard() {
 		double highestValue = 0;
