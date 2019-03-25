@@ -17,6 +17,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javax.swing.JApplet;
+import javax.swing.JOptionPane;
 
 import java.util.ArrayList;
 
@@ -302,7 +304,8 @@ public class GameState extends Application {
         raise.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                int raiseAmount = 3;//TODO 2 replace this with a JOptionPane to get input amount to raise
+                String raiseString = JOptionPane.showInputDialog("Enter raise amount:");
+                int raiseAmount = Integer.parseInt(raiseString);
                 int sizeOfBet = raiseAmount + amountToCall - currentPlayer.getAmountBetThisRound();
                 if ((currentPlayer.getChipCount() - sizeOfBet) >= 0) {
                     currentPlayer.setAmountBetThisRound(currentPlayer.getAmountBetThisRound() + sizeOfBet);
