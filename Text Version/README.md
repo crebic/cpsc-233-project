@@ -5,7 +5,7 @@ https://github.com/crebic/private-cpsc-233-project-private1212123-/tree/version-
 2. Download the repository as a ZIP folder
 3. Navigate to the download location of the ZIP folder
 4. Right click on the folder and "Extract All" (extract the folder to whatever location of your choosing, usually into the same folder as the ZIP)
-5. Extract all files from the "card_png_zip" folder into the same file as the java files 
+5. Navigate to "src" in the extracted folder
 6. Open Command Prompt to and change the directory to the folder you extracted
 7. Compile all the files in the folder
 8. Run the UI class
