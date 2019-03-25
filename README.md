@@ -20,4 +20,4 @@ JUNIT TEST:
 TEXT VERSION:
 1. Extract all files in the "Text Version" into a folder
 2. Compile all files
-3. Run the gameState class
+3. Run the App class
