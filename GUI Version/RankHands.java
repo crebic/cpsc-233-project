@@ -3,7 +3,11 @@ import java.util.Collections;
 
 public class RankHands {
 
-
+    /**
+     * @param players arraylist of players
+     * @param tableCards arraylist of cards on table
+     * @return arraylist of player(s) who won
+     */
     public static ArrayList<Player> rankHands(ArrayList<Player> players, ArrayList<Card> tableCards) {
         ArrayList<Card> cards;
         for (Player player : players) {
@@ -32,7 +36,10 @@ public class RankHands {
         return winners;
     }
 
-
+    /**
+     * @param cards arraylist of cards
+     * @return value of the player's hand
+     */
     private static double matchingValueCheck(ArrayList<Card> cards) {
         Collections.sort(cards);
         int[] valueCounts = new int[13];//this is the possible cause of the error
@@ -65,11 +72,19 @@ public class RankHands {
         } else return highCard(cards);//highCard
     }
 
+    /**
+     * @param cards arraylist of cards
+     * @return value of the highest card in hand or on table
+     */
     private static double highCard(ArrayList<Card> cards) {
         Collections.sort(cards);
         return cards.get(cards.size() - 1).getValue() / 100.0;
     }
 
+    /**
+     * @param cards arraylist of player's cards
+     * @return value of hand if there is a straight, otherwise returns 0
+     */
     private static double straight(ArrayList<Card> cards) {//TODO this doesn't seem to work
         Collections.sort(cards);
         int cardsInARow = 0, highestValue = 0;
@@ -97,6 +112,10 @@ public class RankHands {
         return 0;
     }
 
+    /**
+     * @param cards arraylist of player's cards
+     * @return value of had if there is a flush, otherwise returns 0
+     */
     private static double flush(ArrayList<Card> cards) {
 
         ArrayList<Card> hearts = new ArrayList<>();
@@ -131,11 +150,19 @@ public class RankHands {
         return 0;
     }
 
+    /**
+     * @param cards arraylist of cards
+     * @return value of hand if there is a straight flush, otherwise 0
+     */
     private static double straightFlush(ArrayList<Card> cards) {
         //TODO straightFlush
         return 0;
     }
 
+    /**
+     * @param cards arraylist of cards
+     * @return value of hand if there is a royal flush, otherwise 0
+     */
     private static double royalFlush(ArrayList<Card> cards) {
         //TODO royalFlush
         return 0;
