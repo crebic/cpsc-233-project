@@ -13,5 +13,6 @@ https://github.com/crebic/private-cpsc-233-project-private1212123-/tree/version-
 
 TO RUN THE JUNIT TEST:
 1. Extract all files in the "JUNIT Test" file into a folder 
-2. Type "javac -cp .:junit-4.12.jar:hamcrest-core-1.3.jar *.java" to compile the files
-3. Type "java -cp .;hamcrest-core-1.3.jar;junit-4.12.jar org.junit.runner.JUnitCore  RankHandsTest" to run the test
+2. Put a "hamcrest-core-1.3" JAR file and "junit-4.12" JAR file into the same place
+3. Type "javac -cp .:junit-4.12.jar:hamcrest-core-1.3.jar *.java" to compile the files
+4. Type "java -cp .;hamcrest-core-1.3.jar;junit-4.12.jar org.junit.runner.JUnitCore  RankHandsTest" to run the test
