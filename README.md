@@ -1,12 +1,17 @@
 Project Repository Link:
-https://github.com/crebic/private-cpsc-233-project-private1212123-/tree/version-3
+https://github.com/crebic/private-cpsc-233-project-private1212123-/tree/version-3-1
 
-
-1. Pick version 2 from the branches of the repository
-2. Click the green "Clone and download" button at the top right of the coe repository
-3. Download the repository as a ZIP folder
-4. Navigate to the download location of the ZIP folder
-5. Right click on the folder and "Extract All" (extract the folder to whatever location of your choosing, usually into the same folder as the ZIP)
+1. Click the green "Clone and download" button at the top right of the coe repository
+2. Download the repository as a ZIP folder
+3. Navigate to the download location of the ZIP folder
+4. Right click on the folder and "Extract All" (extract the folder to whatever location of your choosing, usually into the same folder as the ZIP)
+5. Extract all files from the "card_png_zip" folder into the same file as the java files 
 6. Open Command Prompt to and change the directory to the folder you extracted
 7. Compile all the files in the folder
 8. Run the UI class
+
+
+TO RUN THE JUNIT TEST:
+1. Extract all files in the "JUNIT Test" file into a folder 
+2. Type "javac -cp .:junit-4.12.jar:hamcrest-core-1.3.jar *.java" to compile the files
+3. Type "java -cp .;hamcrest-core-1.3.jar;junit-4.12.jar org.junit.runner.JUnitCore  RankHandsTest" to run the test
