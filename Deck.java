@@ -1,90 +1,58 @@
+import java.util.ArrayList;
 import java.util.Random;
-import java.util.*;
 
-public class Deck{
+public class Deck {
 
-	public ArrayList<Card> deck = new ArrayList<>(); //TODO should this be private???
-	
-	public Deck(){
-		
-		//constructor
-		String suit;
-		
-		for (int i = 0; i < 4; i++){
-			
-			switch(i){
-				
-				case(0):
-					suit = "spade";
-					break;
-				case(1):
-					suit = "heart";
-					break;
-				case(2):
-					suit = "club";
-					break;
-				case(3):
-					suit = "diamond";
-					break;
-				default:
-					suit = "uiu";
-			}
-			
-			//card with value 14 is the Ace card
-			for (int j = 2; j <= 14; j++){
-				deck.add(new Card(j, suit));
-			}
-		}
-	}
+    private ArrayList<Card> cards = new ArrayList<>();
 
-	public void deal(Player[] lst, ArrayList<Card> tableCards){
-		Random rand = new Random();
-		for (Player p: lst){
-			p.setPair(deck.remove(rand.nextInt(deck.size() - 1)), deck.remove(rand.nextInt(deck.size() - 1)));
-		}
-		for (int i = 0; i < 5; i++){
-			tableCards.add(i, deck.remove(rand.nextInt(deck.size() - 1)));
-		}
-	}
+    public Deck() {
+        resetDeck();
+    }
 
-	public void resetDeck(){
-		
-		//resets the deck to it's original form after dealing hands
-		
-		deck.clear();
-		
-		String suit;
-		
-		for (int i = 0; i < 4; i++){
-			
-			switch(i){
-				
-				case(0):
-					suit = "spade";
-					break;
-				case(1):
-					suit = "heart";
-					break;
-				case(2):
-					suit = "club";
-					break;
-				case(3):
-					suit = "diamond";
-					break;
-				default:
-					suit = "";
-			}
-			
-			for (int j = 1; j <= 13; j++){
-				deck.add(new Card(j, suit));
-			}
-		}
-	}
+    public void resetDeck() {//TODO make private, cut out of gamestate
+        cards.clear();
+        String suit = "";
+        for (int i = 1; i <= 4; i++) {
+            switch (i) {
+                case 1:
+                    suit = "Hearts";
+                    break;
+                case 2:
+                    suit = "Diamonds";
+                    break;
+                case 3:
+                    suit = "Spades";
+                    break;
+                case 4:
+                    suit = "Clubs";
+            }
+            for (int j = 1; j <= 13; j++) {
+                cards.add(new Card(j, suit));
+            }
+        }
+    }
 
-
-
-
-
-
-
+    public void deal(ArrayList<Player> players, ArrayList<Card> table) {
+        Random r = new Random();
+        table.clear();
+        resetDeck();
+        Card c1, c2;
+        int sizeOfDeck = 51;//starts at zero for Random.nextInt()
+        for (int i = 0; i < 5; i++) {
+            c1 = cards.get(r.nextInt(sizeOfDeck) + 1);//TODO why plus 1 here?
+            table.add(c1);
+            cards.remove(c1);
+            sizeOfDeck--;
+        }
+        for (Player p : players) {
+            p.newHand();
+            c1 = cards.get(r.nextInt(sizeOfDeck) + 1);
+            cards.remove(c1);
+            sizeOfDeck--;
+            c2 = cards.get(r.nextInt(sizeOfDeck) + 1);
+            cards.remove(c2);
+            sizeOfDeck--;
+            p.setHand(c1, c2);
+        }
+    }
 }

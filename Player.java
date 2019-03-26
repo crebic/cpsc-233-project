@@ -1,84 +1,87 @@
+import java.util.ArrayList;
 
+public class Player implements Comparable {
 
-class Player{
-    private int chips;
-    private int seatNumber;
-    private boolean isFolded;
-    Card[] cardPair = new Card[2];
-    private boolean isPlaying = true;
-	
-	//for testing purposes
-	Player(){
-		
-	}
-	Player(int startingChips, int _seatNumber)
-	{
-		chips = startingChips;
-		seatNumber = _seatNumber;
-	}
-	//
-	
-	
-    Player(int startingChips, int _seatNumber, Card card1, Card card2)
-    {
-        //set initial player state
-        chips = startingChips;
-        seatNumber = _seatNumber;
-        cardPair[0] = card1;
-        cardPair[1] = card2;
+    private String name;
+
+    private ArrayList<Card> hand;
+
+    private int chipCount = 100;
+
+    private int amountBetThisRound = 0;//TODO reset every round?
+
+    public int potInvestment = 0;//for display
+
+    private double scoreThisRound;
+
+    public boolean isFolded = false;
+
+    public Player(String ns, int c) {
+        hand = new ArrayList<>();
+        name = ns;
+        if (c >= 0) chipCount = c;
+    }
+
+    public void setScoreThisRound(double d) {
+        if (d > scoreThisRound) {
+            scoreThisRound = d;
+        }
+    }
+
+    public double getScoreThisRound() {
+        return scoreThisRound;
+    }
+
+    public void newHand() {
+        potInvestment = 0;
+        hand.clear();
+        scoreThisRound = 0;
+        setAmountBetThisRound(0);
         isFolded = false;
     }
-    Player(Player player)
-    {
-        chips = player.getChips();
-        seatNumber = player.getSeatNumber();
-        isFolded = player.getDidFold();
-        cardPair = player.getPair();
-        isPlaying = player.getIsPlaying();
+
+    public int getAmountBetThisRound() {
+        return amountBetThisRound;
     }
 
-    //getters
-    public int getChips()
-    {
-        return chips;
+    public void setAmountBetThisRound(int amount) {
+        if (amount >= 0)
+            amountBetThisRound = amount;
     }
-    public int getSeatNumber()
-    {
-        return seatNumber;
+
+    public int getChipCount() {
+        return chipCount;
     }
-    public Card[] getPair()
-    {
-        return cardPair;
+
+    public String getName() {
+        return name;
     }
-    public boolean getDidFold()
-    {
-        return isFolded;
+
+    public void addChips(int amount) {
+        if (amount > 0) chipCount += amount;
     }
-    public boolean getIsPlaying()
-    {
-        return isPlaying;
+
+    public void removeChips(int amount) {
+        if (amount > 0) chipCount -= amount;
     }
-    
-    //setters
-    public void setPair(Card card1, Card card2)
-    {
-        cardPair[0] = card1;
-        cardPair[1] = card2;
+
+    public void setHand(Card c1, Card c2) {
+        hand.add(c1);
+        hand.add(c2);
     }
-    public void addChips(int chipsAdded)
-    {
-        chips += chipsAdded;
+
+    public ArrayList<Card> getHand() {
+        ArrayList<Card> handCopy = new ArrayList<>();
+        for (Card c : hand) {
+            handCopy.add(new Card(c));
+        }
+        return handCopy;
     }
-    public void deductChips(int chipsDeducted)
-    {
-        chips -= chipsDeducted;
-    }
-    public void changeFoldedState(boolean folded)
-    {
-        isFolded = folded;
-    }
-    public void changePlayingState(boolean playing)
-    {
-        isPlaying = playing;
+
+    public int compareTo(Object o) {
+        if (o instanceof Player) {
+            Player p = (Player) o;
+            return (int) ((scoreThisRound - p.getScoreThisRound()) * 1000000);
+        } else return 0;
     }
 }
