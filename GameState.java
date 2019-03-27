@@ -20,9 +20,13 @@ import javafx.stage.WindowEvent;
 
 import java.util.ArrayList;
 
-
 import javax.swing.JApplet;
 import javax.swing.JOptionPane;
+
+import java.awt.Toolkit;
+import java.awt.Dimension;
+//import java.awt.GraphicsDevice;
+//import java.awt.GraphicsEnvironment;
 
 //TODO shortlist 1: fix rankhands bug 2: implement save game and cancel for the X button 3:make the back to main buttons reset everything, possibly with a reset() method
 
@@ -57,9 +61,22 @@ public class GameState extends Application {
 
     //Start of GUI rendering parts
 
+    //Windows resolution
+    //set to work on 1080p screens
+    int screenWidth = 1920;
+    int screenHeight = 1080-62;
+    /*
+    double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+    double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height-62; //-62 makes perfect fit on Jesse's computer
+    
+    GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+    int screenWidth = gd.getDisplayMode().getWidth();
+    int screenHeight = gd.getDisplayMode().getHeight();
+    */
+
     //  Start of Main menu
     private StackPane mainMenuRoot = new StackPane();//equivalent to root
-    private Scene mainMenuScene = new Scene(mainMenuRoot, 800, 600);
+    private Scene mainMenuScene = new Scene(mainMenuRoot, screenWidth, screenHeight);
     private Button newGameButton = new Button("Start New Game");
     private Button aiGameButton = new Button("Play vs. CPU");
     private Button loadGameButton = new Button("Load Game");//TODO implement this button
@@ -70,7 +87,7 @@ public class GameState extends Application {
 
     //Start of new game menu
     private StackPane newGameMenuRoot = new StackPane();
-    private Scene newGameMenuScene = new Scene(newGameMenuRoot, 800, 600);
+    private Scene newGameMenuScene = new Scene(newGameMenuRoot, screenWidth, screenHeight);
     private Text chipInputLabel = new Text("Enter Starting Chip Amount:");
     private Text playerInputLabel = new Text("Enter Number of Players:");
     private TextField chipInput = new TextField("");
@@ -83,7 +100,7 @@ public class GameState extends Application {
 
     //start of heads up menu
     private StackPane aiMenuRoot = new StackPane();
-    private Scene aiMenuScene = new Scene(aiMenuRoot, 800, 600);
+    private Scene aiMenuScene = new Scene(aiMenuRoot, screenWidth, screenHeight);
     private Text aiMenuTitle = new Text("Heads Up \nvs.\nCPU ");
     private Button aiEasyButton = new Button("Easy");//TODO implement button
     private Button aiMediumButton = new Button("Medium");//TODO implement button
@@ -94,7 +111,7 @@ public class GameState extends Application {
 
     //start of inter - player Screen
     private StackPane privacyScreenRoot = new StackPane();
-    private Scene privacyScreenScene = new Scene(privacyScreenRoot, 800, 600);
+    private Scene privacyScreenScene = new Scene(privacyScreenRoot, screenWidth, screenHeight);
     private Text privacyScreenTitle = new Text("It's Player 1's Turn");
     private Button nextTurnButton = new Button("Begin Turn");
 
@@ -103,7 +120,7 @@ public class GameState extends Application {
     //start of in game interface
     private StackPane inGameRoot = new StackPane();
 
-    private Scene inGameScene = new Scene(inGameRoot, 800, 600);
+    private Scene inGameScene = new Scene(inGameRoot, screenWidth, screenHeight);
 
     private VBox inGameInterface = new VBox(30);//equivalent to root 2
 
@@ -129,7 +146,7 @@ public class GameState extends Application {
     //start of state of game display menu
 
     private StackPane stateOfGameDisplayRoot = new StackPane();
-    private Scene stateOfGameDisplayScene = new Scene(stateOfGameDisplayRoot, 800, 600);
+    private Scene stateOfGameDisplayScene = new Scene(stateOfGameDisplayRoot, screenWidth, screenHeight);
     private VBox stateOfGameDisplay = new VBox(30);
     private HBox stateOfGameDisplayTableCardsBox = new HBox();
     private Text stateOfGameDisplayPotLabel = new Text("Current Pot " + pot);
@@ -139,7 +156,7 @@ public class GameState extends Application {
 
     //start of end game screen (displays winner)
     private StackPane winScreenRoot = new StackPane();
-    private Scene winScreenScene = new Scene(winScreenRoot, 800, 600);
+    private Scene winScreenScene = new Scene(winScreenRoot, screenWidth, screenHeight);
     private VBox winScreen = new VBox(200);
     private Text winScreenTitle = new Text();
     private Button winScreenBackToMainButton = new Button("Back to Main Menu");
