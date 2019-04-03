@@ -29,6 +29,10 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 
 import javafx.application.Platform;
+import javafx.scene.*;
+import javafx.stage.*;
+import javafx.geometry.*;
+import javafx.application.*;
 
 //TODO shortlist 1: fix rankhands bug 2: implement save game and cancel for the X button 3:make the back to main buttons reset everything, possibly with a reset() method
 
@@ -64,17 +68,9 @@ public class GameState extends Application {
     //Start of GUI rendering parts
 
     //Windows resolution
-    //set to work on 1080p screens
-    int screenWidth = 1920;
-    int screenHeight = 1080-62;
-    /*
-    double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
-    double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height-62; //-62 makes perfect fit on Jesse's computer
-    
-    GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-    int screenWidth = gd.getDisplayMode().getWidth();
-    int screenHeight = gd.getDisplayMode().getHeight();
-    */
+    Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+    double screenWidth = primaryScreenBounds.getWidth();
+    double screenHeight = primaryScreenBounds.getHeight();
 
     //  Start of Main menu
     private StackPane mainMenuRoot = new StackPane();//equivalent to root
