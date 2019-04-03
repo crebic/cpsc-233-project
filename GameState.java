@@ -25,8 +25,10 @@ import javax.swing.JOptionPane;
 
 import java.awt.Toolkit;
 import java.awt.Dimension;
-//import java.awt.GraphicsDevice;
-//import java.awt.GraphicsEnvironment;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+
+import javafx.application.Platform;
 
 //TODO shortlist 1: fix rankhands bug 2: implement save game and cancel for the X button 3:make the back to main buttons reset everything, possibly with a reset() method
 
@@ -179,7 +181,7 @@ public class GameState extends Application {
                 } else if (option == 1){
                     primary.close();
                 } else {
-                    //TODO cancel the action
+                    we.consume();
                 }
             }
         });
