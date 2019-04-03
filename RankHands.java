@@ -13,8 +13,7 @@ public class RankHands {
                 player.setScoreThisRound(matchingValueCheck(cards));
                 player.setScoreThisRound(straight(cards));
                 player.setScoreThisRound(flush(cards));
-                player.setScoreThisRound(straightFlush(cards));
-                player.setScoreThisRound(royalFlush(cards));
+                player.setScoreThisRound(straightFlush(cards));//also does royal flush
             }
         }
         double maxScore = 0;
@@ -33,7 +32,7 @@ public class RankHands {
     }
 
 
-    private static double matchingValueCheck(ArrayList<Card> cards) {
+    private static double matchingValueCheck(ArrayList<Card> cards) {//TODO check the logic on high card comparisons
         Collections.sort(cards);
         int[] valueCounts = new int[13];//this is the possible cause of the error
         for (Card c : cards) {
@@ -133,11 +132,39 @@ public class RankHands {
 
     private static double straightFlush(ArrayList<Card> cards) {
         //TODO straightFlush
-        return 0;
-    }
+        if (straight(cards) > 4 && flush(cards) > 5) {
+            ArrayList<Card> hearts = new ArrayList<>();
+            ArrayList<Card> spades = new ArrayList<>();
+            ArrayList<Card> clubs = new ArrayList<>();
+            ArrayList<Card> diamonds = new ArrayList<>();
 
-    private static double royalFlush(ArrayList<Card> cards) {
-        //TODO royalFlush
+            for (Card c : cards) {//TODO not sure if this switch statement is better then the if statement in flush
+                switch (c.getSuit()) {
+                    case "hearts":
+                        hearts.add(c);
+                        break;
+                    case "spades":
+                        spades.add(c);
+                        break;
+                    case "clubs":
+                        clubs.add(c);
+                        break;
+                    case "diamonds":
+                        diamonds.add(c);
+                        break;
+                }
+            }
+            //return a total value of 8+the highcard used in the straight
+            if (hearts.size() > 4) {
+                return 4 + straight(hearts);
+            } else if (clubs.size() > 4) {
+                return 4 + straight(clubs);
+            } else if (spades.size() > 4) {
+                return 4 + straight(spades);
+            } else if (diamonds.size() > 4) {
+                return 4 + straight(diamonds);
+            }
+        }
         return 0;
     }
 }
