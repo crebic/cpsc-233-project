@@ -34,9 +34,9 @@ import javafx.stage.*;
 import javafx.geometry.*;
 import javafx.application.*;
 
-//TODO shortlist 1: fix rankhands bug 2: implement save game and cancel for the X button 3:make the back to main buttons reset everything, possibly with a reset() method
+//TODO shortlist 1: fix rankhands bugs 2: implement save game 3:ai
 
-//TODO reminders: make blinds?, ai, settings/music
+//TODO reminders: make blinds?, settings/music
 
 public class GameState extends Application {
     //start of instance variables for the game
@@ -73,7 +73,7 @@ public class GameState extends Application {
     double screenHeight = primaryScreenBounds.getHeight();
 
     //  Start of Main menu
-    private StackPane mainMenuRoot = new StackPane();//equivalent to root
+    private StackPane mainMenuRoot = new StackPane();
     private Scene mainMenuScene = new Scene(mainMenuRoot, screenWidth, screenHeight);
     private Button newGameButton = new Button("Start New Game");
     private Button aiGameButton = new Button("Play vs. CPU");
@@ -120,7 +120,7 @@ public class GameState extends Application {
 
     private Scene inGameScene = new Scene(inGameRoot, screenWidth, screenHeight);
 
-    private VBox inGameInterface = new VBox(30);//equivalent to root 2
+    private VBox inGameInterface = new VBox(30);
 
     private HBox tableCardsBox = new HBox();
 
@@ -164,17 +164,16 @@ public class GameState extends Application {
     //Start of Event Handlers
 
     public void setEventHandlers() {//TODO replace syntax with lambda expressions
-        //could replace passed primaryStage with a reference to primary
-      
-        //@param we of type window event 
+
+        //@param we of type window event
         // upon action of hitting the exit in the window it will prompt the user to save.
-        
+
         primary.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
                 int option = JOptionPane.showConfirmDialog(null, "Would you Like to Save Before Exiting?");
-                if (option == 0){
+                if (option == 0) {
                     //TODO save the game
-                } else if (option == 1){
+                } else if (option == 1) {
                     primary.close();
                 } else {
                     we.consume();
@@ -182,7 +181,7 @@ public class GameState extends Application {
             }
         });
 
-        // if the user hits the new game buttone it will bring them to a new menu screen. 
+        // if the user hits the new game button it will bring them to a new menu screen.
         newGameButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -191,26 +190,28 @@ public class GameState extends Application {
 
             }
         });
-        
-        // brings user back to the main menu after hitting the main menu button 
+
+        // brings user back to the main menu after hitting the main menu button
         backToMainButton.setOnAction(new EventHandler<ActionEvent>() {//TODO this button needs to reset everything
             @Override
             public void handle(ActionEvent event) {
+                reset();
                 primary.setScene(mainMenuScene);
                 primary.show();
             }
         });
-        
+
         // has a button that appears after a winner is found, button resets the gamestate and brings the user back to the main menu
-        winScreenBackToMainButton.setOnAction(new EventHandler<ActionEvent>() {//TODO this button needs to reset everything
+        winScreenBackToMainButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                reset();
                 primary.setScene(mainMenuScene);
                 primary.show();
             }
         });
-        
-        
+
+
         // button to navigate from ai screen to the main menu
         aiToMainButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -219,7 +220,7 @@ public class GameState extends Application {
                 primary.show();
             }
         });
-        
+
         // button that navigates from main manue to ai menu screen (bot difficulty etc)
         aiGameButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -228,7 +229,7 @@ public class GameState extends Application {
                 primary.show();
             }
         });
-        
+
         // try catch to start a new game, try: start new game catch:invalid paramater passed
         // catches invalid inputs for number of players and starting chips
         startNewGameButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -258,9 +259,8 @@ public class GameState extends Application {
                 }
             }
         });
-        
-        
-        
+
+
         // button for passing player control and ending your turn
         nextTurnButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -269,7 +269,7 @@ public class GameState extends Application {
                 primary.show();
             }
         });
-        
+
         //button for seeing other players chip count and folded states.
         viewStateOfGameButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -278,8 +278,8 @@ public class GameState extends Application {
                 primary.show();
             }
         });
-        
-        // exits the viewStateOfGame display screen 
+
+        // exits the viewStateOfGame display screen
         stateOfGameDisplayButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -287,8 +287,8 @@ public class GameState extends Application {
                 primary.show();
             }
         });
-        
-        
+
+
         newRoundButton.setOnAction(new EventHandler<ActionEvent>() {
             //This essentially sets up the new round
             @Override
@@ -333,24 +333,24 @@ public class GameState extends Application {
                 }
             }
         });
-        
-        
-        //Ends the game full stop, but prompts the user to save before exiting. 
+
+
+        //Ends the game full stop, but prompts the user to save before exiting.
         endGameButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 int option = JOptionPane.showConfirmDialog(null, "Would you Like to Save Before Exiting?");
-                if (option == 0){
+                if (option == 0) {
                     //TODO save the game
                     primary.close();
-                } else if (option == 1){
+                } else if (option == 1) {
                     primary.close();
                 }
 
             }
         });
-        
-        
+
+
         // button for a "check" dont raise additional chips and end your turn
         check.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -369,7 +369,7 @@ public class GameState extends Application {
                 }
             }
         });
-        
+
         // button that changes your folded state to true, removing you from the hand till the next round
         fold.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -395,32 +395,32 @@ public class GameState extends Application {
                     } else {
                         nextTurn();
                     }
-                } else {
+                } else {//check if the current player is all in
                     JOptionPane.showMessageDialog(null, "Can't Fold, You're All In");
                 }
             }
         });
-        
-        
+
+
         // button that has a pop up window for the user to input desired raise amount, wrapped in a try catch to ensure amount entered is valid
         raise.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 int raiseAmount = 0;
                 boolean validInputs = false;
-                try{
+                try {
                     String input = JOptionPane.showInputDialog("How Much Would You Like to Raise?\n Amount to Call: " + (amountToCall - currentPlayer.getAmountBetThisRound()));
-                    if (input == null){
+                    if (input == null) {
                         return;
                     }
                     raiseAmount = Integer.parseInt(input);
                     if (raiseAmount < 0) throw new Exception();
                     else validInputs = true;
-                }catch(Exception E){
+                } catch (Exception E) {
                     JOptionPane.showMessageDialog(null, "Invalid Input");
                 }
                 int sizeOfBet = raiseAmount + amountToCall - currentPlayer.getAmountBetThisRound();
-                if (validInputs){
+                if (validInputs) {
                     if ((currentPlayer.getChipCount() - sizeOfBet) >= 0) {
                         currentPlayer.setAmountBetThisRound(currentPlayer.getAmountBetThisRound() + sizeOfBet);
                         currentPlayer.potInvestment += sizeOfBet;//for display
@@ -436,8 +436,8 @@ public class GameState extends Application {
 
             }
         });
-        
-        
+
+
         // button that matches the highest raise currently on the table
         call.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -558,8 +558,8 @@ public class GameState extends Application {
                 thisPlayerStackLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14));
                 thisPlayerStackLabel.setFill(Color.WHITE);
                 HBox imageBox = new HBox();
-                ImageView imageOne = new ImageView(new Image("blue_back.png"));
-                ImageView imageTwo = new ImageView(new Image("blue_back.png"));
+                ImageView imageOne = new ImageView(new Image("./CardFolder/blue_back.png"));
+                ImageView imageTwo = new ImageView(new Image("./CardFolder/blue_back.png"));
                 imageOne.setPreserveRatio(true);
                 imageOne.setFitHeight(100);
                 imageOne.setFitWidth(100);
@@ -576,7 +576,7 @@ public class GameState extends Application {
     private void showTableCards(HBox cardBox) {
         cardBox.getChildren().clear();
         Image cardFront;
-        Image cardBack = new Image("blue_back.png");
+        Image cardBack = new Image("./CardFolder/blue_back.png");
         int numberToShow = 0;
         if (round > 0) numberToShow = round + 2;
         for (Card c : tableCards) {
@@ -662,7 +662,7 @@ public class GameState extends Application {
         privacyScreenTitle.setText("It's Player " + currentPlayer.getName() + "'s Turn");
         primary.setScene(privacyScreenScene);
         primary.show();
-        //
+
         playerStackLabel.setText("Player: " + currentPlayer.getName() + "\nYour Stack: " + currentPlayer.getChipCount() + "\nPot Investment: " + currentPlayer.potInvestment + "\n" + (amountToCall - currentPlayer.getAmountBetThisRound()) + " to Call");
         showPlayerCards(currentPlayer);
         showMultiplePlayerCards();
@@ -733,7 +733,35 @@ public class GameState extends Application {
             winnerList = RankHands.rankHands(playerList, tableCards);
             showHandResult();
         }
+    }
 
+    //method to reset all instance variables once a game is quit
+    public void reset() {//TODO trim redundant reseting from this method
+        playerList = new ArrayList<>();
+
+        tableCards = new ArrayList<>();
+
+        pot = 0;
+
+        deck = new Deck();
+
+        round = 0;
+
+        amountToCall = 0;//represents a cumulative amount
+
+        currentPlayer = null;
+
+        nextPlayer = null;
+
+        lastPlayerToRaise = null;
+
+        leftOfDealer = null;
+
+        winnerList = new ArrayList<>();
+
+        if (stateOfGameDisplay.getChildren().contains(newRoundButton)) {
+            stateOfGameDisplay.getChildren().remove(newRoundButton);
+        }
     }
 
 //End of GameState methods
