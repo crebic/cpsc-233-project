@@ -47,4 +47,17 @@ public class Card implements Comparable, Serializable {
             return relativePath + "1" + suit.charAt(0) + ".png";
         }
     }
+    
+    public String toDisplayString() {
+        if (value < 11) {
+            return "" + value + suit.charAt(0);
+        } else if (value == 11) {
+            return "J" + suit.charAt(0);
+        } else if (value == 12) {
+            return "Q" + suit.charAt(0);
+        } else {
+            return "K" + suit.charAt(0);
+        }
+    }
+    
 }
