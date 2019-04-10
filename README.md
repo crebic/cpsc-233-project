@@ -6,3 +6,7 @@
 6. Open Command Prompt to and change the directory to the folder you extracted
 7. Compile all the files in the folder
 8. Run the App class
+
+
+1. The graphical version of the game is contained in the GUIVersion directory, which relies on the Picturers directory inside of it to run the game.
+2. The text-based version of the game is in the TextVersion directory, although it does share 
