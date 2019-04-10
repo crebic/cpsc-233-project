@@ -148,7 +148,89 @@ public class GameState extends Application {
     private Button winScreenBackToMainButton = new Button("Back to Main Menu");
 
     //end of instance variables for the game
+    //////
+    private SaveSlot savedData;
 
+    public void createSaveSlot()
+    {
+        SaveSlot saveData = new SaveSlot(playerList, tableCards, pot, deck, round, amountToCall, currentPlayer, nextPlayer, lastPlayerToRaise, leftOfDealer);
+        saveGame(saveData);
+    }
+    
+    //Start of Event Handlers
+    public void saveGame(SaveSlot saveData)
+    {
+        //saves only when end game button pressed as of now TODORICK
+        //String saveName = JOptionPane.showInputDialog(null, "Please choose a file name to save to:");
+        try
+        {
+            String saveName = "SavedGame";
+            File file = new File(saveName);
+            file.delete();
+            FileOutputStream fileStream = new FileOutputStream(saveName);
+            BufferedOutputStream bufferedStream = new BufferedOutputStream(fileStream);
+            ObjectOutputStream objectStream = new ObjectOutputStream(bufferedStream);
+            objectStream.writeObject(saveData);
+            objectStream.close();
+            fileStream.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println("ERROR OCCURRED WHILE SAVING DATA");
+        }
+    }
+    public void loadGame()
+    {
+        try{
+            String saveName = "SavedGame";
+            File file = new File(saveName);
+            FileInputStream fileStream = new FileInputStream(saveName);
+            ObjectInputStream objectStream = new ObjectInputStream(fileStream);
+
+            savedData = (SaveSlot) objectStream.readObject();
+            loadAndProcessSavedData();
+
+            objectStream.close();
+            fileStream.close();
+        }
+        catch(FileNotFoundException e)
+        {
+            System.out.println("FILE NOT FOUND");
+        }
+        catch(Exception e)
+        {
+            System.out.println("ERROR OCCURRED WHILE LOADING DATA");
+        }
+    }
+
+    public void loadAndProcessSavedData()
+    {
+        this.playerList = savedData.getPlayerList();
+        this.tableCards = savedData.getTableCards();
+        this.pot = savedData.getPot();
+        this.deck = savedData.getDeck();
+        this.round = savedData.getRound();
+        this.amountToCall = savedData.getAmountToCall();
+        this.currentPlayer = savedData.getCurrentPlayer();
+        this.nextPlayer = savedData.getNextPlayer();
+        this.lastPlayerToRaise = savedData.getLastPlayerToRaise();
+        this.leftOfDealer = savedData.getLeftOfDealer();
+
+        potLabel.setText("Current pot: " + this.pot);
+        showTableCards(tableCardsBox);
+        showTableCards(stateOfGameDisplayTableCardsBox);
+        showMultiplePlayerCards();
+        playerStackLabel.setText("Player: " + currentPlayer.getName() + "\nYour Stack: " + currentPlayer.getChipCount() + "\nPot Investment: " + currentPlayer.potInvestment);
+        showPlayerCards(currentPlayer);
+        primary.setScene(inGameScene);
+        primary.show();
+    }//////
+
+    //TODORICK testing purposes only
+    public int getPot()
+    {
+        return pot;
+    }
     //Start of Event Handlers
 
     public void setEventHandlers() {
@@ -160,7 +242,7 @@ public class GameState extends Application {
             public void handle(WindowEvent we) {
                 int option = JOptionPane.showConfirmDialog(null, "Would you Like to Save Before Exiting?");
                 if (option == 0) {
-                    //TODO save the game
+                    createSaveSlot();
                 } else if (option == 1) {
                     primary.close();
                 } else {
@@ -168,7 +250,12 @@ public class GameState extends Application {
                 }
             }
         });
-
+        loadGameButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                loadGame();
+            }
+        });
         // if the user hits the new game button it will bring them to a new menu screen.
         newGameButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -339,7 +426,7 @@ public class GameState extends Application {
             public void handle(ActionEvent event) {
                 int option = JOptionPane.showConfirmDialog(null, "Would you Like to Save Before Exiting?");
                 if (option == 0) {
-                    //TODO save the game
+                    createSaveSlot();
                     primary.close();
                 } else if (option == 1) {
                     primary.close();
