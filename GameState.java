@@ -3,8 +3,6 @@ import javafx.event.*;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
-import javafx.scene.*;
-import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
@@ -15,8 +13,13 @@ import javax.swing.*;
 import java.io.*;
 import java.awt.*;
 import java.lang.*;
-import javafx.geometry.*;
- /*
+
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+/*
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
