@@ -15,6 +15,16 @@ class SaveSlot implements Serializable
     private Player lastPlayerToRaise;
     private Player leftOfDealer;
 
+    //* @param playerList gets saved, 
+    //* @param tableCards gets saved
+    //* @param pot gets saved
+    //* @param deck gets saved
+    //* @param amountToCall gets saved
+    //* @param currentPlayer gets saved
+    //* @param nextPlayer gets saved
+    //* @param lastPlayerToRaise gets saved 
+    //* @param leftOfDealer gets saved
+  
     public SaveSlot (ArrayList<Player> playerList, ArrayList<Card> tableCards, int pot, Deck deck, int round, int amountToCall, Player currentPlayer, Player nextPlayer, Player lastPlayerToRaise, Player leftOfDealer)
     {
         super();
