@@ -108,13 +108,13 @@ public class RankHands {
         ArrayList<Card> diamonds = new ArrayList<>();
 
         for (Card c : cards) {
-            if (c.getSuit().equals("hearts")) {
+            if (c.getSuit().equals("Hearts")) {
                 hearts.add(c);
-            } else if (c.getSuit().equals("spades")) {
+            } else if (c.getSuit().equals("Spades")) {
                 spades.add(c);
-            } else if (c.getSuit().equals("clubs")) {
+            } else if (c.getSuit().equals("Clubs")) {
                 clubs.add(c);
-            } else if (c.getSuit().equals("diamonds")) {
+            } else if (c.getSuit().equals("Diamonds")) {
                 diamonds.add(c);
             }
         }
@@ -144,16 +144,16 @@ public class RankHands {
 
             for (Card c : cards) {//TODO not sure if this switch statement is better then the if statement in flush
                 switch (c.getSuit()) {
-                    case "hearts":
+                    case "Hearts":
                         hearts.add(c);
                         break;
-                    case "spades":
+                    case "Spades":
                         spades.add(c);
                         break;
-                    case "clubs":
+                    case "Clubs":
                         clubs.add(c);
                         break;
-                    case "diamonds":
+                    case "Diamonds":
                         diamonds.add(c);
                         break;
                 }
