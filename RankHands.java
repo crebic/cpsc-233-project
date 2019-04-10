@@ -10,7 +10,7 @@ public class RankHands {
             if (!player.isFolded) {
                 cards = player.getHand();
                 cards.addAll(tableCards);
-                player.setScoreThisRound(matchingValueCheck(cards));
+                player.setScoreThisRound(matchingValueCheck(cards, player.getHand()));
                 player.setScoreThisRound(straight(cards));
                 player.setScoreThisRound(flush(cards));
                 player.setScoreThisRound(straightFlush(cards));//also does royal flush
@@ -32,7 +32,7 @@ public class RankHands {
     }
 
 
-    private static double matchingValueCheck(ArrayList<Card> cards) {//TODO check the logic on high card comparisons
+    private static double matchingValueCheck(ArrayList<Card> cards, ArrayList<Card> hand) {//TODO check the logic on high card comparisons
         Collections.sort(cards);
         int[] valueCounts = new int[13];//this is the possible cause of the error
         for (Card c : cards) {
@@ -50,23 +50,27 @@ public class RankHands {
             }
         }
         if (max == 4) {
-            return 7 + value / 100.0 + highCard(cards) / 100.0;//quads
+            return 7 + value / 100.0 + highCard(cards, hand) / 100.0;//quads
         } else if (max == 3) {
             if (secondToMax > 1) {
                 return 6 + value / 100.0 + secondValue / 10000.0;//full house
             }
-            return 3 + value / 100.0 + highCard(cards) / 100.0;//triple
+            return 3 + value / 100.0 + highCard(cards, hand) / 100.0;//triple
         } else if (max == 2) {
             if (secondToMax == 2) {
-                return 2 + Math.max(value, secondValue) / 100.0 + highCard(cards) / 100.0;//two pair TODO kicker
+                return 2 + Math.max(value, secondValue) / 100.0 + highCard(cards, hand) / 100.0;//two pair TODO kicker
             }
-            return 1 + value / 100.0 + highCard(cards) / 100.0;//pair
-        } else return highCard(cards);//highCard
+            return 1 + value / 100.0 + highCard(cards, hand) / 100.0;//pair
+        } else return highCard(cards, hand);//highCard
     }
 
     private static double highCard(ArrayList<Card> cards) {
         Collections.sort(cards);
         return cards.get(cards.size() - 1).getValue() / 100.0;
+    }
+
+    private static double highCard(ArrayList<Card> cards, ArrayList<Card> hand) {
+        return highCard(cards) + highCard(hand) / 100.0;
     }
 
     private static double straight(ArrayList<Card> cards) {//TODO this doesn't seem to work

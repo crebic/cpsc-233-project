@@ -31,14 +31,17 @@ public class Card implements Comparable {
 
     public String toString() {
         //For showing card images
-        if (value < 11) {
-            return "" + value + suit.charAt(0) + ".png";
+        String relativePath = "./CardFolder/";
+        if (value < 10) {
+            return relativePath + (value+1) + suit.charAt(0) + ".png";
+        } else if (value == 10) {
+            return relativePath + "J" + suit.charAt(0) + ".png";
         } else if (value == 11) {
-            return "J" + suit.charAt(0) + ".png";
+            return relativePath + "Q" + suit.charAt(0) + ".png";
         } else if (value == 12) {
-            return "Q" + suit.charAt(0) + ".png";
+            return relativePath + "K" + suit.charAt(0) + ".png";
         } else {
-            return "K" + suit.charAt(0) + ".png";
+            return relativePath + "1" + suit.charAt(0) + ".png";
         }
     }
 }

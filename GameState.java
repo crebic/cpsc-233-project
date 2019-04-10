@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -15,28 +16,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.util.ArrayList;
 
-import javax.swing.JApplet;
-import javax.swing.JOptionPane;
+//TODO shortlist 1: implement save game
 
-import java.awt.Toolkit;
-import java.awt.Dimension;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-
-import javafx.application.Platform;
-import javafx.scene.*;
-import javafx.stage.*;
-import javafx.geometry.*;
-import javafx.application.*;
-
-//TODO shortlist 1: fix rankhands bugs 2: implement save game 3:ai
-
-//TODO reminders: make blinds?, settings/music
+//TODO reminders: make blinds?, ai, settings/music
 
 public class GameState extends Application {
     //start of instance variables for the game
@@ -51,7 +39,7 @@ public class GameState extends Application {
 
     private int round = 0;
 
-    private int amountToCall = 0;//represents a cumulative amount
+    private int amountToCall = 0;//represents a per round amount
 
     private Player currentPlayer;
 
@@ -100,9 +88,9 @@ public class GameState extends Application {
     private StackPane aiMenuRoot = new StackPane();
     private Scene aiMenuScene = new Scene(aiMenuRoot, screenWidth, screenHeight);
     private Text aiMenuTitle = new Text("Heads Up \nvs.\nCPU ");
-    private Button aiEasyButton = new Button("Easy");//TODO implement button
-    private Button aiMediumButton = new Button("Medium");//TODO implement button
-    private Button aiHardButton = new Button("Hard");//tODO implement button
+    private Button aiStartButton = new Button("Start");
+    private Text aiChipInputLabel = new Text("Enter Starting Chip Amount:");
+    private TextField aiChipInput = new TextField("");
     private Button aiToMainButton = new Button("Back to Main Menu");
 
     private VBox aiMenu = new VBox(35);
@@ -163,7 +151,7 @@ public class GameState extends Application {
 
     //Start of Event Handlers
 
-    public void setEventHandlers() {//TODO replace syntax with lambda expressions
+    public void setEventHandlers() {
 
         //@param we of type window event
         // upon action of hitting the exit in the window it will prompt the user to save.
@@ -192,7 +180,7 @@ public class GameState extends Application {
         });
 
         // brings user back to the main menu after hitting the main menu button
-        backToMainButton.setOnAction(new EventHandler<ActionEvent>() {//TODO this button needs to reset everything
+        backToMainButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 reset();
@@ -323,6 +311,16 @@ public class GameState extends Application {
                     } catch (Exception E) {
                         nextPlayer = playerList.get(0);//In the case that the current player is at the end position
                     }
+                    if (currentPlayer.getName().equals("AI")) {
+                        int aiBet = AI.bet(amountToCall, currentPlayer, playerList, tableCards);
+                        pot += aiBet;
+                        if (aiBet > 0) {
+                            lastPlayerToRaise = currentPlayer;
+                            amountToCall = currentPlayer.getAmountBetThisRound();
+                        }
+                        currentPlayer = playerList.get(0);
+                        nextPlayer = playerList.get(1);
+                    }
                     drawNextTurn();
                     showTableCards(tableCardsBox);
                     showTableCards(stateOfGameDisplayTableCardsBox);
@@ -347,6 +345,32 @@ public class GameState extends Application {
                     primary.close();
                 }
 
+            }
+        });
+
+        aiStartButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    int startingChips = Integer.parseInt(aiChipInput.getText());
+
+                    playerList.add(new Player("1", startingChips));
+                    playerList.add(new Player("AI", startingChips));
+                    deck.deal(playerList, tableCards);
+                    showTableCards(tableCardsBox);
+                    showTableCards(stateOfGameDisplayTableCardsBox);
+                    showMultiplePlayerCards();
+                    leftOfDealer = playerList.get(0);
+                    currentPlayer = leftOfDealer;
+                    lastPlayerToRaise = currentPlayer;
+                    nextPlayer = playerList.get(1);
+                    playerStackLabel.setText("Player: " + currentPlayer.getName() + "\nYour Stack: " + currentPlayer.getChipCount() + "\nPot Investment: " + currentPlayer.potInvestment);
+                    showPlayerCards(currentPlayer);
+                    primary.setScene(inGameScene);
+                    primary.show();
+                } catch (Exception E) {
+                    JOptionPane.showMessageDialog(null, "Invalid Input");
+                }
             }
         });
 
@@ -504,8 +528,14 @@ public class GameState extends Application {
         aiMenuTitle.setFill(Color.WHITE);
         aiMenuTitle.setFont(Font.font("Arial", FontWeight.BOLD, 60));
         aiMenuTitle.setTextAlignment(TextAlignment.CENTER);
+        aiChipInputLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        aiChipInputLabel.setFill(Color.WHITE);
+        aiChipInputLabel.setTextAlignment(TextAlignment.CENTER);
+        aiChipInput.setPrefWidth(200);
+        aiChipInput.setMaxWidth(200);
+        aiChipInput.setMinWidth(200);
         aiMenu.setAlignment(Pos.CENTER);
-        aiMenu.getChildren().addAll(aiMenuTitle, aiEasyButton, aiMediumButton, aiHardButton, aiToMainButton);
+        aiMenu.getChildren().addAll(aiMenuTitle, aiChipInputLabel, aiChipInput, aiStartButton, aiToMainButton);
         aiMenuRoot.getChildren().add(aiMenu);
         //###############end of heads up menu#################
         privacyScreenRoot.setStyle("-fx-background-color: #228B22;");
@@ -688,7 +718,29 @@ public class GameState extends Application {
                 nextPlayer = playerList.get(0);//In the case that the current player is at the end position
             }
         }
-        drawNextTurn();
+        //If the player is an AI automate a turn, else draw the next player's turn
+        if (currentPlayer.getName().equals("AI")) {
+            int aiBet = AI.bet(amountToCall, currentPlayer, playerList, tableCards);
+            pot += aiBet;
+            if (aiBet > 0) {//ai bets
+                if (amountToCall < currentPlayer.getAmountBetThisRound()) {//ai raises
+                    lastPlayerToRaise = currentPlayer;
+                    amountToCall = currentPlayer.getAmountBetThisRound();
+                    currentPlayer = playerList.get(0);
+                    nextPlayer = playerList.get(1);
+                    drawNextTurn();
+                } else {//ai calls
+                    nextRound();
+                    return;
+                }
+            } else if (!currentPlayer.isFolded) {//ai checks
+                nextRound();
+            } else {//ai folds
+                round = 4;
+                nextRound();
+            }
+        } else
+            drawNextTurn();
     }
 
     public void nextRound() {
@@ -701,7 +753,7 @@ public class GameState extends Application {
             if (!leftOfDealer.isFolded) {
                 currentPlayer = leftOfDealer;
             } else {
-                try {//TODO replace these try-catch statements with a seperate method, the method returning the object first
+                try {
                     currentPlayer = playerList.get(playerList.indexOf(leftOfDealer) + 1);
                 } catch (Exception E) {
                     currentPlayer = playerList.get(0);//In the case that the dealer was at the end position
@@ -723,6 +775,17 @@ public class GameState extends Application {
             } while (nextPlayer.isFolded);
             //end of it
             lastPlayerToRaise = currentPlayer;
+            if (currentPlayer.getName().equals("AI")) {
+                int aiBet = AI.bet(amountToCall, currentPlayer, playerList, tableCards);
+                pot += aiBet;
+                if (amountToCall < currentPlayer.getAmountBetThisRound()) {//ai raises
+                    lastPlayerToRaise = currentPlayer;
+                    amountToCall = currentPlayer.getAmountBetThisRound();
+                }
+                currentPlayer = playerList.get(0);
+                nextPlayer = playerList.get(1);
+
+            }
             drawNextTurn();
             round++;
             showTableCards(tableCardsBox);
@@ -736,7 +799,7 @@ public class GameState extends Application {
     }
 
     //method to reset all instance variables once a game is quit
-    public void reset() {//TODO trim redundant reseting from this method
+    public void reset() {
         playerList = new ArrayList<>();
 
         tableCards = new ArrayList<>();
@@ -747,7 +810,7 @@ public class GameState extends Application {
 
         round = 0;
 
-        amountToCall = 0;//represents a cumulative amount
+        amountToCall = 0;
 
         currentPlayer = null;
 
@@ -761,6 +824,7 @@ public class GameState extends Application {
 
         if (stateOfGameDisplay.getChildren().contains(newRoundButton)) {
             stateOfGameDisplay.getChildren().remove(newRoundButton);
+            stateOfGameDisplay.getChildren().add(stateOfGameDisplayButton);//new
         }
     }
 
@@ -781,6 +845,6 @@ public class GameState extends Application {
 }
 
 
-//Bug when a player is eliminated strange patterns develop, privacy screen label is off (fixed?)
+//Bug after reseting a game with an AI, started a new game and clicked look around the table, and there is no back to main button (fixed?)
 
-//Bug one time in a two player game managed to get it to display "6 to call" shouldn't be possible
+//Bug raising the ai and it updates the raise, redraws the turn, no new round and no call by the ai
