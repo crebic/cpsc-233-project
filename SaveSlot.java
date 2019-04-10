@@ -1,6 +1,8 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
+//* this class stores all of the intance variables used across other classes in the game so they can be saved if desired. 
+
 class SaveSlot implements Serializable
 {
     private static final long serialVersionUID = 4L;
