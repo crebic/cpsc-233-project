@@ -1,3 +1,22 @@
+import javafx.application.*;
+import javafx.event.*;
+import javafx.geometry.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.image.*;
+import javafx.scene.layout.*;
+import javafx.scene.paint.*;
+import javafx.scene.text.*;
+import javafx.stage.*;
+import java.util.*;
+import javax.swing.*;
+import java.io.*;
+import java.awt.*;
+import java.lang.*;
+import javafx.geometry.*;
+ /*
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -38,6 +57,7 @@ import javafx.scene.*;
 import javafx.stage.*;
 import javafx.geometry.*;
 import javafx.application.*;
+*/
 
 //TODO shortlist 1: implement save game
 
