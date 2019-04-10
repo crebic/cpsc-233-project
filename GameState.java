@@ -37,7 +37,8 @@ import java.awt.Dimension;
 
 //TODO reminders: make blinds?, ai, settings/music
 
-public class GameState extends Application {
+public class GameState extends Application implements Serializable{
+    private static final long serialVersionUID = 3L;
     //start of instance variables for the game
 
     private static ArrayList<Player> playerList = new ArrayList<>();
