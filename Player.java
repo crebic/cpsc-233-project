@@ -1,7 +1,10 @@
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Player implements Comparable {
+public class Player implements Comparable, Serializable {
 
+    private static final long serialVersionUID = 2L;
+    
     private String name;
 
     private ArrayList<Card> hand;
