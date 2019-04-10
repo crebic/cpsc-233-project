@@ -1,4 +1,7 @@
-public class Card implements Comparable {
+import java.io.Serializable;
+
+public class Card implements Comparable, Serializable {
+    private static final long serialVersionUID = 1L;
     private int value;
     private String suit;
 
