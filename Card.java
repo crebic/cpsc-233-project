@@ -1,7 +1,7 @@
 package game;
 
 import java.io.Serializable;
-//* Authors Sam Robertson 
+//* Authors Group 9
 //* 2018 February 02
 
 
@@ -62,7 +62,7 @@ public class Card implements Comparable, Serializable {
 	*/
     public String toString() {
         //For showing card images
-        String relativePath = "./CardFolder/";
+        String relativePath = "./AssetFolder/";
         if (value < 10) {
             return relativePath + (value+1) + suit.charAt(0) + ".png";
         } else if (value == 10) {
