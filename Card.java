@@ -77,7 +77,7 @@ public class Card implements Comparable, Serializable {
     }
     
       /**
-	*@return, returns a string of the card, ie 10 of clubs is 10c.
+	*@return returns a string of the card, ie 10 of clubs is 10c.
 	*/
     public String toDisplayString() {
         if (value < 11) {
