@@ -1,0 +1,21 @@
+import java.io.*;
+import sun.audio.*;
+
+
+public class audio
+{
+  public static void main(String[] args) 
+  throws Exception
+  {
+    // open the sound file as a Java input stream
+    String songFile = "/home/ugb/quenten.welch1/Desktop/Sound/HaloTheme.wav";
+    InputStream in = new FileInputStream(songFile);
+
+    // create an audiostream from the inputstream
+    AudioStream audioStream = new AudioStream(in);
+
+    // play the audio clip with the audioplayer class
+    AudioPlayer.player.start(audioStream);
+  }
+}
+//* song file should have a path to a downloaded wavfile,
