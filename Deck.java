@@ -5,14 +5,18 @@ import java.util.Random;
 import java.io.Serializable;
 
 public class Deck implements Serializable {
-
+    
+    
+//*instance variables
     private static final long serialVersionUID = 5L;
     private ArrayList<Card> cards = new ArrayList<>();
 
     public Deck() {
         resetDeck();
     }
-
+/**
+* method for resetting the deck (reshuffle)
+*/
     public void resetDeck() {//TODO make private, cut out of gamestate
         cards.clear();
         String suit = "";
@@ -36,18 +40,25 @@ public class Deck implements Serializable {
         }
     }
 
+/**
+*deals cards to the players and to the table
+*@param players an ArrayList of all the players
+*@param table an ArrayList of the table cards
+*/
     public void deal(ArrayList<Player> players, ArrayList<Card> table) {
         Random r = new Random();
-        table.clear();
-        resetDeck();
-        Card c1, c2;
+        table.clear(); //clears the table cards
+        resetDeck(); 
+        Card c1, c2; // every player needs 2 cards
         int sizeOfDeck = 51;//starts at zero for Random.nextInt()
+        //deals 5 random cards to the table
         for (int i = 0; i < 5; i++) {
-            c1 = cards.get(r.nextInt(sizeOfDeck) + 1);//TODO why plus 1 here?
-            table.add(c1);
+            c1 = cards.get(r.nextInt(sizeOfDeck) + 1);//size of deck is 51, add 1 to randomly select 1 of the 52 cards
+            table.add(c1); 
             cards.remove(c1);
             sizeOfDeck--;
         }
+        //deals 2 random cards for every player in the game
         for (Player p : players) {
             p.newHand();
             c1 = cards.get(r.nextInt(sizeOfDeck) + 1);
