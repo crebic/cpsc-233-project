@@ -1,3 +1,5 @@
+package game;
+
 import java.io.Serializable;
 //* Authors Sam Robertson 
 //* 2018 February 02
