@@ -263,7 +263,7 @@ public class GameState extends Application implements Serializable{
         showTableCards(tableCardsBox);
         showTableCards(stateOfGameDisplayTableCardsBox);
         showMultiplePlayerCards();
-        playerStackLabel.setText("Player: " + currentPlayer.getName() + "\nYour Stack: " + currentPlayer.getChipCount() + "\nPot Investment: " + currentPlayer.potInvestment);
+        playerStackLabel.setText("Player: " + currentPlayer.getName() + "\nYour Stack: " + currentPlayer.getChipCount() + "\nPot Investment: " + currentPlayer.getPotInvestment());
         showPlayerCards(currentPlayer);
         primary.setScene(inGameScene);
         primary.show();
@@ -368,7 +368,7 @@ public class GameState extends Application implements Serializable{
                     currentPlayer = leftOfDealer;
                     lastPlayerToRaise = currentPlayer;
                     nextPlayer = playerList.get(1);
-                    playerStackLabel.setText("Player: " + currentPlayer.getName() + "\nYour Stack: " + currentPlayer.getChipCount() + "\nPot Investment: " + currentPlayer.potInvestment);
+                    playerStackLabel.setText("Player: " + currentPlayer.getName() + "\nYour Stack: " + currentPlayer.getChipCount() + "\nPot Investment: " + currentPlayer.getPotInvestment());
                     showPlayerCards(currentPlayer);
                     primary.setScene(inGameScene);
                     primary.show();
@@ -494,7 +494,7 @@ public class GameState extends Application implements Serializable{
                     currentPlayer = leftOfDealer;
                     lastPlayerToRaise = currentPlayer;
                     nextPlayer = playerList.get(1);
-                    playerStackLabel.setText("Player: " + currentPlayer.getName() + "\nYour Stack: " + currentPlayer.getChipCount() + "\nPot Investment: " + currentPlayer.potInvestment);
+                    playerStackLabel.setText("Player: " + currentPlayer.getName() + "\nYour Stack: " + currentPlayer.getChipCount() + "\nPot Investment: " + currentPlayer.getPotInvestment());
                     showPlayerCards(currentPlayer);
                     primary.setScene(inGameScene);
                     primary.show();
@@ -577,7 +577,7 @@ public class GameState extends Application implements Serializable{
                 if (validInputs) {
                     if ((currentPlayer.getChipCount() - sizeOfBet) >= 0) {
                         currentPlayer.setAmountBetThisRound(currentPlayer.getAmountBetThisRound() + sizeOfBet);
-                        currentPlayer.potInvestment += sizeOfBet;//for display
+                        currentPlayer.setPotInvestment(currentPlayer.getPotInvestment() + sizeOfBet);//for display
                         currentPlayer.removeChips(sizeOfBet);
                         pot += sizeOfBet;
                         amountToCall += raiseAmount;
@@ -599,13 +599,13 @@ public class GameState extends Application implements Serializable{
                 int call = amountToCall - currentPlayer.getAmountBetThisRound();
                 if (call <= currentPlayer.getChipCount()) {
                     currentPlayer.setAmountBetThisRound(currentPlayer.getAmountBetThisRound() + call);
-                    currentPlayer.potInvestment += call;//for display
+                    currentPlayer.setPotInvestment(currentPlayer.getPotInvestment() + call);//for display
                     pot += call;
                     currentPlayer.removeChips(call);
                 } else {
                     //Special case of going all in
                     currentPlayer.setAmountBetThisRound(currentPlayer.getAmountBetThisRound() + currentPlayer.getChipCount());
-                    currentPlayer.potInvestment += currentPlayer.getAmountBetThisRound();
+                    currentPlayer.setPotInvestment(currentPlayer.getPotInvestment() + currentPlayer.getAmountBetThisRound());
                     pot += currentPlayer.getChipCount();
                     currentPlayer.removeChips(currentPlayer.getChipCount());
                 }
@@ -714,7 +714,7 @@ public class GameState extends Application implements Serializable{
         for (Player player : playerList) {
             if (player != currentPlayer && !player.isFolded) {
                 VBox thisPlayerInfo = new VBox();
-                Text thisPlayerStackLabel = new Text("Player: " + player.getName() + "\nStack: " + player.getChipCount() + "\nPot Investment: " + player.potInvestment);
+                Text thisPlayerStackLabel = new Text("Player: " + player.getName() + "\nStack: " + player.getChipCount() + "\nPot Investment: " + player.getPotInvestment());
                 thisPlayerStackLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14));
                 thisPlayerStackLabel.setFill(Color.WHITE);
                 HBox imageBox = new HBox();
@@ -783,7 +783,7 @@ public class GameState extends Application implements Serializable{
         for (Player player : playerList) {
             if (!player.isFolded) {
                 VBox thisPlayerInfo = new VBox();
-                Text thisPlayerStackLabel = new Text("Player: " + player.getName() + "\nStack: " + player.getChipCount() + "\nPot Investment: " + player.potInvestment);
+                Text thisPlayerStackLabel = new Text("Player: " + player.getName() + "\nStack: " + player.getChipCount() + "\nPot Investment: " + player.getPotInvestment());
                 thisPlayerStackLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14));
                 thisPlayerStackLabel.setFill(Color.WHITE);
 
@@ -823,7 +823,7 @@ public class GameState extends Application implements Serializable{
         primary.setScene(privacyScreenScene);
         primary.show();
 
-        playerStackLabel.setText("Player: " + currentPlayer.getName() + "\nYour Stack: " + currentPlayer.getChipCount() + "\nPot Investment: " + currentPlayer.potInvestment + "\n" + (amountToCall - currentPlayer.getAmountBetThisRound()) + " to Call");
+        playerStackLabel.setText("Player: " + currentPlayer.getName() + "\nYour Stack: " + currentPlayer.getChipCount() + "\nPot Investment: " + currentPlayer.getPotInvestment() + "\n" + (amountToCall - currentPlayer.getAmountBetThisRound()) + " to Call");
         showPlayerCards(currentPlayer);
         showMultiplePlayerCards();
     }
