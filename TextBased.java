@@ -3,8 +3,14 @@ package game;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class TextBased {
+/**
+* Author Group 9
+*Last edited 2019 April 11
+*/
 
+public class TextBased {
+    
+    //instance variables to track the state of the game
     private static Deck deck = new Deck();
 
     private static int round = 0;
@@ -26,6 +32,8 @@ public class TextBased {
     private static ArrayList<Card> tableCards = new ArrayList<>();
 
     private static ArrayList<Player> winnerList = new ArrayList<>();
+    
+    //methods to textually render the cards
 
     private static void displayTableCards() {
         System.out.println("Table Cards: ");
@@ -41,7 +49,8 @@ public class TextBased {
         System.out.println((amountToCall - currentPlayer.getAmountBetThisRound()) + " to call");
         System.out.println("\nCards:\n" + player.getHand().get(0).toDisplayString() + " " + player.getHand().get(1).toDisplayString());
     }
-
+    
+    //methods to update the state of the game based on player moves
     public static void check() {
         if (amountToCall == currentPlayer.getAmountBetThisRound()) {
             if (nextPlayer == lastPlayerToRaise)
@@ -112,7 +121,8 @@ public class TextBased {
             nextRound();
         }
     }
-
+    
+    //method to draw the next players turn
     public static void nextTurn() {
         Player temporaryPlayer = nextPlayer;
         nextPlayer = currentPlayer;
@@ -125,11 +135,13 @@ public class TextBased {
     }
 
     public static void privacyScreen() {
+        //draws a visible partition to avoid one player seeing the others' hand
         for (int i = 0; i < 25; i++)
             System.out.println("###############################################");
 
     }
-
+    
+    //draws the next round ie. flop, river, turn
     public static void nextRound() {
         amountToCall = 0;
         for (Player player : playerList) {
@@ -182,6 +194,7 @@ public class TextBased {
     }
 
     public static void showResult() {
+        //Displays info on who won the hand and why
         privacyScreen();
         System.out.println("Result of this Hand:");
         displayTableCards();
@@ -207,6 +220,7 @@ public class TextBased {
     }
 
     private static void getMove() {
+        //get's a human's input on what they want to do with their hand
         System.out.println("It's your turn, choose an option");
         System.out.println("1: fold 2: call 3: raise 4: check");
         Scanner keyInput = new Scanner(System.in);
@@ -231,6 +245,7 @@ public class TextBased {
     }
 
     private static void initialize() {
+        //starts the game
         playerList.add(currentPlayer);
         playerList.add(nextPlayer);
         deck.deal(playerList, tableCards);
