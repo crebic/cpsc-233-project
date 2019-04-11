@@ -1,3 +1,5 @@
+package game;
+
 import javafx.application.*;
 import javafx.event.*;
 import javafx.geometry.*;
