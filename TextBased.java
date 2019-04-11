@@ -37,7 +37,7 @@ public class TextBased {
     private static void displayPlayerCards(Player player) {
         System.out.println("\nPlayer " + player.getName() + " Info:");
         System.out.println("Stack: " + player.getChipCount());
-        System.out.println("Pot Investment: " + player.potInvestment);
+        System.out.println("Pot Investment: " + player.getPotInvestment());
         System.out.println((amountToCall - currentPlayer.getAmountBetThisRound()) + " to call");
         System.out.println("\nCards:\n" + player.getHand().get(0).toDisplayString() + " " + player.getHand().get(1).toDisplayString());
     }
@@ -58,7 +58,7 @@ public class TextBased {
         int call = amountToCall - currentPlayer.getAmountBetThisRound();
         if (call <= currentPlayer.getChipCount()) {
             currentPlayer.setAmountBetThisRound(currentPlayer.getAmountBetThisRound() + call);
-            currentPlayer.potInvestment += call;//for display
+            currentPlayer.setPotInvestment(currentPlayer.getPotInvestment() + call);//for display
             pot += call;
             currentPlayer.removeChips(call);
             if (lastPlayerToRaise == currentPlayer)
@@ -68,7 +68,7 @@ public class TextBased {
         } else {
             //Special case of going all in
             currentPlayer.setAmountBetThisRound(currentPlayer.getAmountBetThisRound() + currentPlayer.getChipCount());
-            currentPlayer.potInvestment += currentPlayer.getAmountBetThisRound();
+            currentPlayer.setPotInvestment(currentPlayer.getPotInvestment() + currentPlayer.getAmountBetThisRound());
             pot += currentPlayer.getChipCount();
             currentPlayer.removeChips(currentPlayer.getChipCount());
             round = 2;
@@ -86,7 +86,7 @@ public class TextBased {
             int sizeOfBet = raiseAmount + amountToCall - currentPlayer.getAmountBetThisRound();
             if ((currentPlayer.getChipCount() - sizeOfBet) >= 0) {
                 currentPlayer.setAmountBetThisRound(currentPlayer.getAmountBetThisRound() + sizeOfBet);
-                currentPlayer.potInvestment += sizeOfBet;//for display
+                currentPlayer.setPotInvestment(currentPlayer.getPotInvestment() + sizeOfBet);//for display
                 currentPlayer.removeChips(sizeOfBet);
                 pot += sizeOfBet;
                 amountToCall += raiseAmount;
