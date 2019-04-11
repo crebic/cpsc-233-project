@@ -5,7 +5,7 @@
 5. Right click on the folder and "Extract All" (extract the folder to whatever location of your choosing, usually into the same folder as the ZIP)
 6. Open Command Prompt to and change the directory to the folder you extracted
 7. Compile all the files in the folder (using the command: java -d . *.java )
-8. Run the GameState (using the command: java texasholdem.GameState)
+8. Run the GameState (using the command: java game.GameState)
 
 
 1. The graphical version of the game is contained in the GUIVersion directory, which relies on the Picturers directory inside of it to run the game.
