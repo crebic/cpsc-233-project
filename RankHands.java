@@ -44,11 +44,16 @@ public class RankHands {
             if (valueCounts[i] > max) {
                 max = valueCounts[i];
                 value = i + 1;
-            } else if (valueCounts[i] > secondToMax) {
-                secondToMax = valueCounts[i];
-                secondValue = i + 1;
             }
         }
+        //
+       for (int j = 0; j < valueCounts.length; j++){
+           if (valueCounts[j] > secondToMax && j != value - 1) {
+                secondToMax = valueCounts[j];
+                secondValue = j + 1;
+            }
+       }
+        //
         if (max == 4) {
             return 7 + value / 100.0 + highCard(cards, hand) / 100.0;//quads
         } else if (max == 3) {
