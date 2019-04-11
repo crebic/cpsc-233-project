@@ -15,11 +15,11 @@ public class Player implements Comparable, Serializable {
 
     private int amountBetThisRound = 0;//TODO reset every round?
 
-    public int potInvestment = 0;//for display
+    private int potInvestment = 0;//for display
 
     private double scoreThisRound;
 
-    public boolean isFolded = false;
+    protected boolean isFolded = false;
 
     public Player(String ns, int c) {
         hand = new ArrayList<>();
@@ -60,6 +60,14 @@ public class Player implements Comparable, Serializable {
 
     public String getName() {
         return name;
+    }
+    
+    public int getPotInvestment(){
+        return potInvestment;
+    }
+    
+    public void setPotInvestment(int newPotInvestment){
+        potInvestment = newPotInvestment;
     }
 
     public void addChips(int amount) {
