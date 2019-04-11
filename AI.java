@@ -1,9 +1,11 @@
+package game;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class AI {
 
-    //TODO 2:AI chekcing loop 3:Integrate with GameState
+    //TODO 2:AI checking loop 3:Integrate with GameState
 
 
     public static int bet(int amountToCall, Player self, ArrayList<Player> playerList, ArrayList<Card> tableCards) {//TODOtwo clicks to update?
