@@ -64,9 +64,10 @@ import javafx.geometry.*;
 import javafx.application.*;
 */
 
-//TODO shortlist 1: implement save game
-
-//TODO reminders: make blinds?, ai, settings/music
+/**
+*@authors Sam R, Rick, Jordan, Jesse, Quenten
+*@version 4, last edited  April 11 2019.
+*/
 
 public class GameState extends Application implements Serializable{
     private static final long serialVersionUID = 3L;
@@ -108,8 +109,7 @@ public class GameState extends Application implements Serializable{
     private Scene mainMenuScene = new Scene(mainMenuRoot, screenWidth, screenHeight);
     private Button newGameButton = new Button("Start New Game");
     private Button aiGameButton = new Button("Play vs. CPU");
-    private Button loadGameButton = new Button("Load Game");//TODO implement this button
-    private Button settingsButton = new Button("Settings");//TODO implement this button
+    private Button loadGameButton = new Button("Load Game");
     private Text mainMenuTitle = new Text("Welcome to \nTexas Hold 'em!");
 
     private VBox mainMenu = new VBox(30);
@@ -193,7 +193,8 @@ public class GameState extends Application implements Serializable{
     //end of instance variables for the game
     //////
     private SaveSlot savedData;
-
+    
+    //* method for creating a saveslot
     public void createSaveSlot()
     {
         SaveSlot saveData = new SaveSlot(playerList, tableCards, pot, deck, round, amountToCall, currentPlayer, nextPlayer, lastPlayerToRaise, leftOfDealer);
@@ -201,6 +202,10 @@ public class GameState extends Application implements Serializable{
     }
     
     //Start of Event Handlers
+    /**
+    *@param saveData savedata hold the instance of every relavent variable at the time of saving
+    * method writes it to a file for later retrieval 
+    */
     public void saveGame(SaveSlot saveData)
     {
         //saves only when end game button pressed as of now TODORICK
@@ -222,6 +227,8 @@ public class GameState extends Application implements Serializable{
             System.out.println("ERROR OCCURRED WHILE SAVING DATA");
         }
     }
+    
+    //* method for retrieving instance variable data from the savefile 
     public void loadGame()
     {
         try{
@@ -245,7 +252,9 @@ public class GameState extends Application implements Serializable{
             System.out.println("ERROR OCCURRED WHILE LOADING DATA");
         }
     }
-
+    
+    
+    //* sets up the instance variables of a game based on the data from the last save file found. 
     public void loadAndProcessSavedData()
     {
         this.playerList = savedData.getPlayerList();
@@ -278,8 +287,10 @@ public class GameState extends Application implements Serializable{
 
     public void setEventHandlers() {
 
-        //@param we of type window event
-        // upon action of hitting the exit in the window it will prompt the user to save.
+    /**
+    *@param we detects button press
+    * prompts the user before exiting the game to save an instance of the gamestate. 
+    */
 
         primary.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
@@ -293,6 +304,7 @@ public class GameState extends Application implements Serializable{
                 }
             }
         });
+        //*event handler for pressing the load game button
         loadGameButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -339,7 +351,7 @@ public class GameState extends Application implements Serializable{
             }
         });
 
-        // button that navigates from main manue to ai menu screen (bot difficulty etc)
+        // button that navigates from main menu to ai menu screen (bot difficulty etc)
         aiGameButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -629,7 +641,7 @@ public class GameState extends Application implements Serializable{
         mainMenuTitle.setFill(Color.WHITE);
         mainMenuTitle.setFont(Font.font("Arial", FontWeight.BOLD, 60));
         mainMenuTitle.setTextAlignment(TextAlignment.CENTER);
-        mainMenu.getChildren().addAll(mainMenuTitle, newGameButton, aiGameButton, loadGameButton, settingsButton, endGameButton);
+        mainMenu.getChildren().addAll(mainMenuTitle, newGameButton, aiGameButton, loadGameButton, endGameButton);
         mainMenu.setAlignment(Pos.CENTER);
         mainMenuRoot.getChildren().add(mainMenu);
         //###############end of main menu###############
@@ -732,7 +744,9 @@ public class GameState extends Application implements Serializable{
             }
         }
     }
-
+    /**
+    *@param cardBox Graphics for a card
+    */
     private void showTableCards(HBox cardBox) {
         cardBox.getChildren().clear();
         Image cardFront;
@@ -756,6 +770,10 @@ public class GameState extends Application implements Serializable{
         }
     }
 
+    /**
+    *@param player the player object
+    *reveals facedown cards to everyone
+    */
     private void showPlayerCards(Player player) {
         playerCardsBox.getChildren().clear();
         ImageView firstCard = new ImageView();
@@ -830,7 +848,7 @@ public class GameState extends Application implements Serializable{
 
     //end of helper methods for next turn, next round
 
-
+    //changes the active or "hot seat" player
     private void nextTurn() {
         //these loops move through the player list until the next player for this hand that isn't folded is current, and the next player after that is determined
         do {
@@ -872,7 +890,8 @@ public class GameState extends Application implements Serializable{
         } else
             drawNextTurn();
     }
-
+    
+    //method that cycles to the next betting round in a standard hand
     public void nextRound() {
         amountToCall = 0;
         for (Player player : playerList) {
