@@ -62,7 +62,7 @@ public class Card implements Comparable, Serializable {
 	*/
     public String toString() {
         //For showing card images
-        String relativePath = "./AssetFolder/";
+        String relativePath = "./CardFolder/";
         if (value < 10) {
             return relativePath + (value+1) + suit.charAt(0) + ".png";
         } else if (value == 10) {
