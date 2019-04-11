@@ -32,11 +32,11 @@ public class RankHands {
     }
 
 
-    private static double matchingValueCheck(ArrayList<Card> cards, ArrayList<Card> hand) {//TODO check the logic on high card comparisons
+    private static double matchingValueCheck(ArrayList<Card> cards, ArrayList<Card> hand) {
         Collections.sort(cards);
-        int[] valueCounts = new int[13];//this is the possible cause of the error
+        int[] valueCounts = new int[13];
         for (Card c : cards) {
-            valueCounts[c.getValue() - 1]++;//TODO might be a not yet initialized error
+            valueCounts[c.getValue() - 1]++;
         }
         int max = 0, secondToMax = 0;
         int value = 0, secondValue = 0;
@@ -63,7 +63,7 @@ public class RankHands {
             return 3 + value / 100.0 + highCard(cards, hand) / 100.0;//triple
         } else if (max == 2) {
             if (secondToMax == 2) {
-                return 2 + Math.max(value, secondValue) / 100.0 + highCard(cards, hand) / 100.0;//two pair TODO kicker
+                return 2 + Math.max(value, secondValue) / 100.0 + highCard(cards, hand) / 100.0;//two pair
             }
             return 1 + value / 100.0 + highCard(cards, hand) / 100.0;//pair
         } else return highCard(cards, hand);//highCard
@@ -78,14 +78,14 @@ public class RankHands {
         return highCard(cards) + highCard(hand) / 100.0;
     }
 
-    private static double straight(ArrayList<Card> cards) {//TODO this doesn't seem to work
+    private static double straight(ArrayList<Card> cards) {
         Collections.sort(cards);
         int cardsInARow = 0, highestValue = 0;
         for (int i = 0; i < cards.size() - 1; i++) {
             if (cards.get(i + 1).getValue() - 1 == cards.get(i).getValue()) {
                 cardsInARow++;
                 highestValue = cards.get(i + 1).getValue();
-            } else if (cardsInARow < 5) {//to prevent counting seperated streak? TODO test
+            } else if (cardsInARow < 5) {//to prevent counting seperated streak
                 cardsInARow = 0;
             }
         }
@@ -147,7 +147,7 @@ public class RankHands {
             ArrayList<Card> clubs = new ArrayList<>();
             ArrayList<Card> diamonds = new ArrayList<>();
 
-            for (Card c : cards) {//TODO not sure if this switch statement is better then the if statement in flush
+            for (Card c : cards) {
                 switch (c.getSuit()) {
                     case "Hearts":
                         hearts.add(c);
