@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
+ *@Author T09 G1
+ *Version 1, last edited April 11, 2019 
  * This class stores all of the intance variables used across other 
  * classes in the game so they can be saved if desired.
  */
