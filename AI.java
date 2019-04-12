@@ -17,7 +17,7 @@ public class AI {
         if (!self.isFolded) {
             if (winnerList.contains(self)) {
                 //Strategies for winning
-                if (thoughtOutcome > 0.96 && self.potInvestment < (0.3 * chips)) {
+                if (thoughtOutcome > 0.96 && self.getPotInvestment() < (0.3 * chips)) {
                     betSize = 0;
                 } else if (thoughtOutcome > 0.35) {
                     if (amountToCall < (chips / 5))
@@ -47,7 +47,7 @@ public class AI {
             }
             self.setAmountBetThisRound(self.getAmountBetThisRound() + betSize);
             self.removeChips(betSize);
-            self.potInvestment += betSize;
+            self.getPotInvestment() += betSize;
         }
         return betSize;
 
