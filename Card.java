@@ -63,6 +63,7 @@ public class Card implements Comparable, Serializable {
     public String toString() {
         //For showing card images
         String relativePath = "./CardFolder/";
+	//Create the image path in the cardfolder ex: ./CardFolder/4C.png
         if (value < 10) {
             return relativePath + (value+1) + suit.charAt(0) + ".png";
         } else if (value == 10) {
@@ -80,6 +81,7 @@ public class Card implements Comparable, Serializable {
 	*@return returns a string of the card, ie 10 of clubs is 10c.
 	*/
     public String toDisplayString() {
+	//formats the value of the card to a readable string
         if (value < 11) {
             return "" + value + suit.charAt(0);
         } else if (value == 11) {
