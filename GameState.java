@@ -327,7 +327,7 @@ public class GameState extends Application implements Serializable{
             public void handle(ActionEvent event) {
                 try {
                     int numberOfPlayers = Integer.parseInt(playerInput.getText());
-                    if (numberOfPlayers <= 1) throw new Exception();
+                    if (numberOfPlayers <= 1 || numberOfPlayers >= 20) throw new Exception();
                     int startingChips = Integer.parseInt(chipInput.getText());
                     for (int i = 1; i <= numberOfPlayers; i++) {
                         playerList.add(new Player("" + i, startingChips));//add players with starting chips
