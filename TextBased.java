@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 /**
 * Author T09 Group 1
-*Last edited 2019 April 11
+*Last edited 2019 April 11 Version 4
 * Class is for running all of the logic on the text based version of our game 
 */
 public class TextBased {
