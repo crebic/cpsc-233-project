@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
-* Author Group 9
+* Author T09 Group 1
 *Last edited 2019 April 11
+* Class is for running all of the logic on the text based version of our game 
 */
-
 public class TextBased {
     
     //instance variables to track the state of the game
@@ -34,7 +34,6 @@ public class TextBased {
     private static ArrayList<Player> winnerList = new ArrayList<>();
     
     //methods to textually render the cards
-
     private static void displayTableCards() {
         if (round > 0){
         System.out.println("Table Cards: ");
@@ -44,6 +43,7 @@ public class TextBased {
         }
     }
 
+    //method to show the player cards 
     private static void displayPlayerCards(Player player) {
         System.out.println("\nPlayer " + player.getName() + " Info:");
         System.out.println("Stack: " + player.getChipCount());
@@ -65,6 +65,7 @@ public class TextBased {
         }
     }
 
+    //method for the call turn option
     public static void call() {
         int call = amountToCall - currentPlayer.getAmountBetThisRound();
         if (call <= currentPlayer.getChipCount()) {
@@ -87,6 +88,7 @@ public class TextBased {
         }
     }
 
+    //method for the raise turn option
     public static void raise() {
         System.out.println("Enter an amount to raise");
         Scanner keyInput = new Scanner(System.in);
@@ -113,6 +115,7 @@ public class TextBased {
         }
     }
 
+    //method for the fold turn option
     public static void fold() {
         if (currentPlayer.getChipCount() == 0) {
             System.out.println("Can't fold, all in");
@@ -136,6 +139,7 @@ public class TextBased {
         getMove();
     }
 
+    //method to create a barrier to prevent other players from seeing each others hands 
     public static void privacyScreen() {
         //draws a visible partition to avoid one player seeing the others' hand
         for (int i = 0; i < 25; i++)
@@ -195,8 +199,8 @@ public class TextBased {
         }
     }
 
+    //method to show the end round result (winners, chips, etc)
     public static void showResult() {
-        //Displays info on who won the hand and why
         privacyScreen();
         System.out.println("Result of this Hand:");
         displayTableCards();
@@ -221,6 +225,7 @@ public class TextBased {
         }
     }
 
+    //method gets turn input from player
     private static void getMove() {
         //get's a human's input on what they want to do with their hand
         System.out.println("It's your turn, choose an option");
@@ -246,6 +251,7 @@ public class TextBased {
         }
     }
 
+    //method starts the game 
     private static void initialize() {
         //starts the game
         playerList.add(currentPlayer);
@@ -256,6 +262,7 @@ public class TextBased {
         startGame.next();
     }
 
+    //main method
     public static void main(String[] args) {
         initialize();
         displayTableCards();
