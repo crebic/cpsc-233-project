@@ -21,6 +21,48 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+/*
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import java.util.ArrayList;
+import javax.swing.JApplet;
+import javax.swing.JOptionPane;
+import java.awt.Toolkit;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+import java.io.PrintWriter;
+import java.io.Serializable;
+import java.awt.Dimension;
+import java.lang.*;
+import javafx.application.Platform;
+import javafx.scene.*;
+import javafx.stage.*;
+import javafx.geometry.*;
+import javafx.application.*;
+*/
 
 /**
 *@Author Sam , Rick, Jordan, Jesse, Quenten T09 G1
@@ -186,9 +228,7 @@ public class GameState extends Application implements Serializable{
         }
     }
     
-    /** 
-     * Method for retrieving instance variable data from the savefile 
-     */
+    //* method for retrieving instance variable data from the savefile 
     public void loadGame()
     {
         try{
@@ -214,9 +254,7 @@ public class GameState extends Application implements Serializable{
     }
     
     
-    /**
-     * Sets up the instance variables of a game based on the data from the last save file found. 
-     */
+    //* sets up the instance variables of a game based on the data from the last save file found. 
     public void loadAndProcessSavedData()
     {
         //set all data and GUI to saved data
@@ -240,9 +278,7 @@ public class GameState extends Application implements Serializable{
         primary.setScene(inGameScene);
         primary.show();
     }//////
-    
-    /**
-     * @return the amount in the pot.
+
     public int getPot()
     {
         return pot;
