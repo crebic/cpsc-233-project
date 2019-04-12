@@ -1,7 +1,7 @@
 package game;
 
 import java.io.Serializable;
-/* @Author Tutorial 09 Group 1
+/* @Author Tutorial 09 Group 1 Version 2
 * Last edited April 10, 2019
 * Class is for creating an object that represents a card, holding the suit value and numerical value 
 */
