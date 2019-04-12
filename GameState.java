@@ -224,7 +224,7 @@ public class GameState extends Application implements Serializable{
         }
         catch(Exception e)
         {
-            System.out.println("ERROR OCCURRED WHILE SAVING DATA");
+            JOptionPane.showMessageDialog(null, "ERROR OCCURED WHILE SAVING DATA");
         }
     }
     
@@ -245,11 +245,11 @@ public class GameState extends Application implements Serializable{
         }
         catch(FileNotFoundException e)
         {
-            System.out.println("FILE NOT FOUND");
+            JOptionPane.showMessageDialog(null, "FILE NOT FOUND");
         }
         catch(Exception e)
         {
-            System.out.println("ERROR OCCURRED WHILE LOADING DATA");
+            JOptionPane.showMessageDialog(null, "ERROR OCCURED WHILE LOADING DATA");
         }
     }
     
