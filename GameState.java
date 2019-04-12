@@ -279,6 +279,8 @@ public class GameState extends Application implements Serializable{
         primary.show();
     }//////
 
+    //@Return int - pot amount
+    //Returns the amount in the pot 
     public int getPot()
     {
         return pot;
@@ -725,6 +727,7 @@ public class GameState extends Application implements Serializable{
         //###############end of win screen################
     }
 
+    //Shows card and information for multiple players
     private void showMultiplePlayerCards() {
         multiplePlayerInfoBox.getChildren().clear();
         for (Player player : playerList) {
@@ -796,10 +799,11 @@ public class GameState extends Application implements Serializable{
         secondCard.setImage(imageTwo);
         playerCardsBox.getChildren().add(secondCard);
     }
+    
     //start of helper methods for next turn, next round
 
+    //shows the state of game screen after configuring it to display the result of the hand
     private void showHandResult() {
-        //shows the state of game screen after configuring it to display the result of the hand
         stateOfGameDisplay.getChildren().remove(stateOfGameDisplayButton);
         stateOfGameDisplay.getChildren().add(newRoundButton);
         multiplePlayerInfoBox.getChildren().clear();
@@ -984,10 +988,12 @@ public class GameState extends Application implements Serializable{
 
 //End of GameState methods
 
+    //Main method
     public static void main(String[] args) {
         launch(args);
     }
 
+    //Runs the javafx start
     public void start(Stage primaryStage) throws Exception {
         primary = primaryStage;
         initialize();
