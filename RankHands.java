@@ -9,7 +9,7 @@ public class RankHands {
     public static ArrayList<Player> rankHands(ArrayList<Player> players, ArrayList<Card> tableCards) {
         ArrayList<Card> cards;
         for (Player player : players) {
-            if (!player.isFolded) {
+            if (!player.isFolded) { //gets the hands and scores them accordingly if the player is not folded
                 cards = player.getHand();
                 cards.addAll(tableCards);
                 player.setScoreThisRound(matchingValueCheck(cards, player.getHand()));
@@ -22,12 +22,12 @@ public class RankHands {
         ArrayList<Player> winners = new ArrayList<>();
         for (Player player : players) {
             if (player.getScoreThisRound() > maxScore) {
-                maxScore = player.getScoreThisRound();
+                maxScore = player.getScoreThisRound(); //the max score was set by the current player, update max score
             }
         }
         for (Player player : players) {
             if (player.getScoreThisRound() == maxScore) {
-                winners.add(player);
+                winners.add(player); //the current player has the highest score, therefore is the winner
             }
         }
         return winners;
@@ -44,7 +44,7 @@ public class RankHands {
         int value = 0, secondValue = 0;
         for (int i = 0; i < valueCounts.length; i++) {
             if (valueCounts[i] > max) {
-                max = valueCounts[i];
+                max = valueCounts[i]; //set the new max
                 value = i + 1;
             }
         }
@@ -73,11 +73,11 @@ public class RankHands {
 
     private static double highCard(ArrayList<Card> cards) {
         Collections.sort(cards);
-        return cards.get(cards.size() - 1).getValue() / 100.0;
+        return cards.get(cards.size() - 1).getValue() / 100.0;//score for a high card
     }
 
     private static double highCard(ArrayList<Card> cards, ArrayList<Card> hand) {
-        return highCard(cards) + highCard(hand) / 100.0;
+        return highCard(cards) + highCard(hand) / 100.0; //score for a high card
     }
 
     private static double straight(ArrayList<Card> cards) {
@@ -114,7 +114,7 @@ public class RankHands {
         ArrayList<Card> clubs = new ArrayList<>();
         ArrayList<Card> diamonds = new ArrayList<>();
 
-        for (Card c : cards) {
+        for (Card c : cards) {// check the suit of each card and correspondingly add them to the proper suit list
             if (c.getSuit().equals("Hearts")) {
                 hearts.add(c);
             } else if (c.getSuit().equals("Spades")) {
@@ -125,6 +125,7 @@ public class RankHands {
                 diamonds.add(c);
             }
         }
+        //check for each suit if there occurs five of the same suit with the table cards and player hands
         if (hearts.size() > 4) {
             Collections.sort(hearts);
             return 5 + hearts.get(hearts.size() - 1).getValue() / 100.0;
@@ -149,7 +150,7 @@ public class RankHands {
             ArrayList<Card> clubs = new ArrayList<>();
             ArrayList<Card> diamonds = new ArrayList<>();
 
-            for (Card c : cards) {
+            for (Card c : cards) { // check the suit of each card and correspondingly add them to the proper suit list
                 switch (c.getSuit()) {
                     case "Hearts":
                         hearts.add(c);
