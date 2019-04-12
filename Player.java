@@ -38,6 +38,7 @@ public class Player implements Comparable, Serializable {
     }
 
     public void newHand() {
+        //when there is a new hand, reset the hand and all player values for the round
         potInvestment = 0;
         hand.clear();
         scoreThisRound = 0;
@@ -83,7 +84,7 @@ public class Player implements Comparable, Serializable {
         hand.add(c2);
     }
 
-    public ArrayList<Card> getHand() {
+    public ArrayList<Card> getHand() {//returns the players hand
         ArrayList<Card> handCopy = new ArrayList<>();
         for (Card c : hand) {
             handCopy.add(new Card(c));
