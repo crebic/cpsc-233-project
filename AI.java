@@ -47,7 +47,7 @@ public class AI {
             }
             self.setAmountBetThisRound(self.getAmountBetThisRound() + betSize);
             self.removeChips(betSize);
-            self.getPotInvestment() += betSize;
+            self.setPotInvestment(self.getPotInvestment() + betSize);
         }
         return betSize;
 
