@@ -142,32 +142,7 @@ public class RankHands {
     private static double straightFlush(ArrayList<Card> cards) {
         //TODO straightFlush
         if (straight(cards) > 4 && flush(cards) > 5) {
-            ArrayList<Card> hearts = new ArrayList<>();
-            ArrayList<Card> spades = new ArrayList<>();
-            ArrayList<Card> clubs = new ArrayList<>();
-            ArrayList<Card> diamonds = new ArrayList<>();
-
-            for (Card c : cards) {
-                if (c.getSuit().equals("H")) {
-                    hearts.add(c);
-                } else if (c.getSuit().equals("S")) {
-                    spades.add(c);
-                } else if (c.getSuit().equals("C")) {
-                    clubs.add(c);
-                } else if (c.getSuit().equals("D")) {
-                    diamonds.add(c);
-                }
-            }
-            //return a total value of 8+the highcard used in the straight
-            if (hearts.size() > 4) {
-                return 4 + straight(hearts);
-            } else if (clubs.size() > 4) {
-                return 4 + straight(clubs);
-            } else if (spades.size() > 4) {
-                return 4 + straight(spades);
-            } else if (diamonds.size() > 4) {
-                return 4 + straight(diamonds);
-            }
+            return 8;
         }
         return 0;
     }
