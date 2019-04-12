@@ -33,6 +33,7 @@ class SaveSlot implements Serializable
     public SaveSlot (ArrayList<Player> playerList, ArrayList<Card> tableCards, int pot, Deck deck, int round, int amountToCall, Player currentPlayer, Player nextPlayer, Player lastPlayerToRaise, Player leftOfDealer)
     {
         super();
+        //set all values as kind of a storing of all the gamestate values, this saveslot object will be serialized so we can efficiently extract all saved data from it using the below getters
         this.playerList = playerList;
         this.tableCards = tableCards;
         this.pot = pot;
