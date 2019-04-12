@@ -218,7 +218,7 @@ public class GameState extends Application implements Serializable{
             FileOutputStream fileStream = new FileOutputStream(saveName);
             BufferedOutputStream bufferedStream = new BufferedOutputStream(fileStream);
             ObjectOutputStream objectStream = new ObjectOutputStream(bufferedStream);
-            objectStream.writeObject(saveData);
+            objectStream.writeObject(saveData);//write the serialized object saveData to the saved text file
             objectStream.close();
             fileStream.close();
         }
@@ -238,7 +238,7 @@ public class GameState extends Application implements Serializable{
             ObjectInputStream objectStream = new ObjectInputStream(fileStream);
 
             savedData = (SaveSlot) objectStream.readObject();
-            loadAndProcessSavedData();
+            loadAndProcessSavedData(); //load the data retrieved from the saved text file
 
             objectStream.close();
             fileStream.close();
@@ -257,6 +257,7 @@ public class GameState extends Application implements Serializable{
     //* sets up the instance variables of a game based on the data from the last save file found. 
     public void loadAndProcessSavedData()
     {
+        //set all data and GUI to saved data
         this.playerList = savedData.getPlayerList();
         this.tableCards = savedData.getTableCards();
         this.pot = savedData.getPot();
@@ -278,7 +279,6 @@ public class GameState extends Application implements Serializable{
         primary.show();
     }//////
 
-    //TODORICK testing purposes only
     public int getPot()
     {
         return pot;
@@ -296,11 +296,11 @@ public class GameState extends Application implements Serializable{
             public void handle(WindowEvent we) {
                 int option = JOptionPane.showConfirmDialog(null, "Would you Like to Save Before Exiting?");
                 if (option == 0) {
-                    createSaveSlot();
+                    createSaveSlot(); //save game
                 } else if (option == 1) {
-                    primary.close();
+                    primary.close(); //dont save
                 } else {
-                    we.consume();
+                    we.consume();//dont save, resume playing
                 }
             }
         });
@@ -308,7 +308,7 @@ public class GameState extends Application implements Serializable{
         loadGameButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                loadGame();
+                loadGame(); //loads the constant saved data text file
             }
         });
         // if the user hits the new game button it will bring them to a new menu screen.
@@ -370,8 +370,9 @@ public class GameState extends Application implements Serializable{
                     if (numberOfPlayers <= 1) throw new Exception();
                     int startingChips = Integer.parseInt(chipInput.getText());
                     for (int i = 1; i <= numberOfPlayers; i++) {
-                        playerList.add(new Player("" + i, startingChips));
+                        playerList.add(new Player("" + i, startingChips));//add players with starting chips
                     }
+                    //set all variables to initial values at the start of the game
                     deck.deal(playerList, tableCards);
                     showTableCards(tableCardsBox);
                     showTableCards(stateOfGameDisplayTableCardsBox);
@@ -429,7 +430,7 @@ public class GameState extends Application implements Serializable{
                 ArrayList<Player> loserList = new ArrayList<>();
                 for (int i = 0; i < playerList.size(); i++) {
                     if (playerList.get(i).getChipCount() == 0) {
-                        loserList.add(playerList.get(i));
+                        loserList.add(playerList.get(i)); //if the player has 0 chips, they have lost
                     }
                 }
                 playerList.removeAll(loserList);
@@ -454,8 +455,10 @@ public class GameState extends Application implements Serializable{
                         nextPlayer = playerList.get(0);//In the case that the current player is at the end position
                     }
                     if (currentPlayer.getName().equals("AI")) {
+                        //the following code is the betting mechanism for the AI
                         int aiBet = AI.bet(amountToCall, currentPlayer, playerList, tableCards);
                         pot += aiBet;
+                        //if the AI makes a bet, set corresponding values to the amount bet
                         if (aiBet > 0) {
                             lastPlayerToRaise = currentPlayer;
                             amountToCall = currentPlayer.getAmountBetThisRound();
@@ -481,10 +484,10 @@ public class GameState extends Application implements Serializable{
             public void handle(ActionEvent event) {
                 int option = JOptionPane.showConfirmDialog(null, "Would you Like to Save Before Exiting?");
                 if (option == 0) {
-                    createSaveSlot();
+                    createSaveSlot();//save game
                     primary.close();
                 } else if (option == 1) {
-                    primary.close();
+                    primary.close();//dont save game
                 }
 
             }
@@ -495,7 +498,7 @@ public class GameState extends Application implements Serializable{
             public void handle(ActionEvent event) {
                 try {
                     int startingChips = Integer.parseInt(aiChipInput.getText());
-
+                    //initialize the game with an AI
                     playerList.add(new Player("1", startingChips));
                     playerList.add(new Player("AI", startingChips));
                     deck.deal(playerList, tableCards);
@@ -587,6 +590,7 @@ public class GameState extends Application implements Serializable{
                 }
                 int sizeOfBet = raiseAmount + amountToCall - currentPlayer.getAmountBetThisRound();
                 if (validInputs) {
+                    //if the input is valid and player has enough chips to bet, set raise bet as new amount to call with corresponding values to other variables
                     if ((currentPlayer.getChipCount() - sizeOfBet) >= 0) {
                         currentPlayer.setAmountBetThisRound(currentPlayer.getAmountBetThisRound() + sizeOfBet);
                         currentPlayer.setPotInvestment(currentPlayer.getPotInvestment() + sizeOfBet);//for display
@@ -609,13 +613,13 @@ public class GameState extends Application implements Serializable{
             @Override
             public void handle(ActionEvent event) {
                 int call = amountToCall - currentPlayer.getAmountBetThisRound();
-                if (call <= currentPlayer.getChipCount()) {
+                if (call <= currentPlayer.getChipCount()) {//player has enough chips to call, add chips to pot
                     currentPlayer.setAmountBetThisRound(currentPlayer.getAmountBetThisRound() + call);
                     currentPlayer.setPotInvestment(currentPlayer.getPotInvestment() + call);//for display
                     pot += call;
                     currentPlayer.removeChips(call);
                 } else {
-                    //Special case of going all in
+                    //Special case of going all in, calll amount is more than the chips the player has available
                     currentPlayer.setAmountBetThisRound(currentPlayer.getAmountBetThisRound() + currentPlayer.getChipCount());
                     currentPlayer.setPotInvestment(currentPlayer.getPotInvestment() + currentPlayer.getAmountBetThisRound());
                     pot += currentPlayer.getChipCount();
@@ -748,6 +752,7 @@ public class GameState extends Application implements Serializable{
     *@param cardBox Graphics for a card
     */
     private void showTableCards(HBox cardBox) {
+        //shows cards in the middle of the table
         cardBox.getChildren().clear();
         Image cardFront;
         Image cardBack = new Image("./CardFolder/blue_back.png");
@@ -758,7 +763,7 @@ public class GameState extends Application implements Serializable{
             imageView.setPreserveRatio(true);
             imageView.setFitHeight(200);
             imageView.setFitWidth(200);
-            if (tableCards.indexOf(c) + 1 <= numberToShow) {
+            if (tableCards.indexOf(c) + 1 <= numberToShow) { //add card based on turn,river,flop,etc.
                 cardFront = new Image(c.toString());
                 imageView.setImage(cardFront);
                 cardBox.getChildren().add(imageView);
