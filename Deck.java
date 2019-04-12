@@ -20,7 +20,7 @@ public class Deck implements Serializable {
     public void resetDeck() {//TODO make private, cut out of gamestate
         cards.clear();
         String suit = "";
-        for (int i = 1; i <= 4; i++) {
+        for (int i = 1; i <= 4; i++) { //cycle through each suit and populate the deck using the nested for loop
             switch (i) {
                 case 1:
                     suit = "Hearts";
@@ -60,11 +60,13 @@ public class Deck implements Serializable {
         }
         //deals 2 random cards for every player in the game
         for (Player p : players) {
+            //for each player, give them a new hand by taking cards from the deck and placing them as part of the players hand
+            //update the decks size to -2 cards for each player
             p.newHand();
-            c1 = cards.get(r.nextInt(sizeOfDeck) + 1);
+            c1 = cards.get(r.nextInt(sizeOfDeck) + 1);//first card in the selected players hand
             cards.remove(c1);
             sizeOfDeck--;
-            c2 = cards.get(r.nextInt(sizeOfDeck) + 1);
+            c2 = cards.get(r.nextInt(sizeOfDeck) + 1);//second card in the selected players hand
             cards.remove(c2);
             sizeOfDeck--;
             p.setHand(c1, c2);
