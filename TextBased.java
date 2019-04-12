@@ -36,10 +36,12 @@ public class TextBased {
     //methods to textually render the cards
 
     private static void displayTableCards() {
+        if (round > 0){
         System.out.println("Table Cards: ");
-        for (int i = 0; i < round + 3; i++)
+        for (int i = 0; i < round + 2; i++)
             System.out.print(tableCards.get(i).toDisplayString() + "\t");
         System.out.println();
+        }
     }
 
     private static void displayPlayerCards(Player player) {
@@ -80,7 +82,7 @@ public class TextBased {
             currentPlayer.setPotInvestment(currentPlayer.getPotInvestment() + currentPlayer.getAmountBetThisRound());
             pot += currentPlayer.getChipCount();
             currentPlayer.removeChips(currentPlayer.getChipCount());
-            round = 2;
+            round = 3;
             nextRound();
         }
     }
@@ -117,7 +119,7 @@ public class TextBased {
             getMove();
         } else {
             currentPlayer.isFolded = true;
-            round = 2;
+            round = 3;
             nextRound();
         }
     }
@@ -147,7 +149,7 @@ public class TextBased {
         for (Player player : playerList) {
             player.setAmountBetThisRound(0);
         }
-        if (round < 2) {
+        if (round < 3) {
             currentPlayer = leftOfDealer;
             if (nextPlayer == currentPlayer) {
                 try {
