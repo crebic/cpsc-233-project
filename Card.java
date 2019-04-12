@@ -1,8 +1,10 @@
 package game;
 
 import java.io.Serializable;
-//* Authors Group 9
-//* 2018 February 02
+/* @Author Tutorial 09 Group 1
+* Last edited April 10, 2019
+* Class is for creating an object that represents a card, holding the suit value and numerical value 
+*/
 
 public class Card implements Comparable, Serializable {
 
