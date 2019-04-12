@@ -2,7 +2,9 @@
 *@Author T09 G1
 *Last edited: April 10, 2019
 */
+
 import java.util.*;
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -346,7 +348,7 @@ public class RankHandsTest {
   public void test_flush_recognizesFlush() {
     //Setup
     player.setHand(new Card(9,"D"), new Card(7, "H"));
-    tableCards.add(new Card(6, "C"));
+    tableCards.add(new Card(5, "C"));
     tableCards.add(new Card(8, "D"));
     tableCards.add(new Card(5, "D"));
     tableCards.add(new Card(4, "D"));
@@ -359,27 +361,6 @@ public class RankHandsTest {
     RankHands test = new RankHands();
     test.rankHands(playerList,tableCards);
     assertEquals("Does not recognize flush",5.09 , player.getScoreThisRound(),0.001);
-  }
-
-  //Flush for player 2 2 is better than flush for player 1, so player 2 should win
-  @Test
-  public void test_flush_flushVsFlush() {
-    //Setup
-    player.setHand(new Card(9,"C"), new Card(7, "D"));
-    player2.setHand(new Card(12,"D"), new Card(11,"D"));
-    tableCards.add(new Card(6, "C"));
-    tableCards.add(new Card(8, "D"));
-    tableCards.add(new Card(5, "D"));
-    tableCards.add(new Card(4, "D"));
-    tableCards.add(new Card(3, "D"));
-
-    ArrayList<Player> playerList = new ArrayList();
-    playerList.add(player);
-    playerList.add(player2);
-
-    //Execute and verify
-    RankHands test = new RankHands();
-    assertEquals("Player 2 should win with the higher flush ",true ,test.rankHands(playerList,tableCards).contains(player2));
   }
 
   //Full house is greater than flush, so player 1 should win
