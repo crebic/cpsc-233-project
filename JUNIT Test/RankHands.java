@@ -140,7 +140,6 @@ public class RankHands {
     }
 
     private static double straightFlush(ArrayList<Card> cards) {
-        //TODO straightFlush
         if (straight(cards) > 4 && flush(cards) > 5) {
             return 8;
         }
