@@ -530,48 +530,4 @@ public class RankHandsTest {
     RankHands test = new RankHands();
     assertEquals("Player 2 should win with the straight flush",true ,test.rankHands(playerList,tableCards).contains(player2));
   }
-/*
-  //Checks to see if it properly ranks royal flush (5 consecutive cards, same suits), which should be
-  //9 + the highest card value / 100.0
-  @Test
-  public void test_checkStraightFlush_recognizesStraightFlush() {
-    //Setup
-    player.setHand(new Card(2,"D"), new Card(3, "D"));
-    tableCards.add(new Card(9, "C"));
-    tableCards.add(new Card(9, "H"));
-    tableCards.add(new Card(6, "D"));
-    tableCards.add(new Card(5, "D"));
-    tableCards.add(new Card(4, "D"));
-
-    ArrayList<Player> playerList = new ArrayList();
-    playerList.add(player);
-
-    //Execute and verify
-    RankHands test = new RankHands();
-    test.rankHands(playerList,tableCards);
-    assertEquals("Does not recognize high card",8.09 , player.getScoreThisRound(),0.001);
-  }
-
-  //Checks to see if it properly ranks royal flush (Ten, Jack, Queen, King, Ace), which should be
-  //10 + the highest card value / 100.0
-  @Test
-  public void test_checkRoyalFlush_recognizesRoyalFlush() {
-    //Setup
-    player.setHand(new Card(10,"D"), new Card(11, "D"));
-    tableCards.add(new Card(12, "D"));
-    tableCards.add(new Card(13, "D"));
-    tableCards.add(new Card(1, "D"));
-    tableCards.add(new Card(5, "D"));
-    tableCards.add(new Card(4, "D"));
-
-    ArrayList<Player> playerList = new ArrayList();
-    playerList.add(player);
-
-    //Execute and verify
-    RankHands test = new RankHands();
-    test.rankHands(playerList,tableCards);
-    assertEquals("Does not recognize high card",9.14 , player.getScoreThisRound(),0.001);
-  }
-
-*/
 }
