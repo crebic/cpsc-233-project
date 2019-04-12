@@ -3,8 +3,13 @@ package game;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Class used to determine who's hand has the greatest value (who has the best hand) based on their cards.
+ * 
+ * @author T01 G09
+ * Date: April 11, 2019
+ */
 public class RankHands {
-
 
     public static ArrayList<Player> rankHands(ArrayList<Player> players, ArrayList<Card> tableCards) {
         ArrayList<Card> cards;
@@ -33,7 +38,13 @@ public class RankHands {
         return winners;
     }
 
-
+    /**
+     * Matches cards of the same number from the player's hand and the cards on the table.
+     * @param cards an arraylist of the cards on the table.
+     * @param hand an arraylist of cards in a player's hand.
+     * @return value of the hand.
+     * If no matches exist, @return highCard method to run.
+     */
     private static double matchingValueCheck(ArrayList<Card> cards, ArrayList<Card> hand) {
         Collections.sort(cards);
         int[] valueCounts = new int[13];
@@ -71,15 +82,32 @@ public class RankHands {
         } else return highCard(cards, hand);//highCard
     }
 
+    /**
+     * Looks for the highest value of an arraylist of cards.
+     * @param an arraylist of cards
+     * @return the value of the cards
+     */
     private static double highCard(ArrayList<Card> cards) {
         Collections.sort(cards);
         return cards.get(cards.size() - 1).getValue() / 100.0;//score for a high card
     }
 
+    /**
+     * Looks for the highest in player's hand and on the table.
+     * @param cards an arraylist of the cards on the table.
+     * @param hand an arraylist of the cards in the player's hand.
+     * @return the highest value of the player's cards and the cards on the table.
+     */
     private static double highCard(ArrayList<Card> cards, ArrayList<Card> hand) {
         return highCard(cards) + highCard(hand) / 100.0; //score for a high card
     }
 
+    /**
+     * Looks for straights on the table and in the player's hand.
+     * @param cards an arraylist of cards.
+     * @return the value of the hand if there is a straight.
+     * If no straight, @return 0.
+     */
     private static double straight(ArrayList<Card> cards) {
         Collections.sort(cards);
         int cardsInARow = 0, highestValue = 0;
@@ -107,6 +135,12 @@ public class RankHands {
         return 0;
     }
 
+    /**
+     * Looks for a flush on the table and in the player's hand.
+     * @param cards an arraylist of cards.
+     * @return the value of the hand if there is a flush.
+     * If there is no flush, @return 0.
+     */
     private static double flush(ArrayList<Card> cards) {
 
         ArrayList<Card> hearts = new ArrayList<>();
@@ -114,7 +148,7 @@ public class RankHands {
         ArrayList<Card> clubs = new ArrayList<>();
         ArrayList<Card> diamonds = new ArrayList<>();
 
-        for (Card c : cards) {// check the suit of each card and correspondingly add them to the proper suit list
+        for (Card c : cards) {//check the suit of each card and correspondingly add them to the proper suit list
             if (c.getSuit().equals("Hearts")) {
                 hearts.add(c);
             } else if (c.getSuit().equals("Spades")) {
@@ -141,9 +175,13 @@ public class RankHands {
         }
         return 0;
     }
-
+    /**
+     * Looks for a straight flush on the table and in the player's hand.
+     * @param cards an arraylist of cards.
+     * @return the value of the hand if there is a straight flush.
+     * If there s no straight flush, @return 0.
+     */
     private static double straightFlush(ArrayList<Card> cards) {
-        //TODO straightFlush
         if (straight(cards) > 4 && flush(cards) > 5) {
             ArrayList<Card> hearts = new ArrayList<>();
             ArrayList<Card> spades = new ArrayList<>();
