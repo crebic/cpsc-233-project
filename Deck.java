@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.io.Serializable;
 
+/*@Author T09 G1 Version 2
+* Last edited April 10 2019
+* Class represents a standard 52 card deck. It deals and reshuffles cards 
+*/ 
 public class Deck implements Serializable {
     
     /**
