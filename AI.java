@@ -3,9 +3,9 @@ package game;
 import java.util.ArrayList;
 import java.util.Random;
 
-//AI for Poker game
 /* Version 1 April 10 2019
 * @Author T09 G1
+*Class runs the AI player logic for a poker game 
 */
 public class AI {
 
