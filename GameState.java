@@ -65,10 +65,10 @@ import javafx.application.*;
 */
 
 /**
-*@authors Sam R, Rick, Jordan, Jesse, Quenten
-*@version 4, last edited  April 11 2019.
+*@Author Sam , Rick, Jordan, Jesse, Quenten T09 G1
+*version 4, last edited  April 11 2019.
+*Class runs the GUI version of the poker game 
 */
-
 public class GameState extends Application implements Serializable{
     private static final long serialVersionUID = 3L;
     //start of instance variables for the game
