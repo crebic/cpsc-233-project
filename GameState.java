@@ -228,7 +228,9 @@ public class GameState extends Application implements Serializable{
         }
     }
     
-    //* method for retrieving instance variable data from the savefile 
+    /** 
+     * Method for retrieving instance variable data from the savefile 
+     */
     public void loadGame()
     {
         try{
@@ -254,7 +256,9 @@ public class GameState extends Application implements Serializable{
     }
     
     
-    //* sets up the instance variables of a game based on the data from the last save file found. 
+    /**
+     * Sets up the instance variables of a game based on the data from the last save file found. 
+     */
     public void loadAndProcessSavedData()
     {
         //set all data and GUI to saved data
@@ -278,7 +282,9 @@ public class GameState extends Application implements Serializable{
         primary.setScene(inGameScene);
         primary.show();
     }//////
-
+    
+    /**
+     * @return the amount in the pot.
     public int getPot()
     {
         return pot;
