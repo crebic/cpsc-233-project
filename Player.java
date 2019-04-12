@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 /**
- * A object Player that contains all the relavent information about a player in the game
- */
+*@Author T09 G1
+*Version 2
+* Class is for creating a Player object that contains all the relavent information about a player in the game
+*/
 public class Player implements Comparable, Serializable {
 
     /**
