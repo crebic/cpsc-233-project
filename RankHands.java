@@ -151,19 +151,14 @@ public class RankHands {
             ArrayList<Card> diamonds = new ArrayList<>();
 
             for (Card c : cards) { // check the suit of each card and correspondingly add them to the proper suit list
-                switch (c.getSuit()) {
-                    case "Hearts":
-                        hearts.add(c);
-                        break;
-                    case "Spades":
-                        spades.add(c);
-                        break;
-                    case "Clubs":
-                        clubs.add(c);
-                        break;
-                    case "Diamonds":
-                        diamonds.add(c);
-                        break;
+                if (c.getSuit().equals("Hearts")) {
+                    hearts.add(c);
+                } else if (c.getSuit().equals("Spades")) {
+                    spades.add(c);
+                } else if (c.getSuit().equals("Clubs")) {
+                    clubs.add(c);
+                } else if (c.getSuit().equals("Diamonds")) {
+                    diamonds.add(c);
                 }
             }
             //return a total value of 8+the highcard used in the straight
