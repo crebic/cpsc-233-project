@@ -9,6 +9,8 @@ import org.junit.Test;
 
 public class RankHandsTest {
   //These variable are required to test rankHands and will be used in all tests
+  //Players are for running the test and checking if the right players win
+  //Cards are for creating the hand combinations to test 
   public Player player = new Player("b",5);
   public Player player2 = new Player("C",5);
   public ArrayList<Card> tableCards = new ArrayList<>();
@@ -82,7 +84,7 @@ public class RankHandsTest {
 
   //Checks to see if it properly ranks a pair (2 same cards)
   @Test
-  public void test_checkPair_recognizesPair() {
+  public void test_pair_recognizesPair() {
     //Setup
     player.setHand(new Card(8,"D"), new Card(7, "H"));
     player2.setHand(new Card(8,"H"), new Card(11, "D"));
@@ -105,7 +107,7 @@ public class RankHandsTest {
 
   //Pair for player 2 is higher, so it should win
   @Test
-  public void test_checkPair_pairVsPair() {
+  public void test_pair_pairVsPair() {
     //Setup
     player.setHand(new Card(2,"D"), new Card(8, "D"));
     player2.setHand(new Card(3,"D"), new Card(9, "H"));
@@ -127,7 +129,7 @@ public class RankHandsTest {
 
   //Three of a kind is greater than pair, so player 2 should win
   @Test
-  public void test_checkPair_pairVsThreeOfAKind() {
+  public void test_pair_pairVsThreeOfAKind() {
     //Setup
     player.setHand(new Card(6,"C"), new Card(5, "H"));
     player2.setHand(new Card(9,"H"), new Card(9, "S"));
@@ -149,7 +151,7 @@ public class RankHandsTest {
 
   //Checks to see if it properly ranks two pairs(2 different same cards)
   @Test
-  public void test_checkTwoPair_recognizesTwoPair() {
+  public void test_twoPair_recognizesTwoPair() {
     //Setup
     player.setHand(new Card(8,"C"), new Card(11, "H"));
     tableCards.add(new Card(11, "C"));
@@ -170,7 +172,7 @@ public class RankHandsTest {
 
   //Two pair for player 1 is better, so player 1 should win
   @Test
-  public void test_checkTwoPair_twoPairVsTwoPair() {
+  public void test_twoPair_twoPairVsTwoPair() {
     //Setup
     player.setHand(new Card(8,"C"), new Card(10, "H"));
     player2.setHand(new Card(9,"H"), new Card(2, "S"));
@@ -193,7 +195,7 @@ public class RankHandsTest {
 
   //Three of a kind is greater than a two pair, so player 2 win
   @Test
-  public void test_checkTwoPair_twoPairVsThreeOfAKind() {
+  public void test_twoPair_twoPairVsThreeOfAKind() {
     //Setup
     player.setHand(new Card(8,"C"), new Card(10, "H"));
     player2.setHand(new Card(9,"H"), new Card(9, "S"));
@@ -216,7 +218,7 @@ public class RankHandsTest {
 
   //Checks to see if it properly ranks a three of a kind(3 same cards)
   @Test
-  public void test_checkThreeOfAKind_recognizesThreeOfAKind() {
+  public void test_threeOfAKind_recognizesThreeOfAKind() {
     //Setup
     player.setHand(new Card(8,"C"), new Card(7, "H"));
     tableCards.add(new Card(8, "C"));
@@ -236,7 +238,7 @@ public class RankHandsTest {
 
   //Trhee of a kind for player 2 is better than three of a kind for player 1, so player 2 should win
   @Test
-  public void test_checkThreeOfAKind_threeOfAKindVsThreeOfAKind() {
+  public void test_threeOfAKind_threeOfAKindVsThreeOfAKind() {
     //Setup
     player.setHand(new Card(8,"C"), new Card(5, "H"));
     player2.setHand(new Card(9,"H"), new Card(9, "S"));
@@ -258,7 +260,7 @@ public class RankHandsTest {
 
   //A straight is greater than a 3 of a kind, so player 2 should win
   @Test
-  public void test_checkThreeOfAKind_threeOfAKindVsStraight() {
+  public void test_threeOfAKind_threeOfAKindVsStraight() {
     //Setup
     player.setHand(new Card(8,"C"), new Card(9, "H"));
     player2.setHand(new Card(6,"H"), new Card(7, "S"));
@@ -280,7 +282,7 @@ public class RankHandsTest {
 
   //Checks to see if it properly ranks straights(5 consecutive numbered cards)
   @Test
-  public void test_checkStraight_recognizesStraight() {
+  public void test_straight_recognizesStraight() {
     //Setup
     player.setHand(new Card(9,"C"), new Card(7, "H"));
     tableCards.add(new Card(6, "C"));
@@ -300,7 +302,7 @@ public class RankHandsTest {
 
   //Straight for player 1 is better than straight for player 2, so player 1 should win
   @Test
-  public void test_checkStraight_straightVsStraight() {
+  public void test_straight_straightVsStraight() {
     //Setup
     player.setHand(new Card(11,"C"), new Card(6, "H"));
     player2.setHand(new Card(6,"H"), new Card(7, "S"));
@@ -320,7 +322,7 @@ public class RankHandsTest {
 
   //Test straight vs. flush, flush (player 2) should win in this case
   @Test
-  public void test_checkStraight_straightVsFlush() {
+  public void test_straight_straightVsFlush() {
     //Setup
     player.setHand(new Card(9,"C"), new Card(7, "H"));
     player2.setHand(new Card(12,"D"), new Card(11,"D"));
@@ -341,7 +343,7 @@ public class RankHandsTest {
 
   //Checks to see if it properly ranks flush(5 same suits)
   @Test
-  public void test_checkFlush_recognizesFlush() {
+  public void test_flush_recognizesFlush() {
     //Setup
     player.setHand(new Card(9,"D"), new Card(7, "H"));
     tableCards.add(new Card(6, "C"));
@@ -361,7 +363,7 @@ public class RankHandsTest {
 
   //Flush for player 2 2 is better than flush for player 1, so player 2 should win
   @Test
-  public void test_checkFlush_flushVsFlush() {
+  public void test_flush_flushVsFlush() {
     //Setup
     player.setHand(new Card(9,"C"), new Card(7, "D"));
     player2.setHand(new Card(12,"D"), new Card(11,"D"));
@@ -382,7 +384,7 @@ public class RankHandsTest {
 
   //Full house is greater than flush, so player 1 should win
   @Test
-  public void test_checkFlush_flushVsFullHouse() {
+  public void test_flush_flushVsFullHouse() {
     //Setup
     player.setHand(new Card(12,"C"), new Card(7, "C"));
     player2.setHand(new Card(5,"C"), new Card(11,"D"));
@@ -403,7 +405,7 @@ public class RankHandsTest {
 
   //Checks to see if it properly ranks full house(a three of a kind and a pair)
   @Test
-  public void test_checkFullHouse_recognizesFullHouse() {
+  public void test_fullHouse_recognizesFullHouse() {
     //Setup
     player.setHand(new Card(9,"D"), new Card(7, "H"));
     tableCards.add(new Card(6, "C"));
@@ -425,7 +427,7 @@ public class RankHandsTest {
 
   //Full house for player 1 is greater than full house for player 2, so player 1 should win
   @Test
-  public void test_checkFullHouse_fullHouseVsFullHouse() {
+  public void test_fullHouse_fullHouseVsFullHouse() {
     //Setup
     player.setHand(new Card(12,"C"), new Card(7, "C"));
     player2.setHand(new Card(5,"C"), new Card(5,"D"));
@@ -447,7 +449,7 @@ public class RankHandsTest {
 
   //Four of a kind is greater than a full house, so player 1 should win
   @Test
-  public void test_checkFullHouse_fullHouseVsFourOfAKind() {
+  public void test_fullHouse_fullHouseVsFourOfAKind() {
     //Setup
     player.setHand(new Card(12,"C"), new Card(2, "C"));
     player2.setHand(new Card(5,"C"), new Card(5,"D"));
@@ -468,7 +470,7 @@ public class RankHandsTest {
 
   //Checks to see if it properly ranks a four of a kind
   @Test
-  public void test_checkFourOfAKind_recognizesFourOfAKind() {
+  public void test_fourOfAKind_recognizesFourOfAKind() {
     //Setup
     player.setHand(new Card(9,"D"), new Card(7, "H"));
     tableCards.add(new Card(9, "C"));
@@ -489,7 +491,7 @@ public class RankHandsTest {
 
   //Four of a kind for player 2 is greater than four of a kind for player 1, so player 2 should win
   @Test
-  public void test_checkFourOfAKind_fourOfAKindVsFourOfAKind() {
+  public void test_fourOfAKind_fourOfAKindVsFourOfAKind() {
     //setup
     player.setHand(new Card(5,"C"), new Card(5, "C"));
     player2.setHand(new Card(12,"C"), new Card(12,"D"));
@@ -510,7 +512,7 @@ public class RankHandsTest {
 
   //Straight flush is greater than four of a kind, so player 2 should win
   @Test
-  public void test_checkFourOfAKind_fourOfAKindVsStraightFlush() {
+  public void test_fourOfAKind_fourOfAKindVsStraightFlush() {
     //setup
     player.setHand(new Card(2,"D"), new Card(3, "D"));
     player2.setHand(new Card(9,"C"), new Card(9,"S"));
