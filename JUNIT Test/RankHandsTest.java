@@ -1,6 +1,6 @@
 /* Test for RankHands class Version 2
 *@Author T09 G1
-*April 10, 2019
+*Last edited: April 10, 2019
 */
 import java.util.*;
 import static org.junit.Assert.*;
